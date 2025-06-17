@@ -10,14 +10,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Weight {
+  standard
+  medium
+  max
+}
+
+enum Variety {
+  arabica
+  robusta
+  blend
+}
+
 model Product {
   id String  @id @default(uuid())
-  name String
+  name String @unique
   price Int
   description String
   image String
-  variety String
+  variety Variety
   origin String
   flavor Boolean
   available Boolean
+  cartItems CartItem[]  
+}
+
+model CartItem {
+  id String @id @default(uuid())
+  product Product @relation(fields: [productId], references: [id])
+  productId String
+  productAmount Int @default(1)
+  weight Weight @default(standard)
+  optionalMessage String?
+  cart Cart @relation(fields: [cartId], references: [id])
+  cartId String
+}
+
+model Cart {
+  id String @id @default(uuid())
+  products CartItem[]
+  totalPrice Int @default(0)
+  order Order?
+}
+
+model Order {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId String?
+  cartId String @unique
+  cart Cart @relation(fields: [cartId], references: [id])
 }

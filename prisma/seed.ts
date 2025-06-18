@@ -5,7 +5,7 @@ function getProducts() {
   return [
     {
       id: 'fd105551-0f0d-4a9f-bc41-c559c8a17256',
-      name: 'Colombia Supremo',
+      name: 'Colombia Espresso',
       price: 25,
       description:
         'A classic coffee with a mild body and caramel sweetness, with notes of nut and delicate acidity. 100% arabica.',
@@ -17,7 +17,7 @@ function getProducts() {
     },
     {
       id: '5f3e3b94-7e75-4b3b-8e4c-babcf1e1e643',
-      name: 'Bogota Blend',
+      name: 'Bogota Coffee Blend',
       price: 20,
       description:
         'A perfect blend for espresso with full body, deep flavour and a slightly chocolate aftertaste. Arabica 80% / Robusta 20%.',
@@ -41,7 +41,7 @@ function getProducts() {
     },
     {
       id: '13c54ef4-c3c2-45d1-a679-72bcf9e03b1a',
-      name: 'Brazil Santos',
+      name: 'Brazil Santos Coffee',
       price: 25,
       description:
         'A delicate coffee with notes of cocoa and nut, a classic from the Brazilian lowlands. 100% arabica.',
@@ -53,7 +53,7 @@ function getProducts() {
     },
     {
       id: '9f3d57e1-8e36-4296-9305-4baf7e684af8',
-      name: 'Guatemala Antigua',
+      name: 'Antigua Coffee',
       price: 20,
       description:
         'A dark roasted blend with an intense, earthy profile and a hint of smoke. Arabica 60% / Robusta 40%.',
@@ -89,7 +89,7 @@ function getProducts() {
     },
     {
       id: '01c7599d-318b-4b9f-baf7-51f3a956a2d3',
-      name: 'Ethiopia Orange Twist',
+      name: 'Orange Coffee Twist',
       price: 25,
       description:
         'Coffee with a natural aroma of sweet orange and a floral finish. Arabica 60% / Robusta 40%. ',
@@ -113,7 +113,7 @@ function getProducts() {
     },
     {
       id: '4bcfa48c-61f1-4d52-92fc-f193601fc5c7',
-      name: 'Nut Harmony',
+      name: 'Nut Coffee Harmony',
       price: 20,
       description:
         'Creamy coffee with a subtle aroma of almonds and honey. Arabica 60% / Robusta 40%.',

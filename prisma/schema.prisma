@@ -16,19 +16,13 @@ enum Weight {
   max
 }
 
-enum Variety {
-  arabica
-  robusta
-  blend
-}
-
 model Product {
   id String  @id @default(uuid())
   name String @unique
   price Int
   description String
   image String
-  variety Variety
+  variety String
   origin String
   flavor Boolean
   available Boolean
@@ -51,6 +45,7 @@ model Cart {
   products CartItem[]
   totalPrice Int @default(0)
   order Order?
+  userId String? 
 }
 
 model Order {

@@ -6,11 +6,14 @@ import { Product } from '@prisma/client';
 export class ProductsService {
   constructor(private prismaService: PrismaService) {}
   public getAll(): Promise<Product[]> {
-    return this.prismaService.product.findMany();
+    return this.prismaService.product.findMany({
+      include: { cartItems: true },
+    });
   }
   public getById(id: Product['id']): Promise<Product | null> {
     return this.prismaService.product.findUnique({
       where: { id },
+      include: { cartItems: true },
     });
   }
 }

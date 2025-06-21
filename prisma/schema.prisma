@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model Product {
   id String  @id @default(uuid())
   name String @unique
@@ -38,16 +43,29 @@ model Cart {
   id String @id @default(uuid())
   products CartItem[]
   totalCartPrice Float @default(0)
-  order Order?
-  userId String? 
+  active Boolean @default(true)
+  userId String?
+  orderId String?@unique
+  order Order? @relation("CartOrder", fields: [orderId], references: [id])
 }
 
 model Order {
   id String @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  totalPrice Float @default(0)
-  userId String?
-  cartId String @unique
-  cart Cart @relation(fields: [cartId], references: [id])
+  totalPrice Float
+  client User? @relation(fields: [clientId], references: [id])
+  clientId String?
+  cart Cart? @relation("CartOrder")
+}
+
+model User {
+  id String @id @default(uuid())
+  firstName String
+  lastName String
+  email String @unique
+  phone String
+  address String
+  role Role @default(USER)
+  orders Order[]
 }

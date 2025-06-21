@@ -4,4 +4,8 @@ export class CreateCartDTO {
   @IsOptional()
   @IsUUID()
   userId: string;
+
+  @IsOptional()
+  @IsUUID()
+  orderId: string;
 }

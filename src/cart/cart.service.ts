@@ -14,11 +14,17 @@ export class CartService {
   public getCartById(id: Cart['id']): Promise<Cart | null> {
     return this.prismaService.cart.findUnique({
       where: { id },
-      include: { products: true },
+      include: {
+        products: {
+          include: {
+            product: true,
+          },
+        },
+      },
     });
   }
   public createCart(
-    cartData: Omit<Cart, 'id' | 'totalCartPrice'>,
+    cartData: Omit<Cart, 'id' | 'totalCartPrice' | 'active'>,
   ): Promise<Cart> {
     return this.prismaService.cart.create({
       data: cartData,

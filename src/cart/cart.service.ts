@@ -3,6 +3,7 @@ import { PrismaService } from 'shared/services/prisma.service';
 import { Cart, CartItem } from '@prisma/client';
 import { Weight, weightMultiplier } from 'enums/weight.enum';
 import { Prisma } from '@prisma/client';
+import { CreateCartDTO } from './dtos/create-cart.dto';
 
 type CartItemWithProduct = Prisma.CartItemGetPayload<{
   include: { product: true };
@@ -23,9 +24,12 @@ export class CartService {
       },
     });
   }
-  public createCart(
-    cartData: Omit<Cart, 'id' | 'totalCartPrice' | 'active'>,
-  ): Promise<Cart> {
+  public getActiveCart() {
+    return this.prismaService.cart.findFirst({
+      where: { active: true },
+    });
+  }
+  public createCart(cartData: CreateCartDTO): Promise<Cart> {
     return this.prismaService.cart.create({
       data: cartData,
     });

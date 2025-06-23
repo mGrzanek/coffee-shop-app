@@ -3,9 +3,9 @@ import { IsOptional, IsUUID } from 'class-validator';
 export class CreateCartDTO {
   @IsOptional()
   @IsUUID()
-  userId: string;
+  userId?: string;
 
   @IsOptional()
   @IsUUID()
-  orderId: string;
+  orderId?: string;
 }

@@ -18,23 +18,15 @@ export class UserController {
     private userService: UserService,
     private cartService: CartService,
   ) {}
-  @Post('/:cartId/user')
-  async createUser(
-    @Param('cartId', new ParseUUIDPipe()) cartId: string,
-    @Body() userData: CreateUserDto,
-  ) {
-    const cart = await this.cartService.getCartById(cartId);
-    if (!cart) throw new NotFoundException('Cart not found');
-    else return this.userService.createUser(userData);
+  @Post('/')
+  async createUser(@Body() userData: CreateUserDto) {
+    return this.userService.createUser(userData);
   }
-  @Put('/:cartId/user/:id')
+  @Put('/:id')
   async updateUser(
-    @Param('cartId', new ParseUUIDPipe()) cartId: string,
     @Param('userId', new ParseUUIDPipe()) userId: string,
     @Body() userData: UpdateUserDto,
   ) {
-    const cart = await this.cartService.getCartById(cartId);
-    if (!cart) throw new NotFoundException('Cart not found');
     return this.userService.updateUser(userId, userData);
   }
 }

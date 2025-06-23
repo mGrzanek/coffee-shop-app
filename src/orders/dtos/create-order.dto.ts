@@ -1,8 +1,13 @@
-import { IsNotEmpty, IsNumber, Min } from 'class-validator';
+import { IsNotEmpty, IsUUID, IsString } from 'class-validator';
 
 export class CreateOrderDTO {
-  @Min(0)
-  @IsNumber()
   @IsNotEmpty()
-  totalPrice: number;
+  @IsString()
+  @IsUUID()
+  cartId: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsUUID()
+  userId: string;
 }

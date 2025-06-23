@@ -18,6 +18,10 @@ import { UpdateCartItemDTO } from './dtos/update-cart-item.dto';
 @Controller('cart')
 export class CartController {
   constructor(private cartService: CartService) {}
+  @Get('/active')
+  async getActiveCart() {
+    return this.cartService.getActiveCart();
+  }
   @Get('/:id')
   async getCartById(@Param('id', new ParseUUIDPipe()) id: string) {
     const cart = this.cartService.getCartById(id);
@@ -55,7 +59,10 @@ export class CartController {
     @Param('cartId', new ParseUUIDPipe()) cartId: string,
     @Body() cartItemData: CreateCartItemDTO,
   ) {
-    return this.cartService.createCartItem({ ...cartItemData, cartId });
+    const cart = await this.cartService.getCartById(cartId);
+    if (cart && cart.active)
+      return this.cartService.createCartItem({ ...cartItemData, cartId });
+    else throw new NotFoundException('Cart not available');
   }
   @Put('/:cartId/cart-items/:itemId')
   async updateCartItem(
@@ -63,10 +70,13 @@ export class CartController {
     @Param('itemId', new ParseUUIDPipe()) itemId: string,
     @Body() cartItemDataToUpdate: UpdateCartItemDTO,
   ) {
-    return this.cartService.updateCartItem(itemId, {
-      ...cartItemDataToUpdate,
-      cartId,
-    });
+    const cart = await this.cartService.getCartById(cartId);
+    if (cart && cart.active)
+      return this.cartService.updateCartItem(itemId, {
+        ...cartItemDataToUpdate,
+        cartId,
+      });
+    else throw new NotFoundException('Cart not available');
   }
   @Delete('/:cartId/cart-items/:itemId')
   async removeCartItem(

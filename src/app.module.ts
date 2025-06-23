@@ -11,9 +11,10 @@ import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { CartModule } from './cart/cart.module';
 import { UserModule } from './user/user.module';
+import { CartItemsModule } from './cart-items/cart-items.module';
 
 @Module({
-  imports: [ProductsModule, OrdersModule, CartModule, UserModule],
+  imports: [ProductsModule, OrdersModule, CartModule, UserModule, CartItemsModule],
   controllers: [AppController],
   providers: [AppService],
 })

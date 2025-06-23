@@ -4,20 +4,15 @@ import {
   Body,
   Param,
   ParseUUIDPipe,
-  NotFoundException,
   Put,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { CartService } from 'src/cart/cart.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Controller('user')
 export class UserController {
-  constructor(
-    private userService: UserService,
-    private cartService: CartService,
-  ) {}
+  constructor(private userService: UserService) {}
   @Post('/')
   async createUser(@Body() userData: CreateUserDto) {
     return this.userService.createUser(userData);

@@ -30,12 +30,12 @@ model Product {
 
 model CartItem {
   id String @id @default(uuid())
-  product Product @relation(fields: [productId], references: [id])
-  productId String
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productId String?
   productAmount Int @default(1)
   weight String @default("100")
   optionalMessage String?
-  cart Cart @relation(fields: [cartId], references: [id])
+  cart Cart @relation(fields: [cartId], references: [id], onDelete: Cascade)
   cartId String
 }
 
@@ -54,9 +54,9 @@ model Order {
   updatedAt DateTime @updatedAt
   totalPrice Float
   status String @default("pending")
-  user User? @relation(fields: [userId], references: [id])
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId String?
-  cart Cart? @relation(fields: [cartId], references: [id])
+  cart Cart? @relation(fields: [cartId], references: [id], onDelete: Cascade)
   cartId String? @unique
 }
 

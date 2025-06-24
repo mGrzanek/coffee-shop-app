@@ -6,6 +6,9 @@ import { CreateCartDTO } from './dtos/create-cart.dto';
 @Injectable()
 export class CartService {
   constructor(private prismaService: PrismaService) {}
+  public getAllCart() {
+    return this.prismaService.cart.findMany();
+  }
   public getCartById(id: Cart['id']): Promise<Cart | null> {
     return this.prismaService.cart.findUnique({
       where: { id },
@@ -16,11 +19,6 @@ export class CartService {
           },
         },
       },
-    });
-  }
-  public getActiveCart() {
-    return this.prismaService.cart.findFirst({
-      where: { active: true },
     });
   }
   public createCart(cartData: CreateCartDTO): Promise<Cart> {

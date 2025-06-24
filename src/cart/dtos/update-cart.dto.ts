@@ -1,11 +1,4 @@
-import {
-  IsNotEmpty,
-  IsNumber,
-  Min,
-  IsUUID,
-  IsOptional,
-  IsBoolean,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, Min, IsUUID, IsOptional } from 'class-validator';
 
 export class UpdateCartDto {
   @Min(0)
@@ -16,11 +9,4 @@ export class UpdateCartDto {
   @IsOptional()
   @IsUUID()
   userId: string;
-
-  @IsBoolean()
-  active: boolean;
-
-  @IsOptional()
-  @IsUUID()
-  orderId: string;
 }

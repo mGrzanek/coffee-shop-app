@@ -5,9 +5,4 @@ export class CreateOrderDTO {
   @IsString()
   @IsUUID()
   cartId: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsUUID()
-  userId: string;
 }

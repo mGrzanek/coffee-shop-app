@@ -1,14 +1,16 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'shared/services/prisma.service';
-import { Order } from '@prisma/client';
+import { Order, Cart, Product, CartItem } from '@prisma/client';
 import { CreateOrderDTO } from './dtos/create-order.dto';
 import { CartService } from 'src/cart/cart.service';
+import { CartItemsService } from 'src/cart-items/cart-items.service';
 
 @Injectable()
 export class OrdersService {
   constructor(
     private prismaService: PrismaService,
     private cartService: CartService,
+    private cartItemsService: CartItemsService,
   ) {}
   public async getOrderById(orderId: Order['id']) {
     return this.prismaService.order.findUnique({
@@ -17,43 +19,49 @@ export class OrdersService {
   }
   public async createOrder(orderData: CreateOrderDTO) {
     try {
-      const deliveryPrice = process.env.DELIVERY_COST;
-      const cart = await this.cartService.getCartById(orderData.cartId);
-      if (!cart) throw new BadRequestException('Cart not exist');
+      const cart = (await this.cartService.getCartById(
+        orderData.cartId,
+      )) as Cart & {
+        products: (CartItem & {
+          product: Product | null;
+        })[];
+      };
+      if (!cart) throw new BadRequestException('Cart not available');
       else {
-        if (!cart.active) throw new BadRequestException('Cart not available');
+        if (cart.products.length === 0)
+          throw new BadRequestException('Cart is empty!');
         else {
-          const totalPrice = +deliveryPrice + +cart.totalCartPrice;
-          await this.cartService.updateCart(orderData.cartId, {
-            userId: cart.userId,
-            active: false,
-            totalCartPrice: cart.totalCartPrice,
-          });
-          await this.cartService.createCart({});
+          const deliveryPrice = +process.env.DELIVERY_COST;
+          const totalPrice = +cart.totalCartPrice + deliveryPrice;
+          const userId = cart.userId;
+          const orderProducts = cart.products.map((item) => ({
+            productId: item.productId,
+            name: item.product?.name,
+            price: item.product?.price,
+            weight: item.weight,
+            amount: item.productAmount,
+            optionalMessage: item.optionalMessage,
+          }));
           const newOrder = await this.prismaService.order.create({
             data: {
               totalPrice,
-              userId: orderData.userId,
-              cartId: orderData.cartId,
+              userId,
+              products: orderProducts,
             },
             include: {
-              cart: {
-                include: {
-                  products: {
-                    include: {
-                      product: true,
-                    },
-                  },
-                },
-              },
               user: true,
             },
           });
+          await this.cartService.updateCart(cart.id, {
+            userId: null,
+            totalCartPrice: cart.totalCartPrice,
+          });
+          await this.cartItemsService.removeAllCartItems(cart.id);
           return newOrder;
         }
       }
     } catch (err) {
-      console.error('ORDER CREATION ERROR:', err);
+      console.error('Create order error:', err);
       throw err;
     }
   }

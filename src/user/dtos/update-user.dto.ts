@@ -2,6 +2,7 @@
 import { Transform } from 'class-transformer';
 import {
   IsString,
+  IsUUID,
   IsPhoneNumber,
   IsNotEmpty,
   MinLength,
@@ -9,6 +10,11 @@ import {
 } from 'class-validator';
 
 export class UpdateUserDto {
+  @IsNotEmpty()
+  @IsString()
+  @IsUUID()
+  cartId: string;
+
   @MinLength(3)
   @IsNotEmpty()
   @IsString()

@@ -15,9 +15,11 @@ import { UpdateCartDto } from './dtos/update-cart.dto';
 @Controller('cart')
 export class CartController {
   constructor(private cartService: CartService) {}
-  @Get('/active')
-  async getActiveCart() {
-    return this.cartService.getActiveCart();
+  @Get('/')
+  async getAllCarts() {
+    const carts = await this.cartService.getAllCart();
+    if (carts.length === 0) throw new NotFoundException('No cart');
+    else return carts;
   }
   @Get('/:id')
   async getCartById(@Param('id', new ParseUUIDPipe()) id: string) {

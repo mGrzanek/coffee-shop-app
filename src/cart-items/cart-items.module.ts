@@ -8,5 +8,6 @@ import { PrismaService } from 'shared/services/prisma.service';
   imports: [CartModule],
   controllers: [CartItemsController],
   providers: [CartItemsService, PrismaService],
+  exports: [CartItemsService],
 })
 export class CartItemsModule {}

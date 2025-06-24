@@ -43,9 +43,7 @@ model Cart {
   id String @id @default(uuid())
   products CartItem[]
   totalCartPrice Float @default(0)
-  active Boolean @default(true)
   userId String?
-  order Order?
 }
 
 model Order {
@@ -56,8 +54,7 @@ model Order {
   status String @default("pending")
   user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
   userId String?
-  cart Cart? @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  cartId String? @unique
+  products Json
 }
 
 model User {
@@ -68,5 +65,6 @@ model User {
   phone String
   address String
   role Role @default(USER)
+  cartId String
   orders Order[]
 }

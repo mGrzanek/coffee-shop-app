@@ -42,7 +42,7 @@ export class CartItemsController {
     @Body() cartItemData: CreateCartItemDTO,
   ) {
     const cart = await this.cartService.getCartById(cartId);
-    if (cart && cart.active)
+    if (cart)
       return this.cartItemsService.createCartItem({ ...cartItemData, cartId });
     else throw new NotFoundException('Cart not available');
   }
@@ -53,7 +53,7 @@ export class CartItemsController {
     @Body() cartItemDataToUpdate: UpdateCartItemDTO,
   ) {
     const cart = await this.cartService.getCartById(cartId);
-    if (cart && cart.active)
+    if (cart)
       return this.cartItemsService.updateCartItem(itemId, {
         ...cartItemDataToUpdate,
         cartId,
@@ -66,10 +66,18 @@ export class CartItemsController {
     @Param('itemId', new ParseUUIDPipe()) itemId: string,
   ) {
     const cart = await this.cartService.getCartById(cartId);
-    if (cart && cart.active) {
+    if (cart) {
       const cartItem = this.cartItemsService.getCartItemById(cartId, itemId);
       if (!cartItem) throw new NotFoundException('CartItem not found');
       else return this.cartItemsService.removeCartItem(cartId, itemId);
     } else throw new NotFoundException('Cart not available');
+  }
+  @Delete('/:cartId/cart-items')
+  async removeAllCartItems(
+    @Param('cartId', new ParseUUIDPipe()) cartId: string,
+  ) {
+    const cart = await this.cartService.getCartById(cartId);
+    if (!cart) throw new NotFoundException('Cart not available');
+    else return this.cartItemsService.removeAllCartItems(cartId);
   }
 }

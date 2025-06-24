@@ -63,6 +63,13 @@ export class CartItemsService {
     await this.calculateTotalPrice(cartId);
     return cartItem;
   }
+  public async removeAllCartItems(cartId: Cart['id']) {
+    await this.prismaService.cartItem.deleteMany({
+      where: { cartId },
+    });
+    await this.calculateTotalPrice(cartId);
+    return { success: true };
+  }
   public async calculateTotalPrice(cartId: Cart['id']) {
     const cartItems = await this.getAllCartItems(cartId);
     const totalCartPrice = cartItems.reduce((acc, item) => {

@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch } from 'react-redux'
 import { Routes, Route } from "react-router-dom";
+import NavBar from "./components/views/NavBar/NavBar";
+import Hero from "./components/views/Hero/Hero";
 import Home from "./components/pages/Home/Home";
 import Product from "./components/pages/Product/Product";
 import Cart from "./components/pages/Cart/Cart";
@@ -14,7 +16,9 @@ const App = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
   return (
-    <div className="App">
+    <>
+      <Hero />
+      <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/:id" element={<Product />} />
@@ -22,7 +26,7 @@ const App = () => {
         <Route path="/order-form" element={<OrderForm />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </div>
+    </>
   );
 }
 

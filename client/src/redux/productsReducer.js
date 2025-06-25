@@ -2,6 +2,7 @@ import { API_URL } from "../config";
 import { updateStatus } from "./statusReducer";
 
 // selectors
+export const getProducts = ({products}) =>  products; 
 
 
 // actions

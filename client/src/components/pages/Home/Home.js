@@ -1,6 +1,8 @@
+import Products from "./../../features/Products/Products";
+
 const Home = () => {
     return(
-        <h2>Home</h2>
+        <Products />
     );
 }
 

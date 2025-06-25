@@ -1,0 +1,33 @@
+@import "./../../../styles/settings.scss";
+
+.hero {
+    background: url('./../../../../public/images/hero/photo-hero.png') no-repeat center center/cover;
+    height: 100vh;
+    background-attachment: fixed;
+    text-align: center;
+    position: relative;
+}
+
+.layer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    h1 {
+        font-family: $hero-title-font-family;
+        font-weight: 700;
+        font-size: 5rem;
+        line-height: .9;
+    }
+
+    h4 {
+        font-family: $hero-subtitle-font-family;
+        font-style: italic;
+        letter-spacing: 1.5px;
+    }
+
+    h1, h4 {
+         color: $cream-color;
+    }
+}

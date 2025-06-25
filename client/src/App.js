@@ -8,6 +8,7 @@ import Home from "./components/pages/Home/Home";
 import Product from "./components/pages/Product/Product";
 import Cart from "./components/pages/Cart/Cart";
 import OrderForm from "./components/pages/OrderForm.js/OrderForm";
+import Footer from "./components/views/Footer/Footer";
 import NotFound from "./components/pages/NotFound/NotFound";
 import { fetchProducts } from "./redux/productsReducer";
 
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MainContainer>
+      <Footer />
     </>
   );
 }

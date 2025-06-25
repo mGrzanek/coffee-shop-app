@@ -1,7 +1,7 @@
 @import "./../../../styles/settings.scss";
 
 .card {
-    height: 450px;
+    max-height: 470px;
     overflow: auto;
     box-shadow: 1px 1px 2px $main-color;
 }
@@ -15,5 +15,13 @@
 .cardTitle {
     overflow: hidden;
     height: 30px; 
-    font-size: 18px;
+    font-size: 1.3rem;
+    color: $main-color;
+    font-family: $hero-title-font-family;
+}
+
+.btn {
+    text-transform: lowercase;
+    border: 1px solid $main-color;
+    background-color: $main-color;
 }

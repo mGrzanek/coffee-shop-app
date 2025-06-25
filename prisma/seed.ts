@@ -9,7 +9,7 @@ function getProducts() {
       price: 25,
       description:
         'A classic coffee with a mild body and caramel sweetness, with notes of nut and delicate acidity. 100% arabica.',
-      image: 'photo_1.jpg',
+      image: 'coffee/classic/coffee_classic.png',
       variety: 'arabica',
       origin: 'Colombia',
       flavor: false,
@@ -21,7 +21,7 @@ function getProducts() {
       price: 20,
       description:
         'A perfect blend for espresso with full body, deep flavour and a slightly chocolate aftertaste. Arabica 80% / Robusta 20%.',
-      image: 'photo_1.jpg',
+      image: 'coffee/classic/coffee_classic.png',
       variety: 'blend',
       origin: 'Colombia',
       flavor: false,
@@ -33,7 +33,7 @@ function getProducts() {
       price: 30,
       description:
         'Deep, intense Robusta from Central Africa. Characterized by low acidity and heavy. 100% Robusta.',
-      image: 'photo_1.jpg',
+      image: 'coffee/classic/coffee_classic.png',
       variety: 'robusta',
       origin: 'Uganda',
       flavor: false,
@@ -45,7 +45,7 @@ function getProducts() {
       price: 25,
       description:
         'A delicate coffee with notes of cocoa and nut, a classic from the Brazilian lowlands. 100% arabica.',
-      image: 'photo_1.jpg',
+      image: 'coffee/classic/coffee_classic.png',
       variety: 'arabica',
       origin: 'Brasil',
       flavor: false,
@@ -57,7 +57,7 @@ function getProducts() {
       price: 20,
       description:
         'A dark roasted blend with an intense, earthy profile and a hint of smoke. Arabica 60% / Robusta 40%.',
-      image: 'photo_1.jpg',
+      image: 'coffee/classic/coffee_classic.png',
       variety: 'blend',
       origin: 'Gwatemalia',
       flavor: false,
@@ -69,7 +69,7 @@ function getProducts() {
       price: 20,
       description:
         'A delicate coffee with a natural coconut flavor and a creamy texture. 100% Arabica.',
-      image: 'photo_1.jpg',
+      image: 'coffee/flavor/coffee_flavor_cherry.png',
       variety: 'arabica',
       origin: 'Brasil',
       flavor: true,
@@ -81,7 +81,7 @@ function getProducts() {
       price: 20,
       description:
         'Velvety coffee with a distinctive fruity-cherry accent. 100% Arabica. ',
-      image: 'photo_1.jpg',
+      image: 'coffee/flavor/coffee_flavor_cherry.png',
       variety: 'arabica',
       origin: 'Colombia',
       flavor: true,
@@ -93,7 +93,7 @@ function getProducts() {
       price: 25,
       description:
         'Coffee with a natural aroma of sweet orange and a floral finish. Arabica 60% / Robusta 40%. ',
-      image: 'photo_1.jpg',
+      image: 'coffee/flavor/coffee_flavor_cherry.png',
       variety: 'blend',
       origin: 'Ethiopia',
       flavor: true,
@@ -105,7 +105,7 @@ function getProducts() {
       price: 30,
       description:
         'Chocolatey robusta with an earthy note. Perfect for milky coffees. 100% Robusta.',
-      image: 'photo_1.jpg',
+      image: 'coffee/flavor/coffee_flavor_cherry.png',
       variety: 'robusta',
       origin: 'Uganda',
       flavor: true,
@@ -117,7 +117,7 @@ function getProducts() {
       price: 20,
       description:
         'Creamy coffee with a subtle aroma of almonds and honey. Arabica 60% / Robusta 40%.',
-      image: 'photo_1.jpg',
+      image: 'coffee/flavor/coffee_flavor_cherry.png',
       variety: 'blend',
       origin: 'Brasil',
       flavor: true,

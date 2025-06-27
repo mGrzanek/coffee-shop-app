@@ -4,10 +4,9 @@ import {
   IsUUID,
   IsInt,
   Min,
-  IsEnum,
+  Max,
   IsOptional,
 } from 'class-validator';
-import { Weight } from 'enums/weight.enum';
 
 export class CreateCartItemDTO {
   @IsUUID()
@@ -15,13 +14,16 @@ export class CreateCartItemDTO {
   @IsNotEmpty()
   productId: string;
 
-  @Min(0)
+  @Min(1)
+  @Max(10)
   @IsInt()
   @IsNotEmpty()
   productAmount: number;
 
-  @IsEnum(Weight)
-  weight: Weight;
+  @IsUUID()
+  @IsString()
+  @IsNotEmpty()
+  weightId: string;
 
   @IsOptional()
   optionalMessage: string;

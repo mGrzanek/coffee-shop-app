@@ -14,6 +14,7 @@ import { UserModule } from './user/user.module';
 import { CartItemsModule } from './cart-items/cart-items.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { WeightModule } from './weight/weight.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { join } from 'path';
     CartModule,
     UserModule,
     CartItemsModule,
+    WeightModule,
   ],
   controllers: [AppController],
   providers: [AppService],

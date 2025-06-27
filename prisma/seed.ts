@@ -1,6 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 const db = new PrismaClient();
 
+function getWeights() {
+  return [
+    { label: 'standard', value: 100, multiplier: 1.0 },
+    { label: 'medium', value: 200, multiplier: 1.8 },
+    { label: 'max', value: 300, multiplier: 2.7 },
+  ];
+}
+
 function getProducts() {
   return [
     {
@@ -127,11 +135,14 @@ function getProducts() {
 }
 
 async function seed() {
-  await Promise.all(
-    getProducts().map((product) => {
+  await Promise.all([
+    ...getProducts().map((product) => {
       return db.product.create({ data: product });
     }),
-  );
+    ...getWeights().map((weight) => {
+      return db.weight.create({ data: weight });
+    }),
+  ]);
 }
 
 seed();

@@ -28,12 +28,21 @@ model Product {
   cartItems CartItem[]  
 }
 
+model Weight {
+  id String @id @default(uuid())
+  label String
+  value Int
+  multiplier Float
+  cartItems CartItem[]
+}
+
 model CartItem {
   id String @id @default(uuid())
   product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
   productId String?
   productAmount Int @default(1)
-  weight String @default("100")
+  weight Weight @relation(fields: [weightId], references: [id])
+  weightId String
   optionalMessage String?
   cart Cart @relation(fields: [cartId], references: [id], onDelete: Cascade)
   cartId String

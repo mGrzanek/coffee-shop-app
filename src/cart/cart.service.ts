@@ -16,6 +16,7 @@ export class CartService {
         products: {
           include: {
             product: true,
+            weight: true,
           },
         },
       },

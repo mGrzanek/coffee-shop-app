@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from 'shared/services/prisma.service';
-import { Order, Cart, Product, CartItem } from '@prisma/client';
+import { Order, Cart, Product, CartItem, Weight } from '@prisma/client';
 import { CreateOrderDTO } from './dtos/create-order.dto';
 import { CartService } from 'src/cart/cart.service';
 import { CartItemsService } from 'src/cart-items/cart-items.service';
@@ -24,6 +24,7 @@ export class OrdersService {
       )) as Cart & {
         products: (CartItem & {
           product: Product | null;
+          weight: Weight | null;
         })[];
       };
       if (!cart) throw new BadRequestException('Cart not available');
@@ -38,7 +39,7 @@ export class OrdersService {
             productId: item.productId,
             name: item.product?.name,
             price: item.product?.price,
-            weight: item.weight,
+            weight: item.weight?.value,
             amount: item.productAmount,
             optionalMessage: item.optionalMessage,
           }));

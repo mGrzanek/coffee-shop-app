@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CartItem, Cart } from '@prisma/client';
-import { Weight, weightMultiplier } from 'enums/weight.enum';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'shared/services/prisma.service';
 
 type CartItemWithProduct = Prisma.CartItemGetPayload<{
-  include: { product: true };
+  include: { product: true; weight: true };
 }>;
 
 @Injectable()
@@ -16,7 +15,7 @@ export class CartItemsService {
   ): Promise<CartItemWithProduct[]> {
     const items = await this.prismaService.cartItem.findMany({
       where: { cartId },
-      include: { product: true },
+      include: { product: true, weight: true },
     });
 
     console.log(JSON.stringify(items, null, 2));
@@ -28,7 +27,7 @@ export class CartItemsService {
   ): Promise<CartItem | null> {
     return this.prismaService.cartItem.findFirst({
       where: { id, cartId },
-      include: { product: true },
+      include: { product: true, weight: true },
     });
   }
   public async createCartItem(
@@ -73,7 +72,7 @@ export class CartItemsService {
   public async calculateTotalPrice(cartId: Cart['id']) {
     const cartItems = await this.getAllCartItems(cartId);
     const totalCartPrice = cartItems.reduce((acc, item) => {
-      const multiplier = weightMultiplier(item.weight as Weight);
+      const multiplier = item.weight?.multiplier ?? 1;
       return acc + item.product.price * item.productAmount * multiplier;
     }, 0);
     return this.prismaService.cart.update({

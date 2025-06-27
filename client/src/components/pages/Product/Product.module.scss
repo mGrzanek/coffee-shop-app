@@ -1,27 +1,28 @@
 @import "./../../../styles/settings.scss";
 
-.card {
-    height: 500px;
-    overflow: auto;
-    box-shadow: 1px 1px 2px $main-color;
-}
-
 .cardImage {
-    width: auto;
-    max-height: 250px; 
+    width: 250px;
+    height: 250px; 
     object-fit: cover; 
     margin: 0 auto;
 }
 
 .cardTitle {
     overflow: hidden;
-    font-size: 1.2rem;
+    height: 30px; 
+    text-align: center;
+    font-size: 1.5rem;
     color: $main-color;
     font-family: $hero-title-font-family;
 }
 
 .price {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-family: $hero-title-font-family;
     color: darken($cream-color, 20%);
+}
+
+.label {
+    color: $main-color;
+    font-size: 1rem;
 }

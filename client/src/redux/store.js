@@ -3,10 +3,12 @@ import { composeWithDevTools } from "@redux-devtools/extension";
 import initialState from './initialState';
 import { thunk } from 'redux-thunk';
 import productsReducer from "./productsReducer";
+import cartItemReducer from "./cartItemReducer";
 import statusReducer from "./statusReducer";
 
 const subreducers = {
     products: productsReducer,
+    cartItems: cartItemReducer,
     status: statusReducer,
 }
 
@@ -17,7 +19,7 @@ const store = createStore(
     initialState,
     composeWithDevTools(
         applyMiddleware(thunk),
-    )
-)
+    ),
+);
 
 export default store;

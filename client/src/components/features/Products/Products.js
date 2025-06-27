@@ -6,8 +6,8 @@ import ProductItem from "./../../views/ProductItem/ProductItem";
 const Products = () => {
     const products = useSelector(getProducts);
     return(
-        <Row className="d-flex px-2 py-4">
-            {products.map(product => <ProductItem key={product._id} {...product} />)}
+        <Row className="d-flex mx-auto px-3 py-4">
+            {products.map(product => <ProductItem key={product.id} {...product} />)}
         </Row>
     );
 }

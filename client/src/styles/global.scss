@@ -6,3 +6,10 @@ body {
     font-size: $base-font-size;
     background: url("./../../public/images/container/photo-container.png") no-repeat center 0/cover;
 }
+
+.btn {
+    text-transform: lowercase;
+    border: 1px solid $main-color;
+    background-color: $main-color;
+    padding: 5px 12px;
+}

@@ -2,11 +2,11 @@ import { API_URL } from "../config";
 import { updateStatus } from "./statusReducer";
 
 // selectors
-export const getProducts = ({products}) =>  products; 
-
+export const getProducts = ({products}) =>  products;
+export const getProductById = ({products}, productId) => products.find(product => product.id === productId);
 
 // actions
-const createActionName = actionName => `app/request/${actionName}`;
+const createActionName = actionName => `app/products/${actionName}`;
 
 const UPDATE_PRODUCTS = createActionName('UPDATE_PRODUCTS');
 
@@ -20,10 +20,11 @@ export const fetchProducts = () => {
             .then(res => res.json())
             .then(products => {
                 dispatch(updateProducts(Array.isArray(products) ? products : []));
-                dispatch(updateStatus(null));
+                dispatch(updateStatus("success"));
             });
         } catch (err) {
             console.error('Fetch products error: ', err);
+            dispatch(updateStatus("error"));
         }
     }
 }

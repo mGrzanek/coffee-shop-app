@@ -9,7 +9,7 @@ const UPDATE_STATUS = createActionName("UPDATE_STATUS");
 export const updateStatus = payload => ({ type: UPDATE_STATUS, payload });
 
 // reducer
-const statusReducer = (statePart = [], action) => {
+const statusReducer = (statePart = null, action) => {
     switch(action.type) {
         case UPDATE_STATUS:
             return action.payload;

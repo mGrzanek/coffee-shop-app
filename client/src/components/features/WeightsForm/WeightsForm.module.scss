@@ -1,0 +1,13 @@
+@import "./../../../styles/settings.scss";
+
+.btnWeight {
+    background-color: $cream-color;
+    border: 1px solid $main-color;
+    color: $main-color;
+    font-weight: 500;
+}
+
+.active {
+    background-color: $main-color;
+    color: $cream-color;
+}

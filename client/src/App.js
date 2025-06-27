@@ -10,11 +10,13 @@ import Cart from "./components/pages/Cart/Cart";
 import OrderForm from "./components/pages/OrderForm.js/OrderForm";
 import Footer from "./components/views/Footer/Footer";
 import NotFound from "./components/pages/NotFound/NotFound";
+import { fetchWeights } from "./redux/weightsReducer";
 import { fetchProducts } from "./redux/productsReducer";
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(fetchWeights());
     dispatch(fetchProducts());
   }, [dispatch]);
   return (

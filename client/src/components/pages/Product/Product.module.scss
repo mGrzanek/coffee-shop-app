@@ -1,8 +1,8 @@
 @import "./../../../styles/settings.scss";
 
 .cardImage {
-    width: 250px;
-    height: 250px; 
+    max-width: 250px;
+    max-height: 280px; 
     object-fit: cover; 
     margin: 0 auto;
 }
@@ -14,12 +14,14 @@
     font-size: 1.5rem;
     color: $main-color;
     font-family: $hero-title-font-family;
+    margin-bottom: 20px;
 }
 
 .price {
     font-size: 1.3rem;
     font-family: $hero-title-font-family;
     color: darken($cream-color, 20%);
+    margin: 0;
 }
 
 .label {

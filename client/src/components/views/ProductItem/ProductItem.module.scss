@@ -4,6 +4,11 @@
     height: 450px;
     overflow: auto;
     box-shadow: 1px 1px 2px $main-color;
+
+    &:hover .cardTitle {
+        color: $cream-color;
+        cursor: pointer;
+    }
 }
 
 .cardImage {
@@ -18,11 +23,13 @@
     font-size: 1.2rem;
     color: $main-color;
     font-family: $hero-title-font-family;
+    text-decoration: none;
+    margin: 0;
 }
 
 .price {
     font-size: 1.1rem;
     font-family: $hero-title-font-family;
     color: darken($cream-color, 20%);
-    margin: 0;
+    padding: 5px;
 }

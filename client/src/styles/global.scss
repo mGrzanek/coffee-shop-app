@@ -7,9 +7,15 @@ body {
     background: url("./../../public/images/container/photo-container.png") no-repeat center 0/cover;
 }
 
-.btn {
+.btn-one {
     text-transform: lowercase;
     border: 1px solid $main-color;
+    font-weight: 400;
     background-color: $main-color;
-    padding: 5px 12px;
+    color: $cream-color;
+
+    &:hover {
+        background-color: $cream-color;
+        color: $main-color;
+    }
 }

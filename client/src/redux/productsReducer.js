@@ -8,9 +8,9 @@ export const getProductById = ({products}, productId) => products.find(product =
 // actions
 const createActionName = actionName => `app/products/${actionName}`;
 
-const UPDATE_PRODUCTS = createActionName('UPDATE_PRODUCTS');
+const GET_PRODUCTS = createActionName('GET_PRODUCTS');
 
-export const updateProducts = payload => ({type: UPDATE_PRODUCTS, payload});
+export const updateProducts = payload => ({type: GET_PRODUCTS, payload});
 
 export const fetchProducts = () => {
     return(dispatch) => {
@@ -33,7 +33,7 @@ export const fetchProducts = () => {
 // action creators
 const productsReducer = (statePart = [], action) => {
     switch(action.type){
-        case UPDATE_PRODUCTS: 
+        case GET_PRODUCTS: 
         return [...action.payload];
         default: 
         return statePart;

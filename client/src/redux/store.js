@@ -3,14 +3,14 @@ import { composeWithDevTools } from "@redux-devtools/extension";
 import initialState from './initialState';
 import { thunk } from 'redux-thunk';
 import productsReducer from "./productsReducer";
-import cartItemReducer from "./cartItemReducer";
 import statusReducer from "./statusReducer";
 import weightsReducer from "./weightsReducer";
+import cartProductsReducer from "./cartProductsReducer";
 
 const subreducers = {
     products: productsReducer,
     weights: weightsReducer,
-    cartItems: cartItemReducer,
+    cartProducts: cartProductsReducer,
     status: statusReducer,
 }
 

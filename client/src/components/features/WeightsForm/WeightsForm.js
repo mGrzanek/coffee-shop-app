@@ -2,11 +2,11 @@ import styles from "./WeightsForm.module.scss";
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
-const WeightsForm = ({ sortedWeights, activeWeight, setActiveWeight, setCurrentWeightMultiplier }) => {
+const WeightsForm = ({ weights, activeWeight, setActiveWeight, setCurrentWeightMultiplier }) => {
    
     return(
         <div className='d-flex flex-row p-0' >
-            {(sortedWeights || []).map((weight) => 
+            {(weights || []).map((weight) => 
                 <button  
                     key={weight.label} 
                     className={clsx(styles.btnWeight, weight.value === activeWeight && styles.active)}
@@ -20,7 +20,7 @@ const WeightsForm = ({ sortedWeights, activeWeight, setActiveWeight, setCurrentW
 }
 
 WeightsForm.propTypes = {
-    sortedWeights: PropTypes.array.isRequired,
+    weights: PropTypes.array.isRequired,
     activeWeight: PropTypes.number.isRequired,
     setActiveWeight: PropTypes.func.isRequired,
     setCurrentWeightMultiplier: PropTypes.func.isRequired

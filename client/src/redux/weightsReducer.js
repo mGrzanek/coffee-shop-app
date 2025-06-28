@@ -1,7 +1,9 @@
 import { API_URL } from "../config";
 
 // selectors
-export const getWeights = ({weights}) => weights;
+export const getWeights = ({weights}) => weights.sort((a, b) => {
+    return a.value - b.value;
+});
 
 // actions
 const createActionName = (actionName) => `app/weights/${actionName}`;

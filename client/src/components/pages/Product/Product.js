@@ -20,10 +20,6 @@ const Product = () => {
     const status = useSelector(getStatus);
     const weights = useSelector(getWeights);
 
-    const sortedWeights = weights.sort((a, b) => {
-        return a.value - b.value;
-    });
-
     const [actionStatus, setActionStatus] = useState(status);
     const [currentPrice, setCurrentPrice] = useState(null);
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
@@ -36,31 +32,39 @@ const Product = () => {
     }, [status]);
 
     useEffect(() => {
-        if(sortedWeights.length > 0 && currentWeight === null && currentWeightMultiplier === null ) {
-            setCurrentWeight(sortedWeights[0].value);
-            setCurrentWeightMultiplier(sortedWeights[0].multiplier);
+        if(weights.length > 0 && currentWeight === null && currentWeightMultiplier === null ) {
+            setCurrentWeight(weights[0].value);
+            setCurrentWeightMultiplier(weights[0].multiplier);
         }
-    }, [sortedWeights, currentWeight, currentWeightMultiplier]);
+    }, [weights, currentWeight, currentWeightMultiplier]);
 
     useEffect(() => {
-        if(actionStatus === 'success' && product) setCurrentPrice((product.price * currentWeightMultiplier * currentAmount).toFixed(2));
+        if(actionStatus !== 'pending' && product) setCurrentPrice(product.price * currentWeightMultiplier * currentAmount);
     }, [currentWeightMultiplier, product, actionStatus, currentAmount]);
 
     const addToCart = () => {
-        const cartProduct = {
-            productId: product.id,
-            productName: product.name,
-            productWeight: +currentWeight,
-            productPrice: +currentPrice,
-        }
-        dispatch(addCartProductThunk(cartProduct));
+        const price = Number(currentPrice);
+        const amount = Number(currentAmount);
+        const weight = Number(currentWeight);
+        const weightValues = weights.map(weight => weight.value);
+        const isValidWeight = weightValues.includes(weight);
+        if (product?.id && product?.name && !isNaN(price) && !isNaN(amount) && amount > 0 && amount <=10 && !isNaN(weight) && isValidWeight){
+            const cartProduct = {
+                productId: product.id,
+                productName: product.name,
+                productWeight: weight,
+                productPrice: price,
+                productAmount: amount,
+            } 
+            dispatch(addCartProductThunk(cartProduct));
+        } else console.log('Invalid product data');
     }
     
     return(
         <>
             {actionStatus === "pending" && !product && <Loader />}
-            {actionStatus === "success" && !product && <Navigate to='/' />}
-            {actionStatus === "success" && product && <Card className="col-11 col-sm-9 col-md-7 m-4 py-3 px-sm-3 p-md-4 mx-auto shadow">
+            {actionStatus !== "pending" && !product && <Navigate to='/' />}
+            {actionStatus !== "pending" && product && <Card className="col-11 col-sm-9 col-md-7 m-4 py-3 px-sm-3 p-md-4 mx-auto shadow">
                 <Card.Body className="d-flex p-0 flex-column justify-content-center align-items-center">
                     {product.image && (
                         <Card.Img className={styles.cardImage} src={IMG_URL + product.image} />
@@ -68,8 +72,8 @@ const Product = () => {
                    <div className="px-3 px-5 py-4">
                         <Card.Title className={styles.cardTitle}>{product.name}</Card.Title>
                         <div className="d-flex pb-3 justify-content-around align-items-center">
-                            {currentPrice !== null  && <Card.Text className={styles.price}>${currentPrice}</Card.Text>}
-                            <WeightsForm sortedWeights={sortedWeights} setCurrentWeightMultiplier={setCurrentWeightMultiplier} activeWeight={currentWeight} setActiveWeight={setCurrentWeight} />
+                            {currentPrice !== null  && <Card.Text className={styles.price}>${currentPrice.toFixed(2)}</Card.Text>}
+                            <WeightsForm weights={weights} setCurrentWeightMultiplier={setCurrentWeightMultiplier} activeWeight={currentWeight} setActiveWeight={setCurrentWeight} />
                         </div>
                         <Card.Text className="fst-italic px-lg-5 text-center">{product.description}</Card.Text>
                         <div className="d-flex justify-content-around align-items-center">    

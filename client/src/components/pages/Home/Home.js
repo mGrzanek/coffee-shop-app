@@ -15,7 +15,7 @@ const Home = () => {
     return(
        <div className="py-3"> 
             {statusAction === "pending" && <Loader />}
-            {statusAction !== "pending" && statusAction === "success" && <Products />}
+            {statusAction !== "pending" && <Products />}
         </div>
     );
 }

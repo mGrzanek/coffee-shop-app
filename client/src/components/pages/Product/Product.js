@@ -1,31 +1,60 @@
 import { Card, Button } from "react-bootstrap";
 import { useParams, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getProductById } from "../../../redux/productsReducer";
 import { getStatus } from "../../../redux/statusReducer";
+import { getWeights } from './../../../redux/weightsReducer';
 import { IMG_URL } from "../../../config";
 import styles from "./Product.module.scss";
 import Loader from "./../../common/Loader/Loader";
 import { useState, useEffect } from "react";
 import AmountForm from "../../features/AmountForm/AmountForm";
 import WeightsForm from "../../features/WeightsForm/WeightsForm";
+import { addCartProductThunk } from "./../../../redux/cartProductsReducer";
+
 
 const Product = () => {
     const {id} = useParams();
+    const dispatch = useDispatch();
     const product = useSelector(state => getProductById(state, id));
     const status = useSelector(getStatus);
+    const weights = useSelector(getWeights);
+
+    const sortedWeights = weights.sort((a, b) => {
+        return a.value - b.value;
+    });
+
     const [actionStatus, setActionStatus] = useState(status);
     const [currentPrice, setCurrentPrice] = useState(null);
-    const [currentWeight, setCurrentWeight] = useState(1);
+    const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     const [currentAmount, setCurrentAmount] = useState(1);
+    const [currentWeight, setCurrentWeight] = useState(null);
+
 
     useEffect(() => {
         setActionStatus(status);
     }, [status]);
 
     useEffect(() => {
-        if(actionStatus === 'success' && product) setCurrentPrice((product.price * currentWeight * currentAmount).toFixed(2));
-    }, [currentWeight, product, actionStatus, currentAmount]);
+        if(sortedWeights.length > 0 && currentWeight === null && currentWeightMultiplier === null ) {
+            setCurrentWeight(sortedWeights[0].value);
+            setCurrentWeightMultiplier(sortedWeights[0].multiplier);
+        }
+    }, [sortedWeights, currentWeight, currentWeightMultiplier]);
+
+    useEffect(() => {
+        if(actionStatus === 'success' && product) setCurrentPrice((product.price * currentWeightMultiplier * currentAmount).toFixed(2));
+    }, [currentWeightMultiplier, product, actionStatus, currentAmount]);
+
+    const addToCart = () => {
+        const cartProduct = {
+            productId: product.id,
+            productName: product.name,
+            productWeight: +currentWeight,
+            productPrice: +currentPrice,
+        }
+        dispatch(addCartProductThunk(cartProduct));
+    }
     
     return(
         <>
@@ -40,7 +69,7 @@ const Product = () => {
                         <Card.Title className={styles.cardTitle}>{product.name}</Card.Title>
                         <div className="d-flex pb-3 justify-content-around align-items-center">
                             {currentPrice !== null  && <Card.Text className={styles.price}>${currentPrice}</Card.Text>}
-                            <WeightsForm setCurrentWeight={setCurrentWeight} />
+                            <WeightsForm sortedWeights={sortedWeights} setCurrentWeightMultiplier={setCurrentWeightMultiplier} activeWeight={currentWeight} setActiveWeight={setCurrentWeight} />
                         </div>
                         <Card.Text className="fst-italic px-lg-5 text-center">{product.description}</Card.Text>
                         <div className="d-flex justify-content-around align-items-center">    
@@ -52,7 +81,7 @@ const Product = () => {
                         </div>
                    </div>
                 </Card.Body>
-                <Button variant="outline-light" className="btn-one text-uppercase w-50 mx-auto">
+                <Button variant="outline-light" className="btn-one text-uppercase w-50 mx-auto" onClick={addToCart}>
                     Add to cart
                 </Button>
             </Card>}

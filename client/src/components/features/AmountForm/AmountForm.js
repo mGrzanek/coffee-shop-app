@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styles from "./AmountForm.module.scss";
 import clsx from "clsx";
 import PropTypes from 'prop-types';
 
 const AmountForm = ({ currentAmount, setCurrentAmount }) => {
-    //const [currentAmount, setCurrentAmount] = useState(1);
 
     useEffect(() => {
         if(currentAmount > 10) setCurrentAmount(10);

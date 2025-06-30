@@ -1,8 +1,8 @@
-export const updateLocalStorage = (cartProducts) => {
+export const updateLocalStorage = (key, value) => {
     try {
         const storedData = localStorage.getItem("cartData");
         const parsedData = storedData ? JSON.parse(storedData) : {};
-        parsedData.cartProducts = cartProducts;
+        parsedData[key] = value;
         localStorage.setItem("cartData", JSON.stringify(parsedData));
     }
     catch(err) {

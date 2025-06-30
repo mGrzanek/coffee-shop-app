@@ -53,7 +53,7 @@ const ProductItem = ({id, name, image, price}) => {
     }
 
     return(
-        <Col xs={10} sm={6} md={4} lg={3} className="pb-3 p-md-2">
+        <Col xs={11} sm={6} md={4} lg={3} className="pb-3 p-md-2">
             <Card className={clsx(styles.card)}>
                 <Card.Body className="d-flex flex-column justify-content-center align-items-center">
                 <Card.Img variant="top" src={IMG_URL + image} className={styles.cardImage} />

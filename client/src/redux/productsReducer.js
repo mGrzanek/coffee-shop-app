@@ -2,7 +2,7 @@ import { API_URL } from "../config";
 import { updateStatus } from "./statusReducer";
 
 // selectors
-export const getProducts = ({products}) =>  products;
+export const getAllProducts = ({products}) =>  products;
 export const getProductById = ({products}, productId) => products.find(product => product.id === productId);
 
 // actions
@@ -10,7 +10,7 @@ const createActionName = actionName => `app/products/${actionName}`;
 
 const GET_PRODUCTS = createActionName('GET_PRODUCTS');
 
-export const updateProducts = payload => ({type: GET_PRODUCTS, payload});
+export const getProducts = payload => ({type: GET_PRODUCTS, payload});
 
 export const fetchProducts = () => {
     return(dispatch) => {
@@ -19,7 +19,7 @@ export const fetchProducts = () => {
             fetch(`${API_URL}/api/products`)
             .then(res => res.json())
             .then(products => {
-                dispatch(updateProducts(Array.isArray(products) ? products : []));
+                dispatch(getProducts(Array.isArray(products) ? products : []));
                 dispatch(updateStatus("success"));
             });
         } catch (err) {
@@ -28,7 +28,6 @@ export const fetchProducts = () => {
         }
     }
 }
-
 
 // action creators
 const productsReducer = (statePart = [], action) => {

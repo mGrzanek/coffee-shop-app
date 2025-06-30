@@ -6,11 +6,13 @@ import productsReducer from "./productsReducer";
 import statusReducer from "./statusReducer";
 import weightsReducer from "./weightsReducer";
 import cartProductsReducer from "./cartProductsReducer";
+import clientReducer from "./clientReducer";
 
 const subreducers = {
     products: productsReducer,
     weights: weightsReducer,
     cartProducts: cartProductsReducer,
+    client: clientReducer,
     status: statusReducer,
 }
 

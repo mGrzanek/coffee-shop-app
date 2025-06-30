@@ -38,7 +38,7 @@ export const addCartProductThunk = (cartProduct) => {
         try {
             dispatch(addCartProduct(cartProduct));
             const updatedCartProducts = getState().cartProducts;
-            updateLocalStorage(updatedCartProducts);
+            updateLocalStorage("cartProducts", updatedCartProducts);
         } catch (err) {
             console.error('addCartProductThunk error: ', err);
         }
@@ -50,7 +50,7 @@ export const updateCartProductThunk = (updatedProduct) => {
         try {
             dispatch(updateCartProduct(updatedProduct));
             const updatedCartProducts = getState().cartProducts;
-            updateLocalStorage(updatedCartProducts);
+            updateLocalStorage("cartProducts", updatedCartProducts);
         } catch (err) {
             console.error('addCartProductThunk error:', err);
         }
@@ -62,7 +62,7 @@ export const removeCartProductThunk = (productToRemoveId) => {
         try {
             dispatch(removeCartProduct(productToRemoveId));
             const updatedCartProducts = getState().cartProducts;
-            updateLocalStorage(updatedCartProducts);
+            updateLocalStorage("cartProducts", updatedCartProducts);
         } catch(err)  {
             console.error('removeCartProductThunk error: ', err);
         }
@@ -74,7 +74,7 @@ export const removeAllCartProductsThunk = () => {
         dispatch(removeAllCartProducts());
         try{
            const updatedCartProducts = getState().cartProducts;
-            updateLocalStorage(updatedCartProducts);
+            updateLocalStorage("cartProducts", updatedCartProducts);
         } catch(err) {
             console.error('removeAllCartProductsThunk error: ', err);
         }

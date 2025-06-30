@@ -7,10 +7,13 @@ body {
     background: url("./../../public/images/container/photo-container.png") no-repeat center 0/cover;
 }
 
-.btn-one {
-    text-transform: lowercase;
+[class^="btn-"] {
+     text-transform: uppercase;
     border: 1px solid $main-color;
-    font-weight: 400;
+    font-weight: 500;
+}
+
+.btn-one {
     background-color: $main-color;
     color: $cream-color;
 
@@ -18,4 +21,28 @@ body {
         background-color: $cream-color;
         color: $main-color;
     }
+}
+
+.btn-two {
+    background-color: $cream-color;
+    color: $main-color;
+
+    &:hover {
+        background-color: $main-color;
+        color: $cream-color;
+    }
+}
+
+.message {
+    color: $main-color;
+    font-size: 1.5rem;
+    padding: 30px;
+    align-items: center;
+    font-weight: 700;
+    font-family: $hero-title-font-family;
+}
+
+.cartItemBtn {
+    cursor: pointer;
+    color: $main-color;
 }

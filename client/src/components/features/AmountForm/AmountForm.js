@@ -21,7 +21,7 @@ const AmountForm = ({ currentAmount, setCurrentAmount }) => {
     return(
         <div className="d-flex align-items-center">
             <button className={clsx(styles.amountBtn, "btn-one")} onClick={amountDecrement}> - </button>
-            <input className={styles.amountInput} value={currentAmount} onChange={(e) => setCurrentAmount(e.target.value)}/>
+            <input className={styles.amountInput} value={currentAmount} onChange={(e) => setCurrentAmount(+e.target.value)}/>
             <button className={clsx(styles.amountBtn, "btn-one")} onClick={amountIncrement}> + </button>
         </div>
     );

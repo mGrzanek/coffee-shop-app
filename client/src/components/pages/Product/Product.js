@@ -55,6 +55,8 @@ const Product = () => {
                 productWeight: weight,
                 productPrice: price,
                 productAmount: amount,
+                productSinglePrice: product.price,
+                optionalMessage: '',
             } 
             dispatch(addCartProductThunk(cartProduct));
         } else console.log('Invalid product data');
@@ -62,9 +64,9 @@ const Product = () => {
     
     return(
         <>
-            {actionStatus === "pending" && !product && <Loader />}
-            {actionStatus !== "pending" && !product && <Navigate to='/' />}
-            {actionStatus !== "pending" && product && <Card className="col-11 col-sm-9 col-md-7 m-4 py-3 px-sm-3 p-md-4 mx-auto shadow">
+            {actionStatus === "pending" && (!product || !weights) && <Loader />}
+            {actionStatus !== "pending" && !product && !weights && <Navigate to='/' />}
+            {actionStatus !== "pending" && product && weights && <Card className="col-11 col-sm-9 col-md-7 m-4 py-3 px-sm-3 p-md-4 mx-auto shadow">
                 <Card.Body className="d-flex p-0 flex-column justify-content-center align-items-center">
                     {product.image && (
                         <Card.Img className={styles.cardImage} src={IMG_URL + product.image} />
@@ -85,7 +87,7 @@ const Product = () => {
                         </div>
                    </div>
                 </Card.Body>
-                <Button variant="outline-light" className="btn-one text-uppercase w-50 mx-auto" onClick={addToCart}>
+                <Button variant="outline-light" className="btn-one w-50 mx-auto" onClick={addToCart}>
                     Add to cart
                 </Button>
             </Card>}

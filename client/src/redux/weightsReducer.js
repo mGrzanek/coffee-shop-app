@@ -1,4 +1,5 @@
 import { API_URL } from "../config";
+import { updateStatus } from "./statusReducer";
 
 // selectors
 export const getWeights = ({weights}) => weights.sort((a, b) => {
@@ -16,9 +17,14 @@ export const updateWeights = payload => ({type: UPDATE_WEIGHTS, payload});
 export const fetchWeights = () => {
     return(dispatch) => {
         try {
+            dispatch(updateStatus("pending"));
             fetch(`${API_URL}/api/weight`)
                 .then(res => res.json())
-                .then(weights => dispatch(updateWeights(weights)));
+                .then(weights => {
+                    dispatch(updateWeights(weights));
+                    dispatch(updateStatus("success"));
+                });
+                    
         } catch(err) {
             console.error('Fetch products error: ', err);
         }

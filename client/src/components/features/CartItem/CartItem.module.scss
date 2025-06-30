@@ -1,0 +1,24 @@
+@import "./../../../styles/settings.scss";
+
+.cartTitle {
+    overflow: hidden;
+    font-size: 1.3rem;
+    color: $main-color;
+    font-family: $hero-title-font-family;
+    text-decoration: none;
+    margin: 0;
+
+    &:hover {
+        color: $cream-color;
+    }
+}
+
+.price {
+    font-size: 1.1rem;
+    font-family: $hero-title-font-family;
+    color: darken($cream-color, 20%);
+}
+
+.cartItemBtn {
+    cursor: pointer;
+}

@@ -88,9 +88,9 @@ const cartProductsReducer = (statePart = [], action) => {
         case ADD_CART_PRODUCT:
             return [ ...statePart, { ...action.payload}];
         case UPDATE_CART_PRODUCT:
-            return statePart.map(itemCart => itemCart.id === action.payload.id ? { ...itemCart, ...action.payload } : itemCart);
+            return statePart.map(itemCart => itemCart.productId === action.payload.productId ? { ...itemCart, ...action.payload } : itemCart);
         case REMOVE_CART_PRODUCT: 
-            return statePart.filter(itemCart => itemCart.id !== action.payload);
+            return statePart.filter(itemCart => itemCart.productId !== action.payload);
         case REMOVE_ALL_PRODUCTS:
             return [];
         default:

@@ -10,7 +10,7 @@ const WeightsForm = ({ weights, activeWeight, setActiveWeight, setCurrentWeightM
                 <button  
                     key={weight.label} 
                     className={clsx(styles.btnWeight, weight.value === activeWeight && styles.active)}
-                    onClick={() => {setActiveWeight(weight.value); setCurrentWeightMultiplier(weight.multiplier) }}
+                    onClick={() => {setActiveWeight(weight.value); setCurrentWeightMultiplier?.(weight.multiplier) }}
                 >
                     {weight.value}g
                 </button>
@@ -23,7 +23,7 @@ WeightsForm.propTypes = {
     weights: PropTypes.array.isRequired,
     activeWeight: PropTypes.number.isRequired,
     setActiveWeight: PropTypes.func.isRequired,
-    setCurrentWeightMultiplier: PropTypes.func.isRequired
+    setCurrentWeightMultiplier: PropTypes.func,
 }
 
 export default WeightsForm;

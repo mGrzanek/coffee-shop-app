@@ -33,7 +33,7 @@ const ProductItem = ({id, name, image, price}) => {
     }, [currentWeightMultiplier, price, currentAmount]);
 
     const addToCart = () => {
-        const price = Number(currentPrice);
+        const newPrice = Number(currentPrice);
         const amount = Number(currentAmount);
         const weight = Number(currentWeight);
         const weightValues = weights.map(weight => weight.value);
@@ -43,8 +43,10 @@ const ProductItem = ({id, name, image, price}) => {
                 productId: id,
                 productName: name,
                 productWeight: weight,
-                productPrice: price,
+                productPrice: newPrice,
                 productAmount: amount,
+                productSinglePrice: price,
+                optionalMessage: '',
             } 
             dispatch(addCartProductThunk(cartProduct));
         } else console.log('Invalid product data');

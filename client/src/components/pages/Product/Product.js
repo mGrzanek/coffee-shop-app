@@ -74,7 +74,7 @@ const Product = () => {
                    <div className="px-3 px-5 py-4">
                         <Card.Title className={styles.cardTitle}>{product.name}</Card.Title>
                         <div className="d-flex pb-3 justify-content-around align-items-center">
-                            {currentPrice !== null  && <Card.Text className={styles.price}>${currentPrice.toFixed(2)}</Card.Text>}
+                            {currentPrice !== null  && <Card.Text className={styles.price}>{currentPrice.toFixed(2)}$</Card.Text>}
                             <WeightsForm weights={weights} setCurrentWeightMultiplier={setCurrentWeightMultiplier} activeWeight={currentWeight} setActiveWeight={setCurrentWeight} />
                         </div>
                         <Card.Text className="fst-italic px-lg-5 text-center">{product.description}</Card.Text>

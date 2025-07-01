@@ -8,11 +8,13 @@ import Home from "./components/pages/Home/Home";
 import Product from "./components/pages/Product/Product";
 import Cart from "./components/pages/Cart/Cart";
 import OrderForm from "./components/pages/OrderForm.js/OrderForm";
+import OrderSummary from "./components/features/OrderSummary/OrderSummary";
 import Footer from "./components/views/Footer/Footer";
 import NotFound from "./components/pages/NotFound/NotFound";
 import { fetchWeights } from "./redux/weightsReducer";
 import { fetchProducts } from "./redux/productsReducer";
 import { getCartProductsThunk } from "./redux/cartProductsReducer";
+import { getClientThunk } from "./redux/clientReducer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ const App = () => {
     dispatch(fetchWeights());
     dispatch(fetchProducts());
     dispatch(getCartProductsThunk());
+    dispatch(getClientThunk());
   }, [dispatch]);
   return (
     <>
@@ -30,7 +33,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/products/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/order-form" element={<OrderForm />} />
+          <Route path="/order/form" element={<OrderForm />} />
+          <Route path="/order/summary" element={<OrderSummary />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MainContainer>

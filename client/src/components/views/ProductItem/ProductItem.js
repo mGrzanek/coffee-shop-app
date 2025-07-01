@@ -59,7 +59,7 @@ const ProductItem = ({id, name, image, price}) => {
                 <Card.Img variant="top" src={IMG_URL + image} className={styles.cardImage} />
                 <div className="d-flex flex-column align-items-center justify-content-center" as={NavLink} to={`/products/${id}`}>
                     <Card.Title className={clsx(styles.cardTitle, "mt-3 text-center")} as={NavLink} to={`/products/${id}`}>{name}</Card.Title>
-                    {currentPrice !== null && !isNaN(currentPrice) &&<Card.Text className={styles.price}>${currentPrice.toFixed(2)}</Card.Text>}          
+                    {currentPrice !== null && !isNaN(currentPrice) &&<Card.Text className={styles.price}>{currentPrice.toFixed(2)}$</Card.Text>}          
                 </div>
                  <WeightsForm weights={weights} setCurrentWeightMultiplier={setCurrentWeightMultiplier} activeWeight={currentWeight} setActiveWeight={setCurrentWeight} />
                 <div className="d-flex mt-3 justify-content-between align-items-center">

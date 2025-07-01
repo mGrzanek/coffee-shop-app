@@ -11,7 +11,6 @@ import { NavLink } from "react-router-dom";
 
 const Cart = () => {
     const cartProducts = useSelector(getAllCartProducts);
-    console.log(cartProducts);
     const status = useSelector(getStatus);
     const [currentCartPrice, setCurrentCartPrice] = useState(null);
     const [singleProductPrice, setSingleProductPrice] = useState(null);
@@ -42,11 +41,11 @@ const Cart = () => {
                     <div className="text-center">Your cart:</div>
                 </ListGroup.Item>
                 {cartProducts.map(cartProduct => 
-                    <CartItem key={cartProduct.productId} {...cartProduct} setSingleProductPrice={setSingleProductPrice} />)
+                    <CartItem key={cartProduct.productId} {...cartProduct} />)
                 }
                 <ListGroup.Item className={clsx(styles.cartSummaryPrice, "d-flex justify-content-around align-items-center")}>
                     <div >Cart price: <span className="px-2">${currentCartPrice}</span></div>
-                    <Button variant="outline-light" className="btn-two" as={NavLink} to='/order-form'>Add order </Button>
+                    <Button variant="outline-light" className="btn-two" as={NavLink} to='/order/form'>Add order </Button>
                 </ListGroup.Item>
             </ListGroup>}
         </div>

@@ -1,11 +1,11 @@
 import { ListGroup } from "react-bootstrap";
 import styles from "./ProductOrderItem.module.scss";
-import { getWeights } from "../../../redux/weightsReducer";
+import { getProductById } from "../../../redux/productsReducer";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
-const ProductOrderItem = ({productName, productPrice, productSinglePrice, productWeight, optionalMessage, productAmount}) => {
-    const weights = useSelector(getWeights);
+const ProductOrderItem = ({productId, productName, productPrice, productSinglePrice, productWeight, optionalMessage, productAmount}) => {
+     const weights = useSelector(state => getProductById(state, productId).weights);
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     
     const multiplier = weights.length > 0 ? weights.find(weight => weight.value === productWeight).multiplier : null;

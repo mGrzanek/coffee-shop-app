@@ -25,7 +25,7 @@ model Product {
   origin String
   flavor Boolean
   available Boolean
-  cartItems CartItem[]  
+  weights Weight[] @relation("ProductWeights")
 }
 
 model Weight {
@@ -33,26 +33,16 @@ model Weight {
   label String
   value Int
   multiplier Float
-  cartItems CartItem[]
+  products Product[]  @relation("ProductWeights")
 }
 
-model CartItem {
+model Delivery {
   id String @id @default(uuid())
-  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
-  productId String?
-  productAmount Int @default(1)
-  weight Weight @relation(fields: [weightId], references: [id])
-  weightId String
-  optionalMessage String?
-  cart Cart @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  cartId String
-}
-
-model Cart {
-  id String @id @default(uuid())
-  products CartItem[]
-  totalCartPrice Float @default(0)
-  userId String?
+  method String
+  price Float
+  leadTime String
+  icon String
+  orders Order[]
 }
 
 model Order {
@@ -60,20 +50,17 @@ model Order {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   totalPrice Float
+  productsPrice Float
+  deliveryCost Int
   status String @default("pending")
-  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
-  userId String?
+  clientName String
+  clientSurname String
+  clientPhone String
+  clientEmail String
+  clientAddress String
   products Json
+  delivery Delivery @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
+  deliveryId String
 }
 
-model User {
-  id String @id @default(uuid())
-  firstName String
-  lastName String
-  email String
-  phone String
-  address String
-  role Role @default(USER)
-  cartId String
-  orders Order[]
-}
+

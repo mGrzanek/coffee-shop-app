@@ -19,8 +19,8 @@ export class OrdersController {
     if (!order) throw new NotFoundException('Order not found');
     else return order;
   }
-  @Post('/')
-  async createOrder(@Body() orderData: CreateOrderDTO) {
-    return this.orderService.createOrder(orderData);
-  }
+  // @Post('/')
+  // async createOrder(@Body() orderData: CreateOrderDTO) {
+  //   return this.orderService.createOrder(orderData);
+  // }
 }

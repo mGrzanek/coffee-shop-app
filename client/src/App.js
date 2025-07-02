@@ -11,17 +11,17 @@ import OrderForm from "./components/pages/OrderForm.js/OrderForm";
 import OrderSummary from "./components/features/OrderSummary/OrderSummary";
 import Footer from "./components/views/Footer/Footer";
 import NotFound from "./components/pages/NotFound/NotFound";
-import { fetchWeights } from "./redux/weightsReducer";
 import { fetchProducts } from "./redux/productsReducer";
 import { getCartProductsThunk } from "./redux/cartProductsReducer";
+import { getDeliveriesThunk } from "./redux/deliveryReducer";
 import { getClientThunk } from "./redux/clientReducer";
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchWeights());
     dispatch(fetchProducts());
     dispatch(getCartProductsThunk());
+    dispatch(getDeliveriesThunk());
     dispatch(getClientThunk());
   }, [dispatch]);
   return (

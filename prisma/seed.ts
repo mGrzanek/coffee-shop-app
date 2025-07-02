@@ -3,9 +3,62 @@ const db = new PrismaClient();
 
 function getWeights() {
   return [
-    { label: 'standard', value: 100, multiplier: 1.0 },
-    { label: 'medium', value: 200, multiplier: 1.8 },
-    { label: 'max', value: 300, multiplier: 2.7 },
+    {
+      id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198',
+      label: 'standard',
+      value: 100,
+      multiplier: 1.0,
+    },
+    {
+      id: 'd0b5d9af-9d17-4e1a-a7aa-f4ebf5030d4f',
+      label: 'medium',
+      value: 200,
+      multiplier: 1.9,
+    },
+    {
+      id: 'b3982b68-cd4a-49e5-aecf-f3f73f206ad1',
+      label: 'large',
+      value: 300,
+      multiplier: 2.8,
+    },
+    {
+      id: '8c19b64d-e902-4b96-b8d2-1d26d17c6dcb',
+      label: 'very-large',
+      value: 500,
+      multiplier: 4.7,
+    },
+    {
+      id: '7fd2cc67-2ec1-4c6e-b50a-64592ae4fba0',
+      label: 'max',
+      value: 1000,
+      multiplier: 9.5,
+    },
+  ];
+}
+
+function getDeliveries() {
+  return [
+    {
+      id: '2f1a9d06-0b63-46e1-9f27-22c93f0ab19b',
+      method: 'Courier Standard',
+      price: 10,
+      leadTime: '[1, 3]',
+      icon: 'faTruck',
+    },
+    {
+      id: 'ecbd792c-7890-4ae5-a3b4-d48b0b86d7df',
+      method: 'Courier Express',
+      price: 15,
+      leadTime: '[1]',
+      icon: 'faTruckFast',
+    },
+    {
+      id: '7d99421b-ef59-4d37-bba9-cf7d067d9e7f',
+      method: 'Postal Courier',
+      price: 8,
+      leadTime: '[1, 5]',
+      icon: 'faEnvelopesBulk',
+    },
   ];
 }
 
@@ -20,6 +73,11 @@ function getProducts() {
       image: 'coffee/classic/coffee_classic.png',
       variety: 'arabica',
       origin: 'Colombia',
+      weights: [
+        { id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198' },
+        { id: '8c19b64d-e902-4b96-b8d2-1d26d17c6dcb' },
+        { id: '7fd2cc67-2ec1-4c6e-b50a-64592ae4fba0' },
+      ],
       flavor: false,
       available: true,
     },
@@ -32,6 +90,11 @@ function getProducts() {
       image: 'coffee/classic/coffee_classic.png',
       variety: 'blend',
       origin: 'Colombia',
+      weights: [
+        { id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198' },
+        { id: '8c19b64d-e902-4b96-b8d2-1d26d17c6dcb' },
+        { id: '7fd2cc67-2ec1-4c6e-b50a-64592ae4fba0' },
+      ],
       flavor: false,
       available: true,
     },
@@ -44,6 +107,11 @@ function getProducts() {
       image: 'coffee/classic/coffee_classic.png',
       variety: 'robusta',
       origin: 'Uganda',
+      weights: [
+        { id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198' },
+        { id: '8c19b64d-e902-4b96-b8d2-1d26d17c6dcb' },
+        { id: '7fd2cc67-2ec1-4c6e-b50a-64592ae4fba0' },
+      ],
       flavor: false,
       available: true,
     },
@@ -56,6 +124,11 @@ function getProducts() {
       image: 'coffee/classic/coffee_classic.png',
       variety: 'arabica',
       origin: 'Brasil',
+      weights: [
+        { id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198' },
+        { id: '8c19b64d-e902-4b96-b8d2-1d26d17c6dcb' },
+        { id: '7fd2cc67-2ec1-4c6e-b50a-64592ae4fba0' },
+      ],
       flavor: false,
       available: true,
     },
@@ -68,6 +141,11 @@ function getProducts() {
       image: 'coffee/classic/coffee_classic.png',
       variety: 'blend',
       origin: 'Gwatemalia',
+      weights: [
+        { id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198' },
+        { id: '8c19b64d-e902-4b96-b8d2-1d26d17c6dcb' },
+        { id: '7fd2cc67-2ec1-4c6e-b50a-64592ae4fba0' },
+      ],
       flavor: false,
       available: true,
     },
@@ -80,6 +158,11 @@ function getProducts() {
       image: 'coffee/flavor/coffee_flavor_cherry.png',
       variety: 'arabica',
       origin: 'Brasil',
+      weights: [
+        { id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198' },
+        { id: 'd0b5d9af-9d17-4e1a-a7aa-f4ebf5030d4f' },
+        { id: 'b3982b68-cd4a-49e5-aecf-f3f73f206ad1' },
+      ],
       flavor: true,
       available: true,
     },
@@ -93,6 +176,11 @@ function getProducts() {
       variety: 'arabica',
       origin: 'Colombia',
       flavor: true,
+      weights: [
+        { id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198' },
+        { id: 'd0b5d9af-9d17-4e1a-a7aa-f4ebf5030d4f' },
+        { id: 'b3982b68-cd4a-49e5-aecf-f3f73f206ad1' },
+      ],
       available: true,
     },
     {
@@ -104,6 +192,11 @@ function getProducts() {
       image: 'coffee/flavor/coffee_flavor_cherry.png',
       variety: 'blend',
       origin: 'Ethiopia',
+      weights: [
+        { id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198' },
+        { id: 'd0b5d9af-9d17-4e1a-a7aa-f4ebf5030d4f' },
+        { id: 'b3982b68-cd4a-49e5-aecf-f3f73f206ad1' },
+      ],
       flavor: true,
       available: true,
     },
@@ -116,6 +209,11 @@ function getProducts() {
       image: 'coffee/flavor/coffee_flavor_cherry.png',
       variety: 'robusta',
       origin: 'Uganda',
+      weights: [
+        { id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198' },
+        { id: 'd0b5d9af-9d17-4e1a-a7aa-f4ebf5030d4f' },
+        { id: 'b3982b68-cd4a-49e5-aecf-f3f73f206ad1' },
+      ],
       flavor: true,
       available: true,
     },
@@ -128,6 +226,11 @@ function getProducts() {
       image: 'coffee/flavor/coffee_flavor_cherry.png',
       variety: 'blend',
       origin: 'Brasil',
+      weights: [
+        { id: 'f3e2c5c0-7be4-4c26-9872-c0ed73c67198' },
+        { id: 'd0b5d9af-9d17-4e1a-a7aa-f4ebf5030d4f' },
+        { id: 'b3982b68-cd4a-49e5-aecf-f3f73f206ad1' },
+      ],
       flavor: true,
       available: true,
     },
@@ -136,13 +239,27 @@ function getProducts() {
 
 async function seed() {
   await Promise.all([
-    ...getProducts().map((product) => {
-      return db.product.create({ data: product });
-    }),
     ...getWeights().map((weight) => {
       return db.weight.create({ data: weight });
     }),
+    ...getDeliveries().map((delivery) => {
+      return db.delivery.create({ data: delivery });
+    }),
   ]);
+
+  await Promise.all(
+    getProducts().map((product) => {
+      const { weights, ...otherData } = product;
+      return db.product.create({
+        data: {
+          ...otherData,
+          weights: {
+            connect: weights.map((weight) => ({ id: weight.id })),
+          },
+        },
+      });
+    }),
+  );
 }
 
 seed();

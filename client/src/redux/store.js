@@ -4,15 +4,15 @@ import initialState from './initialState';
 import { thunk } from 'redux-thunk';
 import productsReducer from "./productsReducer";
 import statusReducer from "./statusReducer";
-import weightsReducer from "./weightsReducer";
 import cartProductsReducer from "./cartProductsReducer";
+import deliveryReducer from "./deliveryReducer";
 import clientReducer from "./clientReducer";
 
 const subreducers = {
     products: productsReducer,
-    weights: weightsReducer,
     cartProducts: cartProductsReducer,
     client: clientReducer,
+    deliveries: deliveryReducer,
     status: statusReducer,
 }
 

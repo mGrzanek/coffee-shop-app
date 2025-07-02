@@ -14,26 +14,32 @@ const OrderSummary = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const client = useSelector(getClient);
-    const deliveryCost = 10;
     const products = useSelector(getAllCartProducts);
     const [currentClient, setCurrentClient] = useState(null);
     const [currentProducts, setCurrentProducts] = useState(null);
+    const [currentDeliveryPrice, setCurrentDeliveryPrice] = useState(null);
 
     useEffect(() => {
-        setCurrentClient(client);
-        setCurrentProducts(products)
+        if (client && products) {
+            setCurrentClient(client);
+            setCurrentProducts(products);
+            setCurrentDeliveryPrice(client.deliveryPrice);
+        }
     }, [client, products]);
 
     const productsPrice = products.map(product => product.productPrice).reduce((acc, productPrice) => {
         return acc + productPrice;
     }, 0);
 
-    const totalPrice = productsPrice + deliveryCost;
+    const totalPrice = productsPrice + currentDeliveryPrice;
 
     const orderSubmit = e => {
         e.preventDefault();
         const newOrder = {
             products,
+            productsPrice,
+            deliveryCost: currentDeliveryPrice,
+            totalPrice,
             clientName: client.firstName,
             clientSurname: client.lastName,
             clientPhone: client.phone,
@@ -48,7 +54,7 @@ const OrderSummary = () => {
 
     return(
         <>
-            {(!currentClient || !currentProducts || currentProducts.length === 0) && <div>Summary not available</div>}
+            {( !currentDeliveryPrice || !currentClient || !currentProducts || currentProducts.length === 0) && <div>Summary not available</div>}
             {currentClient && currentProducts.length > 0 && <ListGroup>
                 <ListGroup.Item className="summaryLabel d-flex justify-content-center">
                     <div>Order summary:</div>
@@ -58,7 +64,7 @@ const OrderSummary = () => {
                 <ListGroup.Item>
                     <div className="d-flex justify-content-between align-items-center col-11">
                         <div className={styles.delivery}>Delivery price:</div> 
-                        <span className=" mx-md-4 mx-lg-5">{deliveryCost.toFixed(2)} $</span>
+                        <span className=" mx-md-4 mx-lg-5">{currentDeliveryPrice.toFixed(2)} $</span>
                     </div>
                 </ListGroup.Item>
                 <ListGroup.Item className="summaryLabel px-sm-5 d-flex justify-content-center justify-content-sm-end align-items-center">

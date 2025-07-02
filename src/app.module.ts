@@ -9,12 +9,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
-import { CartModule } from './cart/cart.module';
 import { UserModule } from './user/user.module';
-import { CartItemsModule } from './cart-items/cart-items.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { WeightModule } from './weight/weight.module';
+import { DeliveriesModule } from './deliveries/deliveries.module';
 
 @Module({
   imports: [
@@ -23,10 +22,9 @@ import { WeightModule } from './weight/weight.module';
     }),
     ProductsModule,
     OrdersModule,
-    CartModule,
     UserModule,
-    CartItemsModule,
     WeightModule,
+    DeliveriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

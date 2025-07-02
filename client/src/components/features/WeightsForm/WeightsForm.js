@@ -3,10 +3,12 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 const WeightsForm = ({ weights, activeWeight, setActiveWeight, setCurrentWeightMultiplier }) => {
-   
+    const sortedWeights = weights.sort((a, b) => {
+        return a.value - b.value;
+    });
     return(
         <div className='d-flex flex-row p-0' >
-            {(weights || []).map((weight) => 
+            {(sortedWeights || []).map((weight) => 
                 <button  
                     key={weight.label} 
                     className={clsx(styles.btnWeight, weight.value === activeWeight && styles.active)}

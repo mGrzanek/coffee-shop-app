@@ -1,8 +1,8 @@
 const initialState = {
     products: [],
-    weights: [],
     cartProducts: [],
     client: null,
+    deliveries: [],
     status: null,
 };
 

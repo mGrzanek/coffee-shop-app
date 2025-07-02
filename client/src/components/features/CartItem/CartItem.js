@@ -5,15 +5,15 @@ import { NavLink } from "react-router-dom";
 import WeightsForm from "../../features/WeightsForm/WeightsForm";
 import AmountForm from "../../features/AmountForm/AmountForm";
 import MessageToggler from "../../common/MessageToggler/MessageToggler";
-import { getWeights } from "../../../redux/weightsReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { getProductById } from "../../../redux/productsReducer";
 import { useCallback, useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { removeCartProductThunk, updateCartProductThunk } from "../../../redux/cartProductsReducer";
 
 const CartItem = ({productId, productName, productWeight, productAmount, productPrice, productSinglePrice, optionalMessage}) => {
-    const weights = useSelector(getWeights);
+    const weights = useSelector(state => getProductById(state, productId).weights);
     const dispatch = useDispatch();
      const [currentAmount, setCurrentAmount] = useState(productAmount);
     const [currentWeight, setCurrentWeight] = useState(productWeight);

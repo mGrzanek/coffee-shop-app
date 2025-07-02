@@ -3,8 +3,7 @@ import clsx from 'clsx';
 import styles from './ProductItem.module.scss';
 import { NavLink } from "react-router-dom";
 import { IMG_URL } from "../../../config";
-import { useSelector, useDispatch } from "react-redux";
-import { getWeights } from './../../../redux/weightsReducer';
+import { useDispatch } from "react-redux";
 import { addCartProductThunk } from "../../../redux/cartProductsReducer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -13,9 +12,8 @@ import AmountForm from "../../features/AmountForm/AmountForm";
 import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 
-const ProductItem = ({id, name, image, price}) => {
+const ProductItem = ({id, name, image, price, weights}) => {
     const dispatch = useDispatch();
-    const weights = useSelector(getWeights);
     const [currentPrice, setCurrentPrice] = useState(null);
     const [currentWeight, setCurrentWeight] = useState(null);
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);

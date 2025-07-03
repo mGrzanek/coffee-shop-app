@@ -20,7 +20,7 @@ export const fetchProducts = () => {
             .then(res => res.json())
             .then(products => {
                 dispatch(getProducts(Array.isArray(products) ? products : []));
-                dispatch(updateStatus("success"));
+                dispatch(updateStatus(null));
             });
         } catch (err) {
             console.error('Fetch products error: ', err);

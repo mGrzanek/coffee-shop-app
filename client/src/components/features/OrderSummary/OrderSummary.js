@@ -1,6 +1,7 @@
 import { API_URL } from "../../../config";
 import { ListGroup, Button } from "react-bootstrap";
 import { getAllCartProducts } from "../../../redux/cartProductsReducer";
+import { getStatus } from "../../../redux/statusReducer";
 import { getClient } from "../../../redux/clientReducer";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,16 +12,18 @@ import { useEffect, useState } from "react";
 import styles from "./OrderSummary.module.scss";
 import { updateClientThunk } from "../../../redux/clientReducer";
 import { removeAllCartProductsThunk } from "../../../redux/cartProductsReducer";
+import { updateStatus } from "../../../redux/statusReducer";
+import AlertMessage from "../../common/AlertMessage/AlertMessage";
 
 const OrderSummary = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const client = useSelector(getClient);
     const products = useSelector(getAllCartProducts);
+    const status = useSelector(getStatus);
     const [currentClient, setCurrentClient] = useState(null);
     const [currentProducts, setCurrentProducts] = useState(null);
     const [currentDeliveryPrice, setCurrentDeliveryPrice] = useState(null);
-    const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         if (client && products) {
@@ -59,28 +62,25 @@ const OrderSummary = () => {
         };
 
         fetch(`${API_URL}/api/orders`, option)
-             .then(async(res) => {
-                if (res.ok) return res.json();
-                else {
-                    const errorText = await res.text(); 
-                    console.error('Server validation error:', errorText);
-                    throw new Error('Failed to send order');
-                } 
-                })
-            .then(() => {
-                dispatch(updateClientThunk(null));
-                dispatch(removeAllCartProductsThunk());
-                console.log('order sent');
-                navigate('/');
+             .then(res => {
+                if (res.ok) {
+                    dispatch(updateClientThunk(null));
+                    dispatch(removeAllCartProductsThunk());
+                    dispatch(updateStatus('success'));
+                    navigate('/');
+                } else if(res.status >= 400 && res.status < 500) dispatch(updateStatus("clientError"));
+                else dispatch(updateStatus("serverError"))
             })
             .catch((err) => {
                 console.error('Order error:', err);
-                setShowAlert(true); 
+                dispatch(updateStatus('serverError'));
             });
     }
 
     return(
         <>
+            {status === "clientError" && <AlertMessage variant="danger" alertTitle="Incorrect data" alertContent="Invalid params." />}
+            {status === "serverError" && <AlertMessage variant="danger" alertTitle="Something went wrong..." alertContent="Unexpected error... Please try again." />}
             {( !currentDeliveryPrice || !currentClient || !currentProducts || currentProducts.length === 0) 
                 && <div className="p-5"><PageTitle>Summary not available</PageTitle></div>}
             {currentClient && currentProducts.length > 0 && <ListGroup>

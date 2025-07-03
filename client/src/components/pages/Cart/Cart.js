@@ -15,11 +15,6 @@ const Cart = () => {
     const status = useSelector(getStatus);
     const [currentCartPrice, setCurrentCartPrice] = useState(null);
     const [singleProductPrice, setSingleProductPrice] = useState(null);
-    const [statusAction, setStatusAction] = useState(status);
-
-    useEffect(() => {
-        setStatusAction(status);
-    }, [status]);
     
     const itemsPrices = cartProducts.map(item => item.productPrice).reduce((acc, item) => {
         return acc + item;
@@ -31,13 +26,13 @@ const Cart = () => {
 
     return(
         <div>
-            {statusAction === "pending" && <Loader />}
-            {cartProducts.length === 0 && statusAction !== "pending" 
+            {status === "pending" && <Loader />}
+            {cartProducts.length === 0 && status !== "pending" 
                 && <div className="p-5 d-flex flex-column justify-content-center">
                         <PageTitle>Empty cart...</PageTitle> 
                         <PageTitle>Add first product</PageTitle>
                     </div>}
-            {cartProducts.length > 0 && statusAction !== "pending" && <ListGroup>
+            {cartProducts.length > 0 && status !== "pending" && <ListGroup>
                 <ListGroup.Item className={styles.cartSummaryPrice}>
                     <div className="text-center">Your cart:</div>
                 </ListGroup.Item>

@@ -17,16 +17,10 @@ const Product = () => {
     const dispatch = useDispatch();
     const product = useSelector(state => getProductById(state, id));
     const status = useSelector(getStatus);
-    const [actionStatus, setActionStatus] = useState(status);
     const [currentPrice, setCurrentPrice] = useState(null);
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     const [currentAmount, setCurrentAmount] = useState(1);
     const [currentWeight, setCurrentWeight] = useState(null);
-
-
-    useEffect(() => {
-        setActionStatus(status);
-    }, [status]);
 
     useEffect(() => {
         if(product && product.weights.length > 0 && currentWeight === null && currentWeightMultiplier === null ) {
@@ -36,8 +30,8 @@ const Product = () => {
     }, [product, currentWeight, currentWeightMultiplier]);
 
     useEffect(() => {
-        if(actionStatus !== 'pending' && product) setCurrentPrice(product.price * currentWeightMultiplier * currentAmount);
-    }, [currentWeightMultiplier, product, actionStatus, currentAmount]);
+        if(status !== 'pending' && product) setCurrentPrice(product.price * currentWeightMultiplier * currentAmount);
+    }, [currentWeightMultiplier, product, status, currentAmount]);
 
     const addToCart = () => {
         const price = Number(currentPrice);
@@ -61,12 +55,12 @@ const Product = () => {
     
     return(
         <>
-            {actionStatus === "pending" && !product && <Loader />}
-            {actionStatus === "success" && !product && <Navigate to='/' />}
-            {actionStatus !== "pending" && product && <Card className="col-11 col-sm-9 col-md-7 m-4 py-3 px-sm-3 p-md-4 mx-auto shadow">
+            {status === "pending" && !product && <Loader />}
+            {status === "success" && !product && <Navigate to='/' />}
+            {status !== "pending" && product && <Card className="col-11 col-sm-9 col-md-7 m-4 py-3 px-sm-3 p-md-4 mx-auto shadow">
                 <Card.Body className="d-flex p-0 flex-column justify-content-center align-items-center">
                     {product.image && (
-                        <Card.Img className={styles.cardImage} src={IMG_URL + product.image} />
+                        <Card.Img className={styles.cardImage} src={`${IMG_URL}/${product.image}`} />
                     )}
                    <div className="px-3 px-5 py-4">
                         <Card.Title className={styles.cardTitle}>{product.name}</Card.Title>

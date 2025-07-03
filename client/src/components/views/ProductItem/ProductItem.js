@@ -19,6 +19,7 @@ const ProductItem = ({id, name, image, price, weights}) => {
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     const [currentAmount, setCurrentAmount] = useState(1);
 
+    console.log(image);
     useEffect(() => {
         if(weights.length > 0 && currentWeight === null && currentWeightMultiplier === null ) {
             setCurrentWeight(weights[0].value);
@@ -46,7 +47,6 @@ const ProductItem = ({id, name, image, price, weights}) => {
                 productSinglePrice: price,
                 optionalMessage: '',
             } 
-            console.log(cartProduct);
             dispatch(addCartProductThunk(cartProduct));
         } else console.log('Invalid product data');
     }
@@ -55,7 +55,7 @@ const ProductItem = ({id, name, image, price, weights}) => {
         <Col xs={11} sm={6} md={4} lg={3} className="pb-3 p-md-2">
             <Card className={clsx(styles.card)}>
                 <Card.Body className="d-flex flex-column justify-content-center align-items-center">
-                <Card.Img variant="top" src={IMG_URL + image} className={styles.cardImage} />
+                <Card.Img variant="top" src={`${IMG_URL}/${image}`} className={styles.cardImage} />
                 <div className="d-flex flex-column align-items-center justify-content-center" as={NavLink} to={`/products/${id}`}>
                     <Card.Title className={clsx(styles.cardTitle, "mt-3 text-center")} as={NavLink} to={`/products/${id}`}>{name}</Card.Title>
                     {currentPrice !== null && !isNaN(currentPrice) &&<Card.Text className={styles.price}>{currentPrice.toFixed(2)} $</Card.Text>}          

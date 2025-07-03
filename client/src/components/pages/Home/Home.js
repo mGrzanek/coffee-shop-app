@@ -2,22 +2,18 @@ import Products from "./../../features/Products/Products";
 import { useSelector } from "react-redux";
 import Loader from "../../common/Loader/Loader";
 import SearchForm from "../../features/SearchForm/SearchForm";
+import AlertMessage from "../../common/AlertMessage/AlertMessage";
 import { getStatus } from "../../../redux/statusReducer";
-import { useEffect, useState } from "react";
 
 const Home = () => {
     const status = useSelector(getStatus);
-    const [statusAction, setStatusAction] = useState(status);
-
-    useEffect(() => {
-        setStatusAction(status);
-    }, [status]);
 
     return(
        <div className="py-3"> 
-            {statusAction === "pending" && <Loader />}
-            {statusAction !== "pending" && <SearchForm />}
-            {statusAction !== "pending" && <Products />}
+            {status === 'success' && <AlertMessage variant="success" alertTitle="Success!" alertContent="The process successful!" />}
+            {status === "pending" && <Loader />}
+            {status !== "pending" && <SearchForm />}
+            {status !== "pending" && <Products />}
         </div>
     );
 }

@@ -43,13 +43,13 @@ const Product = () => {
         const price = Number(currentPrice);
         const amount = Number(currentAmount);
         const weight = Number(currentWeight);
-        const weightValues = product.weights.map(weight => weight.value);
-        const isValidWeight = weightValues.includes(weight);
-        if (product?.id && product?.name && !isNaN(price) && !isNaN(amount) && amount > 0 && amount <=10 && !isNaN(weight) && isValidWeight){
+        const weightId = product.weights.find(weight => weight.value === currentWeight).id;
+        if (product?.id && product?.name && !isNaN(price) && !isNaN(amount) && amount > 0 && amount <=10 && !isNaN(weight) && weightId){
             const cartProduct = {
                 productId: product.id,
-                productName: product.name,
                 productWeight: weight,
+                weightId,
+                productName: product.name,
                 productPrice: price,
                 productAmount: amount,
                 productSinglePrice: product.price,

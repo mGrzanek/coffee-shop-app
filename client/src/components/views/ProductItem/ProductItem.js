@@ -34,18 +34,19 @@ const ProductItem = ({id, name, image, price, weights}) => {
         const newPrice = Number(currentPrice);
         const amount = Number(currentAmount);
         const weight = Number(currentWeight);
-        const weightValues = weights.map(weight => weight.value);
-        const isValidWeight = weightValues.includes(weight);
-        if (id && name && !isNaN(price) && !isNaN(amount) && amount > 0 && amount <=10 && !isNaN(weight) && isValidWeight){
+        const weightId = weights.find(w => w.value === weight).id;
+        if (id && name && !isNaN(price) && !isNaN(amount) && amount > 0 && amount <=10 && !isNaN(weight) && weightId){
             const cartProduct = {
                 productId: id,
-                productName: name,
                 productWeight: weight,
+                weightId,
+                productName: name,
                 productPrice: newPrice,
                 productAmount: amount,
                 productSinglePrice: price,
                 optionalMessage: '',
             } 
+            console.log(cartProduct);
             dispatch(addCartProductThunk(cartProduct));
         } else console.log('Invalid product data');
     }

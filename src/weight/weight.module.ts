@@ -6,5 +6,6 @@ import { PrismaService } from 'shared/services/prisma.service';
 @Module({
   controllers: [WeightController],
   providers: [WeightService, PrismaService],
+  exports: [WeightService],
 })
 export class WeightModule {}

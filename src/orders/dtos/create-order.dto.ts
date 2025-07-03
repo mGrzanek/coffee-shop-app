@@ -9,8 +9,9 @@ import {
   ValidateNested,
   IsArray,
   IsNumber,
+  IsUUID,
 } from 'class-validator';
-import { ProductOrderDTO } from './create-product-order.dto';
+import { OrderedProductDTO } from './create-product-order.dto';
 import { Transform, Type } from 'class-transformer';
 
 export class CreateOrderDTO {
@@ -38,8 +39,10 @@ export class CreateOrderDTO {
   clientPhone: string;
 
   @Transform(({ value }) => {
-    Array.isArray(value) ? value.join(' ') : '';
-    return typeof value === 'string' ? value : '';
+    if (Array.isArray(value)) {
+      return value.join(' ');
+    }
+    return value;
   })
   @IsNotEmpty()
   @IsString()
@@ -47,20 +50,20 @@ export class CreateOrderDTO {
 
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => ProductOrderDTO)
-  products: ProductOrderDTO[];
+  @Type(() => OrderedProductDTO)
+  orderedProducts: OrderedProductDTO[];
 
   @Min(1)
   @IsNumber()
   @IsNotEmpty()
   productsPrice: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  deliveryCost: number;
-
   @Min(1)
   @IsNumber()
   @IsNotEmpty()
   totalPrice: number;
+
+  @IsUUID()
+  @IsNotEmpty()
+  deliveryId: string;
 }

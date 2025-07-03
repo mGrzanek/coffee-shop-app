@@ -8,4 +8,9 @@ export class WeightService {
   public getAllWeights(): Promise<Weight[]> {
     return this.prismaService.weight.findMany();
   }
+  public getWeightById(weightId: Weight['id']): Promise<Weight | null> {
+    return this.prismaService.weight.findUnique({
+      where: { id: weightId },
+    });
+  }
 }

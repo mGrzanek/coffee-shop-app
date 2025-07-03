@@ -46,6 +46,7 @@ const OrderForm = () => {
                 email, 
                 address,
                 deliveryPrice,
+                deliveryMethod,
             }
             dispatch(updateClientThunk(client));
             setFirstName('');

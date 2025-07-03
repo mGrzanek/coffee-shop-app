@@ -1,4 +1,3 @@
-// ProductOrderDTO.ts
 import {
   IsUUID,
   IsString,
@@ -10,14 +9,11 @@ import {
   Min,
 } from 'class-validator';
 
-export class ProductOrderDTO {
+export class OrderedProductDTO {
   @IsUUID()
   @IsString()
   @IsNotEmpty()
   productId: string;
-
-  @IsString()
-  productName: string;
 
   @Min(1)
   @Max(10)
@@ -35,10 +31,10 @@ export class ProductOrderDTO {
   @IsNotEmpty()
   productPrice: number;
 
-  @Min(1)
-  @IsNumber()
+  @IsUUID()
+  @IsString()
   @IsNotEmpty()
-  productWeight: number;
+  weightId: string;
 
   @IsString()
   @IsOptional()

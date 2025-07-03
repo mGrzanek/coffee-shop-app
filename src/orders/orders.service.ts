@@ -1,29 +1,96 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  ConflictException,
+} from '@nestjs/common';
 import { PrismaService } from 'shared/services/prisma.service';
+import { DelivieriesService } from 'src/deliveries/delivieries.service';
+import { WeightService } from 'src/weight/weight.service';
+import { ProductsService } from 'src/products/products.service';
 import { Order } from '@prisma/client';
+import { CreateOrderDTO } from './dtos/create-order.dto';
 
 @Injectable()
 export class OrdersService {
-  constructor(private prismaService: PrismaService) {}
-  public async getOrderById(orderId: Order['id']) {
-    return this.prismaService.order.findUnique({
-      where: { id: orderId },
+  constructor(
+    private prismaService: PrismaService,
+    private deliveriesService: DelivieriesService,
+    private weightService: WeightService,
+    private productsService: ProductsService,
+  ) {}
+  public getAllOrders(): Promise<Order[]> {
+    return this.prismaService.order.findMany({
+      include: { orderedProducts: true, delivery: true },
     });
   }
-  // public async createOrder(
-  //   orderData: Omit<
-  //     CreateOrderDTO,
-  //     'id' | 'createdAt' | 'updatedAt' | 'status'
-  //   >,
-  // ) {
-  //   try {
-  //     const newOrder = await this.prismaService.order.create({
-  //       data: orderData,
-  //     });
-  //     return newOrder;
-  //   } catch (err) {
-  //     console.error('Create order error:', err);
-  //     throw err;
-  //   }
-  // }
+  public async getOrderById(orderId: Order['id']): Promise<Order | null> {
+    return this.prismaService.order.findUnique({
+      where: { id: orderId },
+      include: { orderedProducts: true, delivery: true },
+    });
+  }
+  public async createOrder(orderData: CreateOrderDTO) {
+    try {
+      const { orderedProducts, deliveryId, ...clientData } = orderData;
+      const delivery = await this.deliveriesService.getDeliveryById(deliveryId);
+      if (delivery) {
+        let totalProductsPrice = 0;
+        const validatedOrderedProducts = [];
+        for (const item of orderedProducts) {
+          const weight = await this.weightService.getWeightById(item.weightId);
+          if (weight) {
+            const product = await this.productsService.getById(item.productId);
+            if (product && product.available) {
+              const singlePrice = product.price;
+              const totalPrice =
+                singlePrice * item.productAmount * weight.multiplier;
+
+              totalProductsPrice += totalPrice;
+
+              validatedOrderedProducts.push({
+                productId: product.id,
+                productAmount: item.productAmount,
+                productSinglePrice: singlePrice,
+                productPrice: totalPrice,
+                weightId: weight.id,
+                optionalMessage: item.optionalMessage || null,
+              });
+            } else
+              throw new BadRequestException(
+                `Product ${item.productId} not available`,
+              );
+          } else
+            throw new BadRequestException(
+              `Weight ${item.weightId} not available`,
+            );
+        }
+        const finalTotalPrice = totalProductsPrice + delivery.price;
+        if (
+          finalTotalPrice === clientData.totalPrice &&
+          totalProductsPrice === clientData.productsPrice
+        ) {
+          return await this.prismaService.order.create({
+            data: {
+              ...clientData,
+              productsPrice: totalProductsPrice,
+              totalPrice: finalTotalPrice,
+              delivery: {
+                connect: { id: deliveryId },
+              },
+              orderedProducts: {
+                create: validatedOrderedProducts,
+              },
+            },
+            include: {
+              orderedProducts: true,
+              delivery: true,
+            },
+          });
+        } else throw new ConflictException('Invalid order pice');
+      } else throw new BadRequestException('Invalid delivery method');
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }

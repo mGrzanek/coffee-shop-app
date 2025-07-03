@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import { ListGroup, Button } from "react-bootstrap";
 import { getAllCartProducts } from "../../../redux/cartProductsReducer";
 import { getClient } from "../../../redux/clientReducer";
@@ -18,6 +19,7 @@ const OrderSummary = () => {
     const [currentClient, setCurrentClient] = useState(null);
     const [currentProducts, setCurrentProducts] = useState(null);
     const [currentDeliveryPrice, setCurrentDeliveryPrice] = useState(null);
+    const [showAlert, setShowAlert] = useState(false);
 
     useEffect(() => {
         if (client && products) {
@@ -36,9 +38,9 @@ const OrderSummary = () => {
     const orderSubmit = e => {
         e.preventDefault();
         const newOrder = {
-            products,
+            orderedProducts: products,
             productsPrice,
-            deliveryCost: currentDeliveryPrice,
+            deliveryId: client.deliveryMethod,
             totalPrice,
             clientName: client.firstName,
             clientSurname: client.lastName,
@@ -46,10 +48,34 @@ const OrderSummary = () => {
             clientEmail: client.email,
             clientAddress: client.address,
         }
-        console.log(newOrder);
-        dispatch(updateClientThunk(null));
-        dispatch(removeAllCartProductsThunk());
-        navigate('/');
+        console.log('newOrder', newOrder);  
+        const option = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newOrder),
+        };
+
+        fetch(`${API_URL}/api/orders`, option)
+             .then(async(res) => {
+                if (res.ok) return res.json();
+                else {
+                    const errorText = await res.text(); 
+                    console.error('Server validation error:', errorText);
+                    throw new Error('Failed to send order');
+                } 
+                })
+            .then(() => {
+                dispatch(updateClientThunk(null));
+                dispatch(removeAllCartProductsThunk());
+                console.log('order sent');
+                navigate('/');
+            })
+            .catch((err) => {
+                console.error('Order error:', err);
+                setShowAlert(true); 
+            });
     }
 
     return(

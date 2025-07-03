@@ -7,49 +7,57 @@ import AmountForm from "../../features/AmountForm/AmountForm";
 import MessageToggler from "../../common/MessageToggler/MessageToggler";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../../redux/productsReducer";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { removeCartProductThunk, updateCartProductThunk } from "../../../redux/cartProductsReducer";
 
-const CartItem = ({productId, productName, productWeight, productAmount, productPrice, productSinglePrice, optionalMessage}) => {
-    const weights = useSelector(state => getProductById(state, productId).weights);
+const CartItem = ({productId, productName, weightId, productWeight, productAmount, productPrice, productSinglePrice, optionalMessage}) => {
+    const product = useSelector(state => getProductById(state, productId));
+    const weights = useMemo(() => product?.weights || [], [product]);   
     const dispatch = useDispatch();
-     const [currentAmount, setCurrentAmount] = useState(productAmount);
+    const [currentAmount, setCurrentAmount] = useState(productAmount);
     const [currentWeight, setCurrentWeight] = useState(productWeight);
     const [currentPrice, setCurrentPrice] = useState(productPrice);
+    const [currentWeightId, setCurrentWeightId] = useState(productId);
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     const [message, setMessage] = useState('');
     const [showAlert, setShowAlert] = useState(false);
 
-    const multiplier = useCallback((newWeight) => weights.find(weight => weight.value === newWeight).multiplier, [weights]);
+    const weight = useCallback((newWeight) => weights.find(item => item.value === newWeight), [weights]);
 
     useEffect(() => {
-        if(weights.length > 0) setCurrentWeightMultiplier(multiplier(currentWeight));
-    }, [weights, currentWeight, multiplier])
+        if(weights.length > 0) {
+            setCurrentWeightMultiplier(weight(currentWeight).multiplier);
+            setCurrentWeight(weight(currentWeight).value);
+            setCurrentWeightId(weight(currentWeight).id);
+        }
+    }, [weights, currentWeight, weight])
 
     const updateWeight = (newWeight) => {
-        const newMultiplier = multiplier(newWeight);
+        const newValue = weight(newWeight);
+        const newMultiplier = newValue.multiplier;
+        const newWeightId = newValue.id;
 
         setCurrentWeight(newWeight);
         setCurrentWeightMultiplier(newMultiplier);
+        setCurrentWeightId(newWeightId)
 
         const newPrice = productSinglePrice * newMultiplier * currentAmount;
         setCurrentPrice(newPrice);
 
-        if(newPrice && !isNaN(newPrice) && !isNaN(newMultiplier) && !isNaN(newWeight)){
+        if(newPrice && !isNaN(newPrice) && !isNaN(newMultiplier) && !isNaN(newWeight) && newWeightId){
             dispatch(updateCartProductThunk({
                 productId,
-                productName,
                 productAmount,
-                productWeight: newWeight,
+                weightId: newWeightId,
                 productPrice: newPrice,
                 productSinglePrice,
                 optionalMessage,
             }));
         } else {
             setShowAlert(true);
-            console.log("Wrong params!");
+            console.log("Wrong params.");
         }
     };
 
@@ -63,9 +71,8 @@ const CartItem = ({productId, productName, productWeight, productAmount, product
         if(newPrice && !isNaN(newPrice) && currentWeightMultiplier && currentWeight && !isNaN(currentAmount) && currentAmount > 0 && currentAmount <= 10)
             dispatch(updateCartProductThunk({
                 productId,
-                productName,
                 productAmount: amount,
-                productWeight,
+                weightId: currentWeightId,
                 productPrice: newPrice,
                 productSinglePrice,
                 optionalMessage,
@@ -78,7 +85,7 @@ const CartItem = ({productId, productName, productWeight, productAmount, product
                 productId,
                 productName,
                 productAmount,
-                productWeight,
+                weightId: currentWeightId,
                 productPrice,
                 productSinglePrice,
                 optionalMessage: message

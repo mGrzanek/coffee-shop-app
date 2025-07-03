@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { getStatus} from "../../../redux/statusReducer";
 import Loader from "../../common/Loader/Loader";
 import { Button, ListGroup } from "react-bootstrap";
+import PageTitle from "../../common/PageTitle/PageTitle";
 import CartItem from "../../features/CartItem/CartItem";
 import styles from "./Cart.module.scss";
 import clsx from "clsx";
@@ -32,9 +33,9 @@ const Cart = () => {
         <div>
             {statusAction === "pending" && <Loader />}
             {cartProducts.length === 0 && statusAction !== "pending" 
-                && <div className="p-5 d-flex flex-column justify-content-center message">
-                        <div>Empty cart</div> 
-                        <div className="small">Add first product</div>
+                && <div className="p-5 d-flex flex-column justify-content-center">
+                        <PageTitle>Empty cart...</PageTitle> 
+                        <PageTitle>Add first product</PageTitle>
                     </div>}
             {cartProducts.length > 0 && statusAction !== "pending" && <ListGroup>
                 <ListGroup.Item className={styles.cartSummaryPrice}>

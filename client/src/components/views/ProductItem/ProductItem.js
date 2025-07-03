@@ -58,13 +58,13 @@ const ProductItem = ({id, name, image, price, weights}) => {
                 <Card.Img variant="top" src={IMG_URL + image} className={styles.cardImage} />
                 <div className="d-flex flex-column align-items-center justify-content-center" as={NavLink} to={`/products/${id}`}>
                     <Card.Title className={clsx(styles.cardTitle, "mt-3 text-center")} as={NavLink} to={`/products/${id}`}>{name}</Card.Title>
-                    {currentPrice !== null && !isNaN(currentPrice) &&<Card.Text className={styles.price}>{currentPrice.toFixed(2)}$</Card.Text>}          
+                    {currentPrice !== null && !isNaN(currentPrice) &&<Card.Text className={styles.price}>{currentPrice.toFixed(2)} $</Card.Text>}          
                 </div>
                  <WeightsForm weights={weights} setCurrentWeightMultiplier={setCurrentWeightMultiplier} activeWeight={currentWeight} setActiveWeight={setCurrentWeight} />
                 <div className="d-flex mt-3 justify-content-between align-items-center">
                     <AmountForm currentAmount={currentAmount} setCurrentAmount={setCurrentAmount} />
-                    <Button variant="outline-light" size="sm" className="btn-one mx-2">
-                        <FontAwesomeIcon className={styles.cart} icon={faCartShopping} onClick={addToCart} />
+                    <Button variant="outline-light" size="sm" className="btn-one mx-2" onClick={addToCart}>
+                        <FontAwesomeIcon className={styles.cart} icon={faCartShopping} />
                     </Button>
                 </div>
                 </Card.Body>

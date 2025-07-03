@@ -6,6 +6,7 @@ import Hero from "./components/views/Hero/Hero";
 import MainContainer from "./components/common/MainContainer/MainContainer";
 import Home from "./components/pages/Home/Home";
 import Product from "./components/pages/Product/Product";
+import SearchPhrase from "./components/pages/SearchPhrase/SearchPhrase";
 import Cart from "./components/pages/Cart/Cart";
 import OrderForm from "./components/pages/OrderForm.js/OrderForm";
 import OrderSummary from "./components/features/OrderSummary/OrderSummary";
@@ -32,6 +33,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products/:id" element={<Product />} />
+          <Route path="/products/search/:searchPhrase" element={<SearchPhrase />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order/form" element={<OrderForm />} />
           <Route path="/order/summary" element={<OrderSummary />} />

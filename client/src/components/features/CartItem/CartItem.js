@@ -1,5 +1,6 @@
 import { ListGroup, Accordion, Form, Button } from "react-bootstrap";
 import styles from "./CartItem.module.scss";
+import PropTypes from 'prop-types';
 import clsx from "clsx";
 import { NavLink } from "react-router-dom";
 import WeightsForm from "../../features/WeightsForm/WeightsForm";
@@ -19,7 +20,7 @@ const CartItem = ({productId, productName, weightId, productWeight, productAmoun
     const [currentAmount, setCurrentAmount] = useState(productAmount);
     const [currentWeight, setCurrentWeight] = useState(productWeight);
     const [currentPrice, setCurrentPrice] = useState(productPrice);
-    const [currentWeightId, setCurrentWeightId] = useState(productId);
+    const [currentWeightId, setCurrentWeightId] = useState(weightId);
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     const [message, setMessage] = useState('');
     const [showAlert, setShowAlert] = useState(false);
@@ -126,6 +127,17 @@ const CartItem = ({productId, productName, weightId, productWeight, productAmoun
             </Accordion.Collapse>
         </Accordion>
     );
+}
+
+CartItem.propTypes = {
+    productId: PropTypes.string.isRequired,
+    productName: PropTypes.string.isRequired,
+    weightId: PropTypes.string.isRequired,
+    productWeight: PropTypes.number.isRequired,
+    productAmount: PropTypes.number.isRequired,
+    productPrice: PropTypes.number.isRequired,
+    productSinglePrice: PropTypes.number.isRequired,
+    optionalMessage: PropTypes.string,
 }
 
 export default CartItem;

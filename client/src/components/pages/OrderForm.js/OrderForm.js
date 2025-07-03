@@ -6,6 +6,7 @@ import { updateClientThunk } from "../../../redux/clientReducer";
 import { getAllDeliveries } from "../../../redux/deliveryReducer";
 import { useNavigate } from "react-router-dom";
 import DeliveryForm from "../../features/DeliveryForm/DeliveryForm";
+import PageTitle from "../../common/PageTitle/PageTitle";
 
 const OrderForm = () => {
     const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const OrderForm = () => {
         <>
             {deliveries.length === 0 && <Loader />}
             {deliveries.length > 0 && <Form className="col-10 col-sm-8 col-md-6 mx-auto" noValidate onSubmit={addClient}>
-                <h4 className="my-4">Client details</h4>
+                <PageTitle>Client details:</PageTitle>
                 <Form.Group className="mb-3" controlId="formFirstName">
                     <Form.Label>Firstname: </Form.Label>
                     <Form.Control type="text" placeholder="Firstname" value={firstName} onChange={e => setFirstName(e.target.value)} isInvalid={validated && (!isFirstNameValid) } required />
@@ -115,7 +116,7 @@ const OrderForm = () => {
                         </Col>
                     </Row>
                 </Form.Group>
-                <h4 className="my-4">Delivery methods:</h4>
+                <PageTitle>Delivery methods:</PageTitle>
                 <Form.Group className="mb-4">
                     {deliveries.map(delivery => (
                         <DeliveryForm key={delivery.id} {...delivery} deliveryMethod={deliveryMethod} setDeliveryMethod={setDeliveryMethod} />

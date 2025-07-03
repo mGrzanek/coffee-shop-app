@@ -1,6 +1,7 @@
 import { Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopesBulk, faTruck, faTruckFast } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 const DeliveryForm = ({id, icon, method, price, leadTime, deliveryMethod, setDeliveryMethod}) => {
     const deliveryIcons = {
@@ -33,6 +34,15 @@ const DeliveryForm = ({id, icon, method, price, leadTime, deliveryMethod, setDel
             onChange={() => setDeliveryMethod(id)}
         />
     )
+}
+
+DeliveryForm.propTypes = {
+    id: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    leadTime: PropTypes.string.isRequired,
+    deliveryMethod: PropTypes.string,
+    setDeliveryMethod: PropTypes.func,
 }
 
 export default DeliveryForm;

@@ -3,6 +3,7 @@ import styles from "./ProductOrderItem.module.scss";
 import { getProductById } from "../../../redux/productsReducer";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 
 const ProductOrderItem = ({productId, productName, productPrice, productSinglePrice, productWeight, optionalMessage, productAmount}) => {
      const weights = useSelector(state => getProductById(state, productId).weights);
@@ -32,6 +33,16 @@ const ProductOrderItem = ({productId, productName, productPrice, productSinglePr
             </div>
         </ListGroup.Item>
     );
+}
+
+ProductOrderItem.propTypes = {
+    productId: PropTypes.string.isRequired,
+    productName: PropTypes.string.isRequired,
+    productPrice: PropTypes.number.isRequired,
+    productSinglePrice: PropTypes.number.isRequired,
+    productWeight: PropTypes.number.isRequired,
+    optionalMessage: PropTypes.string,
+    productAmount: PropTypes.number.isRequired,
 }
 
 export default ProductOrderItem;

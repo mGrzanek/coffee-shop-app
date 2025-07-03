@@ -4,6 +4,7 @@ import { getAllCartProducts } from "../../../redux/cartProductsReducer";
 import { getClient } from "../../../redux/clientReducer";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import PageTitle from "../../common/PageTitle/PageTitle";
 import ProductOrderItem from "../ProductOrderItem/ProductOrderItem";
 import ClientOrderItem from "../../views/ClientOrderItem/ClientOrderItem";
 import { useEffect, useState } from "react";
@@ -80,7 +81,8 @@ const OrderSummary = () => {
 
     return(
         <>
-            {( !currentDeliveryPrice || !currentClient || !currentProducts || currentProducts.length === 0) && <div>Summary not available</div>}
+            {( !currentDeliveryPrice || !currentClient || !currentProducts || currentProducts.length === 0) 
+                && <div className="p-5"><PageTitle>Summary not available</PageTitle></div>}
             {currentClient && currentProducts.length > 0 && <ListGroup>
                 <ListGroup.Item className="summaryLabel d-flex justify-content-center">
                     <div>Order summary:</div>

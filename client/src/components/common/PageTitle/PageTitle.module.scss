@@ -1,0 +1,11 @@
+@import "./../../../styles/settings.scss";
+
+.pageTitle {
+    color: $main-color;
+    font-family: $hero-title-font-family;
+    font-weight: 500;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;     
+}

@@ -1,6 +1,7 @@
 import Products from "./../../features/Products/Products";
 import { useSelector } from "react-redux";
 import Loader from "../../common/Loader/Loader";
+import SearchForm from "../../features/SearchForm/SearchForm";
 import { getStatus } from "../../../redux/statusReducer";
 import { useEffect, useState } from "react";
 
@@ -15,6 +16,7 @@ const Home = () => {
     return(
        <div className="py-3"> 
             {statusAction === "pending" && <Loader />}
+            {statusAction !== "pending" && <SearchForm />}
             {statusAction !== "pending" && <Products />}
         </div>
     );

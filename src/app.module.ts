@@ -14,6 +14,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { WeightModule } from './weight/weight.module';
 import { DeliveriesModule } from './deliveries/deliveries.module';
+import { PhotosModule } from './photos/photos.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { DeliveriesModule } from './deliveries/deliveries.module';
     UserModule,
     WeightModule,
     DeliveriesModule,
+    PhotosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

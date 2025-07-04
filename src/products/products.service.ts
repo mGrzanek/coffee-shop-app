@@ -7,13 +7,13 @@ export class ProductsService {
   constructor(private prismaService: PrismaService) {}
   public getAll(): Promise<Product[]> {
     return this.prismaService.product.findMany({
-      include: { weights: true },
+      include: { weights: true, images: true },
     });
   }
   public getById(id: Product['id']): Promise<Product | null> {
     return this.prismaService.product.findUnique({
       where: { id },
-      include: { weights: true },
+      include: { weights: true, images: true },
     });
   }
 }

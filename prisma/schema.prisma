@@ -20,7 +20,7 @@ model Product {
   name String @unique
   price Int
   description String
-  image String
+  images Photo[] @relation("ProductPhoto")
   variety String
   origin String
   flavor Boolean
@@ -36,6 +36,12 @@ model Weight {
   multiplier Float
   products Product[]  @relation("ProductWeights")
   orderedProducts OrderedProduct[]
+}
+
+model Photo {
+  id String @id @default(uuid())
+  image String
+  products Product[] @relation("ProductPhoto")
 }
 
 model Delivery {

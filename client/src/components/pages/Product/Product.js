@@ -1,16 +1,16 @@
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Carousel } from "react-bootstrap";
 import { useParams, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductById } from "../../../redux/productsReducer";
-import { getStatus } from "../../../redux/statusReducer";
+import { getStatus, updateStatus } from "../../../redux/statusReducer";
 import { IMG_URL } from "../../../config";
+import AlertMessage from './../../common/AlertMessage/AlertMessage';
 import styles from "./Product.module.scss";
 import Loader from "./../../common/Loader/Loader";
 import { useState, useEffect } from "react";
 import AmountForm from "../../features/AmountForm/AmountForm";
 import WeightsForm from "../../features/WeightsForm/WeightsForm";
 import { addCartProductThunk } from "./../../../redux/cartProductsReducer";
-
 
 const Product = () => {
     const {id} = useParams();
@@ -21,6 +21,20 @@ const Product = () => {
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     const [currentAmount, setCurrentAmount] = useState(1);
     const [currentWeight, setCurrentWeight] = useState(null);
+    const [sorterdImages, setSortedImages] = useState([]);
+
+    console.log(sorterdImages);
+
+    useEffect(() => {
+        if(product && product.images.length > 0) {
+            const sorterdImages = [...product.images].sort((a, b) => {
+                const image1 = a.image.includes('other') ? 1 : 0;
+                const image2 = b.image.includes('other') ? 1 : 0;
+                return image1 - image2;
+            });   
+            setSortedImages(sorterdImages);
+        }
+    }, [product]);
 
     useEffect(() => {
         if(product && product.weights.length > 0 && currentWeight === null && currentWeightMultiplier === null ) {
@@ -32,6 +46,7 @@ const Product = () => {
     useEffect(() => {
         if(status !== 'pending' && product) setCurrentPrice(product.price * currentWeightMultiplier * currentAmount);
     }, [currentWeightMultiplier, product, status, currentAmount]);
+
 
     const addToCart = () => {
         const price = Number(currentPrice);
@@ -50,17 +65,23 @@ const Product = () => {
                 optionalMessage: '',
             } 
             dispatch(addCartProductThunk(cartProduct));
-        } else console.log('Invalid product data');
+        } else dispatch(updateStatus("clientError"));
     }
     
     return(
         <>
+            {status === "clientError" && <AlertMessage variant="danger" alertTitle="Incorrect data" alertContent="Invalid params." />}
             {status === "pending" && !product && <Loader />}
             {status === "success" && !product && <Navigate to='/' />}
             {status !== "pending" && product && <Card className="col-11 col-sm-9 col-md-7 m-4 py-3 px-sm-3 p-md-4 mx-auto shadow">
                 <Card.Body className="d-flex p-0 flex-column justify-content-center align-items-center">
-                    {product.image && (
-                        <Card.Img className={styles.cardImage} src={`${IMG_URL}/${product.image}`} />
+                    {product.images.length > 0 && (
+                        <Carousel interval={null} slide={false}>
+                            {sorterdImages.map(image => 
+                            <Carousel.Item key={image.id}>
+                                <Card.Img className={styles.cardImage} src={`${IMG_URL}/${image.image}`} />
+                            </Carousel.Item>)}
+                        </Carousel>
                     )}
                    <div className="px-3 px-5 py-4">
                         <Card.Title className={styles.cardTitle}>{product.name}</Card.Title>

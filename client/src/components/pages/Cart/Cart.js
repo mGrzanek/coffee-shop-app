@@ -37,7 +37,7 @@ const Cart = () => {
                     <div className="text-center">Your cart:</div>
                 </ListGroup.Item>
                 {cartProducts.map(cartProduct => 
-                    <CartItem key={cartProduct.productId} {...cartProduct} />)
+                    <CartItem key={`${cartProduct.productId}-${cartProduct.weightId}`} {...cartProduct} />)
                 }
                 <ListGroup.Item className={clsx(styles.cartSummaryPrice, "d-flex justify-content-around align-items-center")}>
                     <div >Cart price: <span className="px-2">${currentCartPrice}</span></div>

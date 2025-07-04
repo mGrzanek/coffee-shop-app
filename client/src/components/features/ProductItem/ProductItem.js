@@ -3,18 +3,19 @@ import clsx from 'clsx';
 import styles from './ProductItem.module.scss';
 import { NavLink } from "react-router-dom";
 import { IMG_URL } from "../../../config";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateStatus } from "../../../redux/statusReducer";
-import { addCartProductThunk } from "../../../redux/cartProductsReducer";
+import { addCartProductThunk, updateCartProductThunk, getAllCartProducts } from "../../../redux/cartProductsReducer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import WeightsForm from "../../features/WeightsForm/WeightsForm";
-import AmountForm from "../../features/AmountForm/AmountForm";
+import WeightsForm from "../WeightsForm/WeightsForm";
+import AmountForm from "../AmountForm/AmountForm";
 import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 
 const ProductItem = ({id, name, images, price, weights}) => {
     const dispatch = useDispatch();
+    const cartProducts = useSelector(getAllCartProducts);
     const [currentPrice, setCurrentPrice] = useState(null);
     const [currentWeight, setCurrentWeight] = useState(null);
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
@@ -45,17 +46,29 @@ const ProductItem = ({id, name, images, price, weights}) => {
         const weight = Number(currentWeight);
         const weightId = weights.find(w => w.value === weight).id;
         if (id && name && !isNaN(price) && !isNaN(amount) && amount > 0 && amount <=10 && !isNaN(weight) && weightId){
-            const cartProduct = {
-                productId: id,
-                productWeight: weight,
-                weightId,
-                productName: name,
-                productPrice: newPrice,
-                productAmount: amount,
-                productSinglePrice: price,
-                optionalMessage: '',
-            } 
-            dispatch(addCartProductThunk(cartProduct));
+            const cartProductExist = cartProducts.find( cartProduct => cartProduct.productId === id && cartProduct.productWeight === weight);
+                if(cartProductExist) {
+                    if(cartProductExist.productAmount > 0 && cartProductExist.productAmount < 10 && (cartProductExist.productAmount + amount) <= 10 ){
+                        const cartProduct = {
+                            ...cartProductExist,
+                            productPrice: cartProductExist.productPrice + newPrice,
+                            productAmount: cartProductExist.productAmount + amount,
+                        } 
+                        dispatch(updateCartProductThunk(cartProduct));
+                    } else dispatch(updateStatus("clientConflict"));
+                } else {
+                const cartProduct = {
+                    productId: id,
+                    productWeight: weight,
+                    weightId,
+                    productName: name,
+                    productPrice: newPrice,
+                    productAmount: amount,
+                    productSinglePrice: price,
+                    optionalMessage: '',
+                } 
+                dispatch(addCartProductThunk(cartProduct));
+            }
         } else dispatch(updateStatus("clientError"));
     }
 
@@ -68,7 +81,7 @@ const ProductItem = ({id, name, images, price, weights}) => {
                     <Card.Title className={clsx(styles.cardTitle, "mt-3 text-center")} as={NavLink} to={`/products/${id}`}>{name}</Card.Title>
                     {currentPrice !== null && !isNaN(currentPrice) &&<Card.Text className={styles.price}>{currentPrice.toFixed(2)} $</Card.Text>}          
                 </div>
-                 <WeightsForm weights={weights} setCurrentWeightMultiplier={setCurrentWeightMultiplier} activeWeight={currentWeight} setActiveWeight={setCurrentWeight} />
+                    <WeightsForm weights={weights} setCurrentWeightMultiplier={setCurrentWeightMultiplier} activeWeight={currentWeight} setActiveWeight={setCurrentWeight} />
                 <div className="d-flex mt-3 justify-content-between align-items-center">
                     <AmountForm currentAmount={currentAmount} setCurrentAmount={setCurrentAmount} />
                     <Button variant="outline-light" size="sm" className="btn-one mx-2" onClick={addToCart}>
@@ -84,8 +97,9 @@ const ProductItem = ({id, name, images, price, weights}) => {
 ProductItem.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
+    images: PropTypes.array.isRequired,
     price: PropTypes.number.isRequired,
+    weights: PropTypes.array.isRequired,
 }
 
 export default ProductItem;

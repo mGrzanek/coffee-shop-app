@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import ProductItem from "../../views/ProductItem/ProductItem";
+import ProductItem from "../../features/ProductItem/ProductItem";
 import PageTitle from "../../common/PageTitle/PageTitle";
 import { getAllProducts } from "../../../redux/productsReducer";
 import { useSelector } from "react-redux";

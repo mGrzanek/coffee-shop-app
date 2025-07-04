@@ -4,14 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { updateClientThunk } from "../../../redux/clientReducer";
 import { getAllDeliveries } from "../../../redux/deliveryReducer";
+import { getStatus, updateStatus } from "../../../redux/statusReducer";
 import { useNavigate } from "react-router-dom";
 import DeliveryForm from "../../features/DeliveryForm/DeliveryForm";
 import PageTitle from "../../common/PageTitle/PageTitle";
+import AlertMessage from "../../common/AlertMessage/AlertMessage";
 
 const OrderForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const deliveries = useSelector(getAllDeliveries);
+    const status = useSelector(getStatus);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -58,12 +61,12 @@ const OrderForm = () => {
             setStreetNumber('');
             setCity('');
             navigate('/order/summary')
-            console.log(client.deliveryPrice);
-        } else console.log('Wrong params');
+        } else dispatch(updateStatus('clientError'));
     }
 
     return(
         <>
+            {status === 'clientError' && <AlertMessage variant="danger" alertTitle="Incorrect data" alertContent="Invalid params." />}
             {deliveries.length === 0 && <Loader />}
             {deliveries.length > 0 && <Form className="col-10 col-sm-8 col-md-6 mx-auto" noValidate onSubmit={addClient}>
                 <PageTitle>Client details:</PageTitle>
@@ -105,7 +108,7 @@ const OrderForm = () => {
                         <Col xs={4}>
                             <Form.Control className="mb-3 mx-1 " type="text" placeholder="Nr" value={streetNumber} onChange={e => setStreetNumber(e.target.value)} isInvalid={validated && (!isStreetNumberValid) } required />
                             <Form.Control.Feedback type="invalid">
-                                Postal code required.
+                                Street number required.
                             </Form.Control.Feedback>
                         </Col>
                         <Col xs={8}>
@@ -122,7 +125,7 @@ const OrderForm = () => {
                         <DeliveryForm key={delivery.id} {...delivery} deliveryMethod={deliveryMethod} setDeliveryMethod={setDeliveryMethod} />
                     ))}
                 </Form.Group>
-                <Button type="submit" variant="outline-light" className="btn-one">Add</Button>
+                <Button type="submit" variant="outline-light" className="btn-one">Order summary</Button>
             </Form>}
         </>
     );

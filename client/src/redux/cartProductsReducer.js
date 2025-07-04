@@ -1,4 +1,5 @@
 import { updateLocalStorage } from "./updateLocalStorage";
+import { v4 as uuidv4 } from 'uuid';
 
 // selectors 
 export const getAllCartProducts = ({cartProducts}) => cartProducts;
@@ -57,10 +58,10 @@ export const updateCartProductThunk = (updatedProduct) => {
     }
 }
 
-export const removeCartProductThunk = (productToRemoveId) => {
+export const removeCartProductThunk = (id) => {
     return(dispatch, getState) => {
         try {
-            dispatch(removeCartProduct(productToRemoveId));
+            dispatch(removeCartProduct(id));
             const updatedCartProducts = getState().cartProducts;
             updateLocalStorage("cartProducts", updatedCartProducts);
         } catch(err)  {
@@ -86,11 +87,11 @@ const cartProductsReducer = (statePart = [], action) => {
         case GET_CART_PRODUCTS:
             return [ ...action.payload ];
         case ADD_CART_PRODUCT:
-            return [ ...statePart, { ...action.payload}];
+            return [ ...statePart, { id: uuidv4(), ...action.payload}];
         case UPDATE_CART_PRODUCT:
-            return statePart.map(itemCart => itemCart.productId === action.payload.productId ? { ...itemCart, ...action.payload } : itemCart);
+            return statePart.map(itemCart => itemCart.id === action.payload.id ? { ...itemCart, ...action.payload } : itemCart);
         case REMOVE_CART_PRODUCT: 
-            return statePart.filter(itemCart => itemCart.productId !== action.payload);
+            return statePart.filter(itemCart => itemCart.id !== action.payload);
         case REMOVE_ALL_PRODUCTS:
             return [];
         default:

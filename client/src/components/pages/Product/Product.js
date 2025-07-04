@@ -10,20 +10,19 @@ import Loader from "./../../common/Loader/Loader";
 import { useState, useEffect } from "react";
 import AmountForm from "../../features/AmountForm/AmountForm";
 import WeightsForm from "../../features/WeightsForm/WeightsForm";
-import { addCartProductThunk } from "./../../../redux/cartProductsReducer";
+import { addCartProductThunk, getAllCartProducts, updateCartProductThunk } from "./../../../redux/cartProductsReducer";
 
 const Product = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
     const product = useSelector(state => getProductById(state, id));
+    const cartProducts = useSelector(getAllCartProducts);
     const status = useSelector(getStatus);
     const [currentPrice, setCurrentPrice] = useState(null);
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     const [currentAmount, setCurrentAmount] = useState(1);
     const [currentWeight, setCurrentWeight] = useState(null);
     const [sorterdImages, setSortedImages] = useState([]);
-
-    console.log(sorterdImages);
 
     useEffect(() => {
         if(product && product.images.length > 0) {
@@ -54,23 +53,36 @@ const Product = () => {
         const weight = Number(currentWeight);
         const weightId = product.weights.find(weight => weight.value === currentWeight).id;
         if (product?.id && product?.name && !isNaN(price) && !isNaN(amount) && amount > 0 && amount <=10 && !isNaN(weight) && weightId){
-            const cartProduct = {
-                productId: product.id,
-                productWeight: weight,
-                weightId,
-                productName: product.name,
-                productPrice: price,
-                productAmount: amount,
-                productSinglePrice: product.price,
-                optionalMessage: '',
+            const cartProductExist = cartProducts.find( cartProduct => cartProduct.productId === product.id && cartProduct.weightId === weightId);
+            if(cartProductExist) {
+                if(cartProductExist.productAmount > 0 && cartProductExist.productAmount < 10 && (cartProductExist.productAmount + amount) <= 10 ){
+                    const cartProduct = {
+                        ...cartProductExist,
+                        productPrice: cartProductExist.productPrice + price,
+                        productAmount: cartProductExist.productAmount + amount,
+                    } 
+                    dispatch(updateCartProductThunk(cartProduct));
+                } else dispatch(updateStatus("clientConflict"));
+            } else {
+                const cartProduct = {
+                    productId: product.id,
+                    productWeight: weight,
+                    weightId,
+                    productName: product.name,
+                    productPrice: price,
+                    productAmount: amount,
+                    productSinglePrice: product.price,
+                    optionalMessage: '',
+                } 
+                dispatch(addCartProductThunk(cartProduct));
             } 
-            dispatch(addCartProductThunk(cartProduct));
         } else dispatch(updateStatus("clientError"));
     }
     
     return(
         <>
             {status === "clientError" && <AlertMessage variant="danger" alertTitle="Incorrect data" alertContent="Invalid params." />}
+            {status === "clientConflict" && <AlertMessage variant="warning" alertTitle="Product limit" alertContent="You can add to cart max 10 pieces of selected product" />}
             {status === "pending" && !product && <Loader />}
             {status === "success" && !product && <Navigate to='/' />}
             {status !== "pending" && product && <Card className="col-11 col-sm-9 col-md-7 m-4 py-3 px-sm-3 p-md-4 mx-auto shadow">

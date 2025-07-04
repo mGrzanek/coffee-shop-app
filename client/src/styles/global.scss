@@ -36,6 +36,10 @@ body {
 .cartItemBtn {
     cursor: pointer;
     color: $main-color;
+
+    &:hover {
+        color: $cream-color;
+    }
 }
 
 .summaryLabel {

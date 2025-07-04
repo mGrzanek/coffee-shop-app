@@ -1,5 +1,6 @@
 import { ListGroup } from "react-bootstrap";
 import styles from "./ClientOrderItem.module.scss";
+import PropTypes from 'prop-types';
 
 const ClientOrderItem = ({firstName, lastName, phone, email, address}) => {
      return(
@@ -19,6 +20,14 @@ const ClientOrderItem = ({firstName, lastName, phone, email, address}) => {
             </div>
         </ListGroup.Item>
      );
+}
+
+ClientOrderItem.propTypes = {
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    address: PropTypes.array.isRequired,
 }
 
 export default ClientOrderItem;

@@ -52,7 +52,6 @@ const OrderSummary = () => {
             clientEmail: client.email,
             clientAddress: client.address,
         }
-        console.log('newOrder', newOrder);  
         const option = {
             method: 'POST',
             headers: {
@@ -87,7 +86,7 @@ const OrderSummary = () => {
                 <ListGroup.Item className="summaryLabel d-flex justify-content-center">
                     <div>Order summary:</div>
                 </ListGroup.Item>
-                    {products.map(product => <ProductOrderItem key={product.productId} {...product} />)}
+                    {products.map(product => <ProductOrderItem key={product.id} {...product} />)}
                 <ClientOrderItem {...client} />
                 <ListGroup.Item>
                     <div className="d-flex justify-content-between align-items-center col-11">

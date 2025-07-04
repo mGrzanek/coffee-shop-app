@@ -67,43 +67,43 @@ function getPhotos() {
   return [
     {
       id: 'f03a4e50-dc5b-4cb7-9f4b-7288e34b7b8b',
-      image: 'coffee/classic/coffee_classic.png',
+      image: '/coffee/classic/coffee_classic.png',
     },
     {
       id: '1a9e3fcb-7a8f-44a3-b0bc-2b5d0b3847c1',
-      image: 'coffee/flavor/coffee_cherry.png',
+      image: '/coffee/flavor/coffee_cherry.png',
     },
     {
       id: '9f11f299-684f-4d8d-9562-449d8fbe871b',
-      image: 'coffee/flavor/coffee_orange.png',
+      image: '/coffee/flavor/coffee_orange.png',
     },
     {
       id: '94c03dd8-2d56-4b86-8df2-04645ea9abdf',
-      image: 'coffee/flavor/coffee_chocolate.png',
+      image: '/coffee/flavor/coffee_chocolate.png',
     },
     {
       id: 'c16011f7-4d7c-4e4f-9d59-1dbefbd7e057',
-      image: 'coffee/flavor/coffee_coconut.png',
+      image: '/coffee/flavor/coffee_coconut.png',
     },
     {
       id: 'a15f342b-bfd0-49c2-b6d2-80e6c8863731',
-      image: 'coffee/flavor/coffee_almonds.png',
+      image: '/coffee/flavor/coffee_almonds.png',
     },
     {
       id: '10d4c25e-ec38-4260-b3c3-9f520f4db504',
-      image: 'coffee/other/coffee_other_1.png',
+      image: '/coffee/other/coffee_other_1.png',
     },
     {
       id: '26b3157a-fd3f-4a1f-a97e-62e68d58941b',
-      image: 'coffee/other/coffee_other_2.png',
+      image: '/coffee/other/coffee_other_2.png',
     },
     {
       id: '5d9d9d0b-6e0a-4a8b-9ebc-c01d45777ae7',
-      image: 'coffee/other/coffee_other_3.jpg',
+      image: '/coffee/other/coffee_other_3.jpg',
     },
     {
       id: '7e9c0d93-fbcb-4591-850d-b76b8a4090a6',
-      image: 'coffee/other/coffee_other_4.jpg',
+      image: '/coffee/other/coffee_other_4.jpg',
     },
   ];
 }

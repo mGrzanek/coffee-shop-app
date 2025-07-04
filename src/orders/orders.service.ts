@@ -9,7 +9,6 @@ import { WeightService } from 'src/weight/weight.service';
 import { ProductsService } from 'src/products/products.service';
 import { Order } from '@prisma/client';
 import { CreateOrderDTO } from './dtos/create-order.dto';
-import { single } from 'rxjs';
 
 @Injectable()
 export class OrdersService {
@@ -39,19 +38,12 @@ export class OrdersService {
         const validatedOrderedProducts = [];
         for (const item of orderedProducts) {
           const weight = await this.weightService.getWeightById(item.weightId);
-          console.log('weight id', item.weightId);
           if (weight) {
             const product = await this.productsService.getById(item.productId);
             if (product && product.available) {
               const singlePrice = product.price;
               const totalPrice =
                 singlePrice * item.productAmount * weight.multiplier;
-              console.log(
-                singlePrice,
-                product.price,
-                weight.multiplier,
-                totalPrice,
-              );
 
               totalProductsPrice += totalPrice;
 
@@ -73,8 +65,6 @@ export class OrdersService {
             );
         }
         const finalTotalPrice = totalProductsPrice + delivery.price;
-        console.log('final price', finalTotalPrice);
-        console.log('delivery price', delivery.price);
         if (
           finalTotalPrice === clientData.totalPrice &&
           totalProductsPrice === clientData.productsPrice

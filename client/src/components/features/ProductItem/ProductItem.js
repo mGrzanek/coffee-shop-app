@@ -21,7 +21,6 @@ const ProductItem = ({id, name, images, price, weights}) => {
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     const [currentAmount, setCurrentAmount] = useState(1);
     const [currentImage, setCurrentImage] = useState(null);
-    console.log()
 
     useEffect(() => {
         if(images.length > 0) {

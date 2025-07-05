@@ -15,7 +15,7 @@ const SearchPhrase = () => {
         <div className="pb-5">
             <PageTitle>Results: </PageTitle>
             <Row className="d-flex mx-auto px-3 py-4">
-                {filteredProducts.map(product => <ProductItem key={product.id} {...product} />)}
+                {filteredProducts.map(product => product.available && <ProductItem key={product.id} {...product} />)}
                 {filteredProducts.length === 0 && <PageTitle>Not found products...</PageTitle>}
             </Row>
         </div>

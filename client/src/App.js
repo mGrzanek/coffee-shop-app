@@ -10,6 +10,7 @@ import SearchPhrase from "./components/pages/SearchPhrase/SearchPhrase";
 import Cart from "./components/pages/Cart/Cart";
 import OrderForm from "./components/pages/OrderForm.js/OrderForm";
 import OrderSummary from "./components/features/OrderSummary/OrderSummary";
+import ProductVarieties from "./components/pages/ProductVarieties/ProductVarieties";
 import Footer from "./components/views/Footer/Footer";
 import NotFound from "./components/pages/NotFound/NotFound";
 import { fetchProducts } from "./redux/productsReducer";
@@ -33,6 +34,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products/:id" element={<Product />} />
+          <Route path="/products/varieties/:variety" element={<ProductVarieties />} />
           <Route path="/products/search/:searchPhrase" element={<SearchPhrase />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order/form" element={<OrderForm />} />

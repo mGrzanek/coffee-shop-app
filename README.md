@@ -2,6 +2,8 @@
 
 This is full-stack coffee shop web app that allows users to browse, customize and order coffee products. The app features real-time price updates, dynamic filtering, detailed product pages, cart management with notes and a streamlined order flow with summary and confirmation.
 
+https://coffee-shop-app-hbwo.onrender.com/
+
 ## Description
 
 The application consists of the following pages:
@@ -18,6 +20,10 @@ The application consists of the following pages:
 
 - **Frontend:** React, Redux (with Thunk middleware), React-Bootstrap & Bootstrap, SCSS Modules
 - **Backend:** NestJS, Prisma ORM, MySQL, TypeScript
+
+## Work in Progress
+
+Work on user registration and login is currently underway.
 
 ## Configuration
 

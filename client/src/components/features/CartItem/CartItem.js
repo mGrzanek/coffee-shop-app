@@ -88,6 +88,7 @@ const CartItem = ({id, productId, productName, weightId, productWeight, productA
     const addMessage = () => {
         if(message && message.length > 0 && message.length <= 100) {
             dispatch(updateCartProductThunk({
+                id,
                 productId,
                 productName,
                 productAmount,

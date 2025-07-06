@@ -15,6 +15,8 @@ import { join } from 'path';
 import { WeightModule } from './weight/weight.module';
 import { DeliveriesModule } from './deliveries/deliveries.module';
 import { PhotosModule } from './photos/photos.module';
+import { AuthModule } from './auth/auth.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { PhotosModule } from './photos/photos.module';
     WeightModule,
     DeliveriesModule,
     PhotosModule,
+    AuthModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

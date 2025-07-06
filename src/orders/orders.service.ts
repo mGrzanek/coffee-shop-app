@@ -3,7 +3,7 @@ import {
   BadRequestException,
   ConflictException,
 } from '@nestjs/common';
-import { PrismaService } from 'shared/services/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { DelivieriesService } from 'src/deliveries/delivieries.service';
 import { WeightService } from 'src/weight/weight.service';
 import { ProductsService } from 'src/products/products.service';

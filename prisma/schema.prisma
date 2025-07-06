@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -27,6 +27,7 @@ model Product {
   available Boolean
   weights Weight[] @relation("ProductWeights")
   orderedProducts OrderedProduct[]
+  users User[] @relation("ProductUser")
 }
 
 model Weight {
@@ -82,6 +83,24 @@ model Order {
   delivery Delivery @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
   deliveryId String
   orderedProducts OrderedProduct[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+}
+
+model User {
+  id       String    @id @default(uuid())
+  email    String    @unique
+  role     Role      @default(USER)
+  password Password?
+  orders Order[]
+  favorites Product[] @relation("ProductUser")
+}
+
+model Password {
+  id       String @id @default(uuid())
+  hashedPassword String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String @unique
 }
 
 

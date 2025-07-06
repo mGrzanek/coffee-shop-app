@@ -7,6 +7,7 @@ import { PrismaService } from 'shared/services/prisma.service';
 import { DelivieriesService } from 'src/deliveries/delivieries.service';
 import { WeightService } from 'src/weight/weight.service';
 import { ProductsService } from 'src/products/products.service';
+import { UserService } from 'src/user/user.service';
 import { Order } from '@prisma/client';
 import { CreateOrderDTO } from './dtos/create-order.dto';
 
@@ -17,6 +18,7 @@ export class OrdersService {
     private deliveriesService: DelivieriesService,
     private weightService: WeightService,
     private productsService: ProductsService,
+    private userService: UserService,
   ) {}
   public getAllOrders(): Promise<Order[]> {
     return this.prismaService.order.findMany({
@@ -31,7 +33,7 @@ export class OrdersService {
   }
   public async createOrder(orderData: CreateOrderDTO) {
     try {
-      const { orderedProducts, deliveryId, ...clientData } = orderData;
+      const { orderedProducts, userId, deliveryId, ...clientData } = orderData;
       const delivery = await this.deliveriesService.getDeliveryById(deliveryId);
       if (delivery) {
         let totalProductsPrice = 0;
@@ -47,6 +49,8 @@ export class OrdersService {
 
               totalProductsPrice += totalPrice;
 
+              const user = this.userService.getUserById(userId);
+
               validatedOrderedProducts.push({
                 productId: product.id,
                 productAmount: item.productAmount,
@@ -54,6 +58,7 @@ export class OrdersService {
                 productPrice: totalPrice,
                 weightId: weight.id,
                 optionalMessage: item.optionalMessage || null,
+                userId: user,
               });
             } else
               throw new BadRequestException(
@@ -76,6 +81,9 @@ export class OrdersService {
               totalPrice: finalTotalPrice,
               delivery: {
                 connect: { id: deliveryId },
+              },
+              user: {
+                connect: { id: userId },
               },
               orderedProducts: {
                 create: validatedOrderedProducts,

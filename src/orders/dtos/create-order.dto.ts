@@ -22,6 +22,10 @@ export class CreateOrderDTO {
   @IsNotEmpty()
   clientName: string;
 
+  // @IsUUID()
+  // @IsNotEmpty()
+  userId: string | null;
+
   @Matches(/^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ\s-]{3,30}$/)
   @MaxLength(30)
   @MinLength(3)

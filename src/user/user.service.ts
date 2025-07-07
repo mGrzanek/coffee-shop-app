@@ -13,7 +13,9 @@ export class UserService {
       where: { id },
     });
   }
-  public getByEmail(email: User['email']): Promise<User | null> {
+  public getByEmail(
+    email: User['email'],
+  ): Promise<(User & { password: Password }) | null> {
     return this.prismaService.user.findUnique({
       where: { email },
       include: { password: true },
@@ -37,7 +39,7 @@ export class UserService {
     } catch (err) {
       if (err.code === 'P2002')
         throw new ConflictException('This email is already exist');
-      else throw err;
+      else console.error(err);
     }
   }
   public updateUserById(

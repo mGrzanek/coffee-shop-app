@@ -8,10 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.setGlobalPrefix('api');
-  app.use(
-    '/images',
-    express.static(join(__dirname, '..', '..', 'public/images')),
-  );
+  app.use('/images', express.static(join(__dirname, '..', 'public/images')));
   await app.enableShutdownHooks();
   await app.listen(8000);
 }

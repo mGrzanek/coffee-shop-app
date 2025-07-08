@@ -8,7 +8,7 @@ import { DelivieriesService } from 'src/deliveries/delivieries.service';
 import { WeightService } from 'src/weight/weight.service';
 import { ProductsService } from 'src/products/products.service';
 import { UserService } from 'src/user/user.service';
-import { Order } from '@prisma/client';
+import { Order, User } from '@prisma/client';
 import { CreateOrderDTO } from './dtos/create-order.dto';
 
 @Injectable()
@@ -31,9 +31,12 @@ export class OrdersService {
       include: { orderedProducts: true, delivery: true },
     });
   }
-  public async createOrder(orderData: CreateOrderDTO) {
+  public async createOrder(
+    orderData: CreateOrderDTO,
+    userId: User['id'] | null,
+  ): Promise<Order> {
     try {
-      const { orderedProducts, userId, deliveryId, ...clientData } = orderData;
+      const { orderedProducts, deliveryId, ...clientData } = orderData;
       const delivery = await this.deliveriesService.getDeliveryById(deliveryId);
       if (delivery) {
         let totalProductsPrice = 0;
@@ -49,8 +52,6 @@ export class OrdersService {
 
               totalProductsPrice += totalPrice;
 
-              const user = this.userService.getUserById(userId);
-
               validatedOrderedProducts.push({
                 productId: product.id,
                 productAmount: item.productAmount,
@@ -58,7 +59,6 @@ export class OrdersService {
                 productPrice: totalPrice,
                 weightId: weight.id,
                 optionalMessage: item.optionalMessage || null,
-                userId: user,
               });
             } else
               throw new BadRequestException(
@@ -74,27 +74,30 @@ export class OrdersService {
           finalTotalPrice === clientData.totalPrice &&
           totalProductsPrice === clientData.productsPrice
         ) {
-          return await this.prismaService.order.create({
-            data: {
-              ...clientData,
-              productsPrice: totalProductsPrice,
-              totalPrice: finalTotalPrice,
-              delivery: {
-                connect: { id: deliveryId },
-              },
-              user: {
-                connect: { id: userId },
-              },
-              orderedProducts: {
-                create: validatedOrderedProducts,
-              },
+          const orderDataToCreate: any = {
+            ...clientData,
+            productsPrice: totalProductsPrice,
+            totalPrice: finalTotalPrice,
+            delivery: {
+              connect: { id: deliveryId },
             },
+            orderedProducts: {
+              create: validatedOrderedProducts,
+            },
+          };
+          if (userId) {
+            orderDataToCreate.user = {
+              connect: { id: userId },
+            };
+          }
+          return await this.prismaService.order.create({
+            data: orderDataToCreate,
             include: {
               orderedProducts: true,
               delivery: true,
             },
           });
-        } else throw new ConflictException('Invalid order pice');
+        } else throw new ConflictException('Invalid order price');
       } else throw new BadRequestException('Invalid delivery method');
     } catch (error) {
       console.error(error);

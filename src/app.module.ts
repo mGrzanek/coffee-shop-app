@@ -17,6 +17,8 @@ import { DeliveriesModule } from './deliveries/deliveries.module';
 import { PhotosModule } from './photos/photos.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
@@ -31,6 +33,10 @@ import { PrismaModule } from './prisma/prisma.module';
     PhotosModule,
     AuthModule,
     PrismaModule,
+    ConfigModule.forRoot({
+      load: [configuration],
+      isGlobal: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

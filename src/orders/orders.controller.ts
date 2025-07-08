@@ -5,10 +5,13 @@ import {
   ParseUUIDPipe,
   Body,
   Post,
+  Request,
+  UseGuards,
   NotFoundException,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDTO } from './dtos/create-order.dto';
+import { JwtOptionalAuthGuard } from 'src/auth/jwt-optional-auth.guard';
 
 @Controller('orders')
 export class OrdersController {
@@ -24,7 +27,9 @@ export class OrdersController {
     else return order;
   }
   @Post('/')
-  async createOrder(@Body() orderData: CreateOrderDTO) {
-    return this.orderService.createOrder(orderData);
+  @UseGuards(JwtOptionalAuthGuard)
+  async createOrder(@Body() orderData: CreateOrderDTO, @Request() req) {
+    const userId = req.user?.userId || null;
+    return this.orderService.createOrder(orderData, userId);
   }
 }

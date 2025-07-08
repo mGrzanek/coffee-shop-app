@@ -11,6 +11,7 @@ export class UserService {
   public getUserById(id: User['id']): Promise<User | null> {
     return this.prismaService.user.findUnique({
       where: { id },
+      include: { orders: true, favorites: true },
     });
   }
   public getByEmail(

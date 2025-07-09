@@ -7,6 +7,7 @@ import statusReducer from "./statusReducer";
 import cartProductsReducer from "./cartProductsReducer";
 import deliveryReducer from "./deliveryReducer";
 import clientReducer from "./clientReducer";
+import userReducer from "./userReducer";
 
 const subreducers = {
     products: productsReducer,
@@ -14,6 +15,7 @@ const subreducers = {
     client: clientReducer,
     deliveries: deliveryReducer,
     status: statusReducer,
+    user: userReducer,
 }
 
 const reducer = combineReducers(subreducers);

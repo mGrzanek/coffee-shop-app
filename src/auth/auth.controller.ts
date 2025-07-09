@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   Body,
   UseGuards,
@@ -23,15 +24,34 @@ export class AuthController {
   @Post('/login')
   async login(@Request() req, @Response() res) {
     const tokens = await this.authService.createSession(req.user);
-    res.cookie('auth', tokens, { httpsOnly: true });
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.cookie('auth', tokens, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
+    });
     res.send({
       message: 'success',
     });
   }
   @UseGuards(JwtAuthGuard)
+  @Get('/profile')
+  async getUser(@Request() req) {
+    return {
+      userId: req.user.userId,
+      email: req.user.email,
+    };
+  }
+  @UseGuards(JwtAuthGuard)
   @Delete('/logout')
-  async logout(@Response() res) {
-    res.cookie('auth', { httpsOnly: true });
+  async logout(@Request() req, @Response() res) {
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.cookie('auth', {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
+      expires: new Date(0),
+    });
     res.send({
       message: 'success',
     });

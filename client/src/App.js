@@ -12,9 +12,12 @@ import OrderForm from "./components/pages/OrderForm.js/OrderForm";
 import OrderSummary from "./components/features/OrderSummary/OrderSummary";
 import ProductVarieties from "./components/pages/ProductVarieties/ProductVarieties";
 import JoinForm from "./components/features/JoinForm/JoinForm";
+import LoginForm from "./components/features/LoginForm/LoginForm";
+import Logout from "./components/Logout/Logout";
 import Footer from "./components/views/Footer/Footer";
 import NotFound from "./components/pages/NotFound/NotFound";
 import { fetchProducts } from "./redux/productsReducer";
+import { fetchUser } from "./redux/userReducer";
 import { getCartProductsThunk } from "./redux/cartProductsReducer";
 import { getDeliveriesThunk } from "./redux/deliveryReducer";
 import { getClientThunk } from "./redux/clientReducer";
@@ -26,6 +29,7 @@ const App = () => {
     dispatch(getCartProductsThunk());
     dispatch(getDeliveriesThunk());
     dispatch(getClientThunk());
+    dispatch(fetchUser());
   }, [dispatch]);
   return (
     <>
@@ -40,7 +44,9 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/order/form" element={<OrderForm />} />
           <Route path="/order/summary" element={<OrderSummary />} />
-          <Route path="/register" element={<JoinForm />} />
+          <Route path="/auth/register" element={<JoinForm />} />
+          <Route path='/auth/login' element={<LoginForm />} />
+          <Route path='/auth/logout' element={<Logout />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MainContainer>

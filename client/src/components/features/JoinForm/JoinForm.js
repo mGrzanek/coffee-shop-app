@@ -1,6 +1,7 @@
 import { Form, Button } from 'react-bootstrap';
 import { getStatus, updateStatus } from "../../../redux/statusReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { emailValidator } from '../../../utils/emailValidator';
 import Loader from "../../common/Loader/Loader";
 import PageTitle from '../../common/PageTitle/PageTitle';
 import { useState } from "react";
@@ -16,7 +17,7 @@ const JoinForm = () => {
     const [password, setPassword] = useState('');
     const [passwordRepeat, setPasswordRepeat] = useState('');
     const [validated, setValidated] = useState(false);
-    const isEmailValid = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+    const isEmailValid = emailValidator(email);
     const isPasswordValid = /^[A-Za-z0-9!@#$%^&*_+-?]{10,}$/.test(password);
     const isRepeatPassword = password === passwordRepeat;
 

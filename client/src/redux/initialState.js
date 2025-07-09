@@ -4,6 +4,7 @@ const initialState = {
     client: null,
     deliveries: [],
     status: null,
+    user: null,
 };
 
 export default initialState;

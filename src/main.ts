@@ -11,6 +11,11 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.setGlobalPrefix('api');
+  app.enableCors({
+    origin:
+      process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : true,
+    credentials: true,
+  });
   app.use(cookieParser());
   app.use('/images', express.static(join(__dirname, '..', 'public/images')));
   await app.enableShutdownHooks();

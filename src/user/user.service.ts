@@ -5,16 +5,16 @@ import { User, Password } from '@prisma/client';
 @Injectable()
 export class UserService {
   constructor(private prismaService: PrismaService) {}
-  public getAllUsers(): Promise<User[]> {
+  public async getAllUsers(): Promise<User[]> {
     return this.prismaService.user.findMany();
   }
-  public getUserById(id: User['id']): Promise<User | null> {
+  public async getUserById(id: User['id']): Promise<User | null> {
     return this.prismaService.user.findUnique({
       where: { id },
       include: { orders: true, favorites: true },
     });
   }
-  public getByEmail(
+  public async getByEmail(
     email: User['email'],
   ): Promise<(User & { password: Password }) | null> {
     return this.prismaService.user.findUnique({
@@ -22,12 +22,12 @@ export class UserService {
       include: { password: true },
     });
   }
-  public createNewUser(
+  public async createNewUser(
     userData: Omit<User, 'id' | 'role'>,
     password: Password['hashedPassword'],
   ): Promise<User> {
     try {
-      return this.prismaService.user.create({
+      return await this.prismaService.user.create({
         data: {
           ...userData,
           password: {
@@ -43,7 +43,7 @@ export class UserService {
       else console.error(err);
     }
   }
-  public updateUserById(
+  public async updateUserById(
     id: User['id'],
     updatedUserData: Omit<User, 'id' | 'role'>,
     password: Password['hashedPassword'],

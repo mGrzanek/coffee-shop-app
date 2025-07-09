@@ -11,6 +11,7 @@ import Cart from "./components/pages/Cart/Cart";
 import OrderForm from "./components/pages/OrderForm.js/OrderForm";
 import OrderSummary from "./components/features/OrderSummary/OrderSummary";
 import ProductVarieties from "./components/pages/ProductVarieties/ProductVarieties";
+import JoinForm from "./components/features/JoinForm/JoinForm";
 import Footer from "./components/views/Footer/Footer";
 import NotFound from "./components/pages/NotFound/NotFound";
 import { fetchProducts } from "./redux/productsReducer";
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/order/form" element={<OrderForm />} />
           <Route path="/order/summary" element={<OrderSummary />} />
+          <Route path="/register" element={<JoinForm />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MainContainer>

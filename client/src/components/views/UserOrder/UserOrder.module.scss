@@ -1,0 +1,15 @@
+@import "./../../../styles/settings.scss";
+
+.orderNumber {
+    font-size: .9rem;
+    color: $main-color;
+    font-family: $hero-title-font-family;
+
+    &:hover {
+        color: $cream-color;
+    }
+}
+
+.orderData, .orderNumber {
+    font-weight: 500;
+}

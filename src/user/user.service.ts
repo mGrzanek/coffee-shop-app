@@ -11,7 +11,19 @@ export class UserService {
   public async getUserById(id: User['id']): Promise<User | null> {
     return this.prismaService.user.findUnique({
       where: { id },
-      include: { orders: true, favorites: true },
+      include: {
+        orders: {
+          include: {
+            orderedProducts: {
+              include: {
+                product: true,
+                weight: true,
+              },
+            },
+          },
+        },
+        favorites: true,
+      },
     });
   }
   public async getByEmail(

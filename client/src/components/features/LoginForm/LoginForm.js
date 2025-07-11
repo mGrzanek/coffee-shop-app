@@ -48,7 +48,7 @@ const LoginForm = () => {
     }
 
     return(
-        <Form className="col-12 col-sm-8 col-md-4 mx-auto" noValidate onSubmit={handleSubmit}>
+        <Form className="col-10 col-sm-8 col-md-4 mx-auto" noValidate onSubmit={handleSubmit}>
             {status === "clientError" && <AlertMessage variant="danger" alertTitle="Invalid data" alertContent="Invalid login or password" />}
             {status === "serverError" && <AlertMessage variant="danger" alertTitle="Something went wrong..." alertContent="Unexpected error... Please try again." />}
             {status === "pending" && <Loader />}

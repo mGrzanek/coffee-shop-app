@@ -1,0 +1,10 @@
+@import "./../../../styles/settings.scss";
+
+.ordersHeader {
+    background-color: $main-color;
+    font-family: $hero-title-font-family;
+
+    > div {
+        color: $cream-color;
+    }
+}

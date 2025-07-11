@@ -14,6 +14,7 @@ import { updateClientThunk } from "../../../redux/clientReducer";
 import { removeAllCartProductsThunk } from "../../../redux/cartProductsReducer";
 import { updateStatus } from "../../../redux/statusReducer";
 import AlertMessage from "../../common/AlertMessage/AlertMessage";
+import { fetchUser } from "../../../redux/userReducer";
 
 const OrderSummary = () => {
     const dispatch = useDispatch();
@@ -66,6 +67,7 @@ const OrderSummary = () => {
                 if (res.ok) {
                     dispatch(updateClientThunk(null));
                     dispatch(removeAllCartProductsThunk());
+                    dispatch(fetchUser());
                     dispatch(updateStatus('success'));
                     navigate('/');
                 } else if(res.status >= 400 && res.status < 500) dispatch(updateStatus("clientError"));

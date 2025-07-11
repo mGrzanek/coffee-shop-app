@@ -9,13 +9,17 @@ import {
   Delete,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { UserService } from 'src/user/user.service';
 import { RegisterDTO } from './dtos/register.dto';
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
   @Post('/register')
   async register(@Body() userData: RegisterDTO) {
     return await this.authService.register(userData);
@@ -35,12 +39,9 @@ export class AuthController {
     });
   }
   @UseGuards(JwtAuthGuard)
-  @Get('/profile')
+  @Get('/user')
   async getUser(@Request() req) {
-    return {
-      userId: req.user.userId,
-      email: req.user.email,
-    };
+    return this.userService.getUserById(req.user.userId);
   }
   @UseGuards(JwtAuthGuard)
   @Delete('/logout')

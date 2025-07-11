@@ -15,7 +15,7 @@ export const logOut = payload => ({type: LOG_OUT, payload});
 
 export const fetchUser = () => {
     return(dispatch) => {
-        fetch(`${API_URL}/api/auth/profile`, {
+        fetch(`${API_URL}/api/auth/user`, {
             credentials: 'include',
         })
         .then(res => {
@@ -23,7 +23,7 @@ export const fetchUser = () => {
             else dispatch(setUser(null));
         })
         .then(data => {
-            dispatch(setUser( data.userId ));
+            dispatch(setUser( data ));
         })
         .catch(err => {
             console.error(err);

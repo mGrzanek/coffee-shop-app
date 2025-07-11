@@ -1,0 +1,15 @@
+@import "./../../../styles/settings.scss";
+
+.productsSumary {
+  font-weight: 500;
+}
+
+.productName {
+  font-size: 1.1rem;
+  font-family: $hero-title-font-family;
+  color: $main-color;
+}
+
+.messageLabel {
+  color: $main-color;
+}

@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../../redux/productsReducer";
 import { useCallback, useEffect, useState, useMemo } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
 import { removeCartProductThunk, updateCartProductThunk } from "../../../redux/cartProductsReducer";
 import { getStatus, updateStatus } from "../../../redux/statusReducer";
 
@@ -118,7 +118,9 @@ const CartItem = ({id, productId, productName, weightId, productWeight, productA
                    <div className="d-flex justify-content-around align-items-center col-12 col-md-5 py-1">
                         <AmountForm className="col-5" currentAmount={currentAmount} setCurrentAmount={updateAmount} />
                         <WeightsForm weights={weights} activeWeight={currentWeight} setActiveWeight={updateWeight} />
-                        <MessageToggler eventKey="0" activeKey={activeKey} setActiveKey={setActiveKey}  />
+                        <MessageToggler eventKey="0" activeKey={activeKey} setActiveKey={setActiveKey}>
+                            <FontAwesomeIcon className='cartItemBtn' icon={faPen} />
+                        </MessageToggler>
                         <FontAwesomeIcon className="cartItemBtn" icon={faTrash} onClick={remove} />
                    </div>
                 </ListGroup.Item>

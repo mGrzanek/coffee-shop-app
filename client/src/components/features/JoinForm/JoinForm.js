@@ -49,7 +49,7 @@ const JoinForm = () => {
     }
 
     return(
-        <Form className="col-12 col-sm-8 col-md-4 mx-auto" noValidate onSubmit={handleSubmit}>
+        <Form className="col-10 col-sm-8 col-md-4 mx-auto" noValidate onSubmit={handleSubmit}>
             {status === "loginError" && <AlertMessage variant="warning" alertTitle="Email exist yet" alertContent="Email is already taken" />}
             {status === "clientError" && <AlertMessage variant="danger" alertTitle="Invalid data" alertContent="YYou must complete all fields correctly." />}
             {status === "serverError" && <AlertMessage variant="danger" alertTitle="Something went wrong..." alertContent="Unexpected error... Please try again." />}

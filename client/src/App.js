@@ -14,6 +14,9 @@ import ProductVarieties from "./components/pages/ProductVarieties/ProductVarieti
 import JoinForm from "./components/features/JoinForm/JoinForm";
 import LoginForm from "./components/features/LoginForm/LoginForm";
 import Logout from "./components/Logout/Logout";
+import UserFavorites from "./components/pages/UserFavorites/UserFavorites";
+import UserOrders from "./components/views/UserOrders/UserOrders";
+import UserSettings from "./components/pages/UserSettings/UserSettings";
 import Footer from "./components/views/Footer/Footer";
 import NotFound from "./components/pages/NotFound/NotFound";
 import { fetchProducts } from "./redux/productsReducer";
@@ -44,9 +47,12 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/order/form" element={<OrderForm />} />
           <Route path="/order/summary" element={<OrderSummary />} />
-          <Route path="/auth/register" element={<JoinForm />} />
-          <Route path='/auth/login' element={<LoginForm />} />
-          <Route path='/auth/logout' element={<Logout />} />
+          <Route path="/register" element={<JoinForm />} />
+          <Route path='/login' element={<LoginForm />} />
+          <Route path='/logout' element={<Logout />} />
+          <Route path='/user/favorites' element={<UserFavorites />} />
+          <Route path='/user/orders' element={<UserOrders />} />
+          <Route path='/user/settings' element={<UserSettings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MainContainer>

@@ -10,7 +10,7 @@ const ProductOrderItem = ({productId, productName, productPrice, productSinglePr
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     
     const multiplier = weights.length > 0 ? weights.find(weight => weight.id === weightId).multiplier : null;
-    const currentProductPrice = productSinglePrice * currentWeightMultiplier;
+    const currentProductPrice = productSinglePrice*currentWeightMultiplier;
 
      useEffect(() => {
             setCurrentWeightMultiplier(multiplier);

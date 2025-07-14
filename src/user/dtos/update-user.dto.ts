@@ -10,11 +10,6 @@ import {
 } from 'class-validator';
 
 export class UpdateUserDto {
-  @IsNotEmpty()
-  @IsString()
-  @IsUUID()
-  cartId: string;
-
   @MinLength(3)
   @IsNotEmpty()
   @IsString()

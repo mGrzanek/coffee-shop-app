@@ -5,6 +5,7 @@ import NavBar from "./components/views/NavBar/NavBar";
 import Hero from "./components/views/Hero/Hero";
 import MainContainer from "./components/common/MainContainer/MainContainer";
 import Home from "./components/pages/Home/Home";
+import PrivateRoute from "./components/common/PrivateRoute/PrivateRoute";
 import Product from "./components/pages/Product/Product";
 import SearchPhrase from "./components/pages/SearchPhrase/SearchPhrase";
 import Cart from "./components/pages/Cart/Cart";
@@ -17,6 +18,7 @@ import Logout from "./components/Logout/Logout";
 import UserFavorites from "./components/pages/UserFavorites/UserFavorites";
 import UserOrders from "./components/views/UserOrders/UserOrders";
 import UserSettings from "./components/pages/UserSettings/UserSettings";
+import UserAddressForm from "./components/pages/UserAddressForm/UserAddressForm";
 import Footer from "./components/views/Footer/Footer";
 import NotFound from "./components/pages/NotFound/NotFound";
 import { fetchProducts } from "./redux/productsReducer";
@@ -49,10 +51,12 @@ const App = () => {
           <Route path="/order/summary" element={<OrderSummary />} />
           <Route path="/register" element={<JoinForm />} />
           <Route path='/login' element={<LoginForm />} />
-          <Route path='/logout' element={<Logout />} />
-          <Route path='/user/favorites' element={<UserFavorites />} />
-          <Route path='/user/orders' element={<UserOrders />} />
-          <Route path='/user/settings' element={<UserSettings />} />
+          <Route path='/logout' element={<PrivateRoute><Logout /></PrivateRoute>} />
+          <Route path='/user/favorites' element={<PrivateRoute><UserFavorites /></PrivateRoute>} />
+          <Route path='/user/orders' element={<PrivateRoute><UserOrders /></PrivateRoute>} />
+          <Route path='/user/settings' element={<PrivateRoute><UserSettings /></PrivateRoute>} />
+          <Route path='/user/settings/address' element={<PrivateRoute><UserAddressForm /></PrivateRoute>} />
+          <Route path='/user/settings/login' element={<PrivateRoute><UserAddressForm /></PrivateRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MainContainer>

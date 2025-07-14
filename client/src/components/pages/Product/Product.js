@@ -102,12 +102,16 @@ const Product = () => {
                     productId: product.id, userId: user.id
                 })); 
             }    
-        } else dispatch(updateStatus("authError"))
+        } else {
+            dispatch(updateStatus("authError"));
+            console.log('auth error');
+        }
     }
     
     return(
         <>
             {status === "clientError" && <AlertMessage variant="danger" alertTitle="Incorrect data" alertContent="Invalid params." />}
+            {status === "authError" && <AlertMessage variant="warning" alertTitle="Only for logged users" alertContent="This action is possible only after logged" />}
             {status === "clientConflict" && <AlertMessage variant="warning" alertTitle="Product limit" alertContent="You can add to cart max 10 pieces of selected product" />}
             {status === "pending" && !product && <Loader />}
             {status === "success" && !product && <Navigate to='/' />}

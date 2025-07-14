@@ -17,7 +17,7 @@ const AlertMessage = ({variant, alertTitle, alertContent}) => {
 
     return (
         <Col className="d-flex justify-content-center">
-            <Alert className="position-fixed top-50 z-2" variant={variant} onClose={() => dispatch(updateStatus(null))} dismissible>
+            <Alert className="position-fixed top-50 z-3" variant={variant} onClose={() => dispatch(updateStatus(null))} dismissible>
                 <Alert.Heading className="px-2">{alertTitle}</Alert.Heading>
                 <p className="px-3">{alertContent}</p>
             </Alert>

@@ -7,7 +7,6 @@ import OrderDetail from "../OrderDetail/OrderDetail";
 import ClientOrderItem from "../ClientOrderItem/ClientOrderItem";
 
 const UserOrder = ({id, createdAt, totalPrice, status, clientName, clientSurname, clientAddress, clientEmail, clientPhone, ...orders}) => {
-    console.log(orders);
     const [activeKey, setActiveKey] = useState(null);
     return(
         <Accordion activeKey={activeKey} onSelect={(e) => setActiveKey(e)}>

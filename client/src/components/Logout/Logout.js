@@ -23,7 +23,7 @@ const Logout = () => {
             })
             .then(() => {
                 dispatch(fetchUser());
-                //dispatch(updateStatus('success'));
+                dispatch(updateStatus('success'));
                 navigate("/");
             })
     }, [dispatch, navigate]);

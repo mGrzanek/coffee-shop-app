@@ -1,7 +1,8 @@
 import { Card, Button, Carousel } from "react-bootstrap";
 import { useParams, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductById } from "../../../redux/productsReducer";
+import { getUser } from "../../../redux/userReducer";
+import { getProductById, fetchLikedProduct, fetchUnlikedProduct } from "../../../redux/productsReducer";
 import { getStatus, updateStatus } from "../../../redux/statusReducer";
 import { IMG_URL } from "../../../config";
 import AlertMessage from './../../common/AlertMessage/AlertMessage';
@@ -11,10 +12,15 @@ import { useState, useEffect } from "react";
 import AmountForm from "../../features/AmountForm/AmountForm";
 import WeightsForm from "../../features/WeightsForm/WeightsForm";
 import { addCartProductThunk, getAllCartProducts, updateCartProductThunk } from "./../../../redux/cartProductsReducer";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
+import clsx from "clsx";
 
 const Product = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
+    const user = useSelector(getUser);
     const product = useSelector(state => getProductById(state, id));
     const cartProducts = useSelector(getAllCartProducts);
     const status = useSelector(getStatus);
@@ -23,6 +29,8 @@ const Product = () => {
     const [currentAmount, setCurrentAmount] = useState(1);
     const [currentWeight, setCurrentWeight] = useState(null);
     const [sorterdImages, setSortedImages] = useState([]);
+    const [animate, setAnimate] = useState(false);
+    const liked = !!(user && product.users.some(u => u.id === user.id));
 
     useEffect(() => {
         if(product && product.images.length > 0) {
@@ -78,6 +86,24 @@ const Product = () => {
             } 
         } else dispatch(updateStatus("clientError"));
     }
+
+    const toggleToFavorites = () => {
+        if(user && user.id){
+            setAnimate(true);
+            setTimeout(() => setAnimate(false), 1000);
+            if(liked) { 
+                dispatch(fetchUnlikedProduct({
+                    productId: product.id, 
+                    userId: user.id
+                }));
+            }
+            else {
+                dispatch(fetchLikedProduct({
+                    productId: product.id, userId: user.id
+                })); 
+            }    
+        } else dispatch(updateStatus("authError"))
+    }
     
     return(
         <>
@@ -91,6 +117,8 @@ const Product = () => {
                         <Carousel interval={null} slide={false}>
                             {sorterdImages.map(image => 
                             <Carousel.Item key={image.id}>
+                                <FontAwesomeIcon onClick={toggleToFavorites} className={clsx(styles.heart, animate && styles.glow)} 
+                                icon={liked ? solidHeart : regularHeart} />
                                 <Card.Img className={styles.cardImage} src={`${IMG_URL}/${image.image}`} />
                             </Carousel.Item>)}
                         </Carousel>

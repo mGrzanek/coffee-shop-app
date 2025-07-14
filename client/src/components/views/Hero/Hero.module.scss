@@ -2,8 +2,7 @@
 
 .hero {
     background: url('./../../../../public/images/hero/photo-hero.png') no-repeat center center/cover;
-    height: 100vh;
-    background-attachment: fixed;
+    height: 50vh;
     text-align: center;
     position: relative;
 }
@@ -13,18 +12,19 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 80vw;
 
     h1 {
         font-family: $hero-title-font-family;
         font-weight: 700;
-        font-size: 5rem;
+        font-size: 2.5rem;
         line-height: .9;
     }
 
     h4 {
         font-family: $hero-subtitle-font-family;
         font-style: italic;
-        letter-spacing: 1.5px;
+        letter-spacing: 1.2px;
     }
 
     h1, h4 {

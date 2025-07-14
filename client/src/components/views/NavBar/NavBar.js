@@ -39,25 +39,25 @@ const NavBar = () => {
                     {user && <div className={styles.productList}>   
                         <Nav.Link className={styles.navLink}>
                             <FontAwesomeIcon className={`${styles.cart}, d-md-none`} icon={faUser} />
-                            <span className="d-none d-md-block">Account</span>
-                            <ul className={styles.productVarieties}>
-                                <li>
-                                    <Nav.Link className={styles.navLink} as={NavLink}  to={`/user/favorites`}>
-                                        Favorites
-                                    </Nav.Link>
-                                </li>
-                                <li>
-                                    <Nav.Link className={styles.navLink} as={NavLink}  to={`/user/orders`}>
-                                        Orders
-                                    </Nav.Link>
-                                </li>
-                                <li>
-                                    <Nav.Link className={styles.navLink} as={NavLink}  to={`/user/settings`}>
-                                        Settings
-                                    </Nav.Link>
-                                </li>
-                            </ul>
+                            <span className={`${styles.navLink} d-none d-md-block`}>Account</span>
                         </Nav.Link>
+                        <ul className={styles.productVarieties}>
+                            <li>
+                                <Nav.Link className={styles.navLink} as={NavLink}  to={`/user/favorites`}>
+                                    Favorites
+                                </Nav.Link>
+                            </li>
+                            <li>
+                                <Nav.Link className={styles.navLink} as={NavLink}  to={`/user/orders`}>
+                                    Orders
+                                </Nav.Link>
+                            </li>
+                            <li>
+                                <Nav.Link className={styles.navLink} as={NavLink}  to={`/user/settings`}>
+                                    Settings
+                                </Nav.Link>
+                            </li>
+                        </ul>
                     </div>}
                     {user && <Nav.Link className={styles.navLink} as={NavLink} to="/logout">
                         <FontAwesomeIcon className={`${styles.cart}, d-md-none`} icon={faPowerOff} />

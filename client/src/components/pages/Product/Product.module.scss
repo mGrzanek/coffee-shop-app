@@ -5,6 +5,25 @@
     height: 340px; 
     object-fit: cover; 
     margin: 0 auto;
+    position: relative;
+}
+
+.heart {
+    color: $main-color;
+    font-size: 2rem;
+    position: absolute;
+    z-index: 10;
+    top: 10%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.glow {
+    animation: glow 1s ease;
 }
 
 .cardTitle {

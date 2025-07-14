@@ -8,3 +8,20 @@ $hero-subtitle-font-family: "Sevillana", cursive;
 $cream-color: burlywood;
 $main-color: rgb(100, 50, 25);
 $light-color: white;
+
+$slow-transition: all 1s ease;
+
+
+@keyframes glow {
+    0% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.4;
+    }
+
+    100% {
+      opacity: 1;
+    }
+}

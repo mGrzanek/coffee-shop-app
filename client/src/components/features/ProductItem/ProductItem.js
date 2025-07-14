@@ -5,26 +5,32 @@ import { NavLink } from "react-router-dom";
 import { IMG_URL } from "../../../config";
 import { useDispatch, useSelector } from "react-redux";
 import { updateStatus } from "../../../redux/statusReducer";
+import { getUser } from "../../../redux/userReducer";
 import { addCartProductThunk, updateCartProductThunk, getAllCartProducts } from "../../../redux/cartProductsReducer";
+import { fetchLikedProduct, fetchUnlikedProduct } from "../../../redux/productsReducer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping,  faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import WeightsForm from "../WeightsForm/WeightsForm";
 import AmountForm from "../AmountForm/AmountForm";
 import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 
-const ProductItem = ({id, name, images, price, weights}) => {
+const ProductItem = ({id, name, images, price, weights, users}) => {
     const dispatch = useDispatch();
+    const user = useSelector(getUser);
     const cartProducts = useSelector(getAllCartProducts);
     const [currentPrice, setCurrentPrice] = useState(null);
     const [currentWeight, setCurrentWeight] = useState(null);
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
     const [currentAmount, setCurrentAmount] = useState(1);
     const [currentImage, setCurrentImage] = useState(null);
+    const [animate, setAnimate] = useState(false);
+    const liked = !!(user && users.some(u => u.id === user.id));
 
     useEffect(() => {
         if(images.length > 0) {
-            const mainImage = images.find(image => !image.image.includes('other')).image;
+            const mainImage = images.find(image => !image?.image.includes('other')).image;
             setCurrentImage(mainImage);
         }
     }, [images]);
@@ -72,10 +78,29 @@ const ProductItem = ({id, name, images, price, weights}) => {
         } else dispatch(updateStatus("clientError"));
     }
 
+    const toggleToFavorites = () => {
+        if(user && user.id){
+            setAnimate(true);
+            setTimeout(() => setAnimate(false), 1000);
+            if(liked) { 
+                dispatch(fetchUnlikedProduct({
+                    productId: id, 
+                    userId: user.id
+                }));
+            }
+            else {
+                dispatch(fetchLikedProduct({
+                    productId: id, userId: user.id
+                })); 
+            }    
+        } else dispatch(updateStatus("authError"))
+    }
+
     return(
         <Col xs={11} sm={6} md={4} lg={3} className="pb-3 p-md-2">
             <Card className={clsx(styles.card)}>
                 <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+                <FontAwesomeIcon onClick={toggleToFavorites} className={clsx(styles.heart, animate && styles.glow)} icon={liked ? solidHeart : regularHeart} />
                 <Card.Img variant="top" src={`${IMG_URL}/${currentImage}`} className={styles.cardImage} />
                 <div className="d-flex flex-column align-items-center justify-content-center" as={NavLink} to={`/products/${id}`}>
                     <Card.Title className={clsx(styles.cardTitle, "mt-3 text-center")} as={NavLink} to={`/products/${id}`}>{name}</Card.Title>
@@ -100,6 +125,7 @@ ProductItem.propTypes = {
     images: PropTypes.array.isRequired,
     price: PropTypes.number.isRequired,
     weights: PropTypes.array.isRequired,
+    users: PropTypes.array.isRequired,
 }
 
 export default ProductItem;

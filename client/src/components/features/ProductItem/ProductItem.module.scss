@@ -16,6 +16,7 @@
     max-height: 230px; 
     object-fit: cover; 
     margin: 0 auto;
+    position: relative;
 }
 
 .cardTitle {
@@ -32,4 +33,22 @@
     font-family: $hero-title-font-family;
     color: darken($cream-color, 20%);
     padding: 5px;
+}
+
+.heart {
+    color: $main-color;
+    font-size: 1.8rem;
+    position: absolute;
+    z-index: 10;
+    top: 10%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.glow {
+    animation: glow 1s ease;
 }

@@ -1,4 +1,5 @@
 import { API_URL } from "../config";
+import { updateStatus } from "./statusReducer";
 
 //selectors
 export const getUser = ({user}) => user;
@@ -14,22 +15,27 @@ export const setUser = payload => ({type: SET_USER, payload});
 export const logOut = payload => ({type: LOG_OUT, payload});
 
 export const fetchUser = () => {
-    return(dispatch) => {
-        fetch(`${API_URL}/api/auth/user`, {
-            credentials: 'include',
-        })
-        .then(res => {
-            if (res.ok) return res.json();
-            else dispatch(setUser(null));
-        })
-        .then(data => {
-            dispatch(setUser( data ));
-        })
-        .catch(err => {
-            console.error(err);
-        });
-    }
-}
+  return (dispatch) => {
+    dispatch(updateStatus('pending'));
+    fetch(`${API_URL}/api/auth/user`, {
+      credentials: 'include',
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          const data = await res.json();
+          dispatch(setUser(data));
+        } else {
+          dispatch(setUser(null));
+        }
+      })
+      .catch((err) => {
+        console.error('Fetch user error:', err);
+        dispatch(setUser(null));
+        dispatch(updateStatus('serverError'));
+      });
+  };
+};
+
 
 const userReducer = (statePart = null, action) => {
     switch(action.type){

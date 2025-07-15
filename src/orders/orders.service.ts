@@ -86,9 +86,11 @@ export class OrdersService {
             },
           };
           if (userId) {
+            const user = await this.userService.getUserById(userId);
             orderDataToCreate.user = {
               connect: { id: userId },
             };
+            orderDataToCreate.clientEmail = user.email;
           }
           return await this.prismaService.order.create({
             data: orderDataToCreate,

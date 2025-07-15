@@ -32,12 +32,13 @@ export const fetchUser = () => {
         console.error('Fetch user error:', err);
         dispatch(setUser(null));
         dispatch(updateStatus('serverError'));
+        dispatch(updateStatus('serverError'));
       });
   };
 };
 
-export const fetchUpdateUser = (dataUser) => {
-  return(dispatch) => {
+export const fetchUpdateUserData = (dataUser) => {
+  return (dispatch) => {
     dispatch(updateStatus('pending'));
     const options = {
       method: 'PUT',
@@ -47,7 +48,19 @@ export const fetchUpdateUser = (dataUser) => {
       },
       body: JSON.stringify(dataUser),
     };
-    // fetch(`${API_URL}/api/auth`)
+    fetch(`${API_URL}/api/auth/user/data`, options)
+      .then(async res => {
+        if(res.ok) {
+          const data = await res.json();
+          dispatch(setUser(data));
+          dispatch(updateStatus('success'));
+        } else if (res.status >= 400 && res.status < 500) dispatch(updateStatus('clientError'));
+        else dispatch(updateStatus('serverError'));
+      })
+      .catch((err) => {
+        console.error('fetchUpdateUserData error:', err);
+        dispatch(updateStatus('serverError'));
+      });
   }
 }
 

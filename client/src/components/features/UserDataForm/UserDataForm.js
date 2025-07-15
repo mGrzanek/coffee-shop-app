@@ -1,5 +1,6 @@
 import { Form, Col, Row } from "react-bootstrap";
 import PropTypes from 'prop-types';
+import { useEffect } from "react";
 import { 
     isFirstNameValid,
     isLastNameValid,
@@ -9,7 +10,16 @@ import {
     isStreetNumberValid,
     isCityValid } from "../../../utils/validators";
 
-const UserDataForm = ({firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, street, setStreet, streetNumber, setStreetNumber, city, setCity, validated }) => {
+const UserDataForm = ({firstName, setFirstName, lastName, setLastName, email, setEmail, phone, setPhone, street, setStreet, streetNumber, setStreetNumber, city, setCity, validated, isUser, isFormValid, setIsFormValid }) => {
+    useEffect(() => {
+        if( isFirstNameValid(firstName) 
+            && isLastNameValid(lastName) 
+            && isPhoneValid(phone) 
+            && isStreetValid(street) 
+            && isStreetNumberValid(streetNumber) 
+            && isCityValid(city)) setIsFormValid(true);
+        else setIsFormValid(false);
+    }, [firstName, lastName, email, phone, street, streetNumber, city, setIsFormValid]);
     return(
         <>
             <Form.Group className="mb-3" controlId="formFirstName">
@@ -35,7 +45,7 @@ const UserDataForm = ({firstName, setFirstName, lastName, setLastName, email, se
             </Form.Group>
             <Form.Group controlId="formEmail" className="mb-3">
                 <Form.Label>Email: </Form.Label>
-                <Form.Control type="email" value={email} placeholder="Email" onChange={e => setEmail(e.target.value)} isInvalid={validated && (!isEmailValid(email))} required />
+                <Form.Control type="email" value={email} disabled={isUser} placeholder="Email" onChange={e => setEmail(e.target.value)} isInvalid={validated && (!isEmailValid(email))} required />
                 <Form.Control.Feedback type="invalid">
                     Invalid email
                 </Form.Control.Feedback>
@@ -71,7 +81,7 @@ UserDataForm.propTypes = {
     lastName: PropTypes.string.isRequired,
     setLastName: PropTypes.func.isRequired,
     email: PropTypes.string.isRequired,
-    setEmail: PropTypes.func.isRequired,
+    setEmail: PropTypes.func,
     phone: PropTypes.string.isRequired,
     setPhone: PropTypes.func.isRequired,
     street: PropTypes.string.isRequired,
@@ -81,6 +91,9 @@ UserDataForm.propTypes = {
     city: PropTypes.string.isRequired,
     setCity: PropTypes.func.isRequired,
     validated: PropTypes.bool.isRequired,
+    isUser: PropTypes.bool.isRequired,
+    isFormValid: PropTypes.bool.isRequired,
+    setIsFormValid: PropTypes.func.isRequired,
 }
 
 export default UserDataForm;

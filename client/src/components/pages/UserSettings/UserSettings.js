@@ -6,7 +6,6 @@ import { updateStatus, getStatus } from "../../../redux/statusReducer";
 import { getUser } from "../../../redux/userReducer";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import UserAddressForm from "../UserAddressForm/UserAddressForm";
 
 const UserSettings = () => {
     const user = useSelector(getUser);

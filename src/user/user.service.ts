@@ -35,7 +35,10 @@ export class UserService {
     });
   }
   public async createNewUser(
-    userData: Omit<User, 'id' | 'role'>,
+    userData: Omit<
+      User,
+      'id' | 'role' | 'firstName' | 'lastName' | 'phone' | 'address'
+    >,
     password: Password['hashedPassword'],
   ): Promise<User> {
     try {
@@ -67,7 +70,7 @@ export class UserService {
           data: {
             ...updatedUserData,
             password: {
-              create: {
+              update: {
                 hashedPassword: password,
               },
             },

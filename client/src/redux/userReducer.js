@@ -36,6 +36,21 @@ export const fetchUser = () => {
   };
 };
 
+export const fetchUpdateUser = (dataUser) => {
+  return(dispatch) => {
+    dispatch(updateStatus('pending'));
+    const options = {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataUser),
+    };
+    // fetch(`${API_URL}/api/auth`)
+  }
+}
+
 
 const userReducer = (statePart = null, action) => {
     switch(action.type){

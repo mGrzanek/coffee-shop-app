@@ -1,18 +1,24 @@
 import {
   Controller,
   Get,
+  Put,
   Post,
   Body,
   UseGuards,
   Request,
   Response,
   Delete,
+  NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from 'src/user/user.service';
 import { RegisterDTO } from './dtos/register.dto';
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { UpdateUserDataDto } from './dtos/update-user-data.dto';
+import { UpdateUserPassword } from './dtos/update-user-password.dto';
+import * as bcrypt from 'bcryptjs';
 
 @Controller('auth')
 export class AuthController {
@@ -42,6 +48,41 @@ export class AuthController {
   @Get('/user')
   async getUser(@Request() req) {
     return this.userService.getUserById(req.user.userId);
+  }
+  @UseGuards(JwtAuthGuard)
+  @Put('/user/data')
+  async upadateUserData(@Request() req, @Body() userData: UpdateUserDataDto) {
+    const userId = req.user?.userId;
+    const user = await this.userService.getUserById(userId);
+    if (user) {
+      const newData = { ...userData, email: req.user?.email };
+      return this.userService.updateUserById(userId, newData, undefined);
+    } else throw new NotFoundException('User not found');
+  }
+  @UseGuards(JwtAuthGuard)
+  @Put('/user/password')
+  async updateUserPassword(
+    @Request() req,
+    @Body() userPassword: UpdateUserPassword,
+  ) {
+    const user = await this.userService.getUserById(req.user?.userId);
+    if (user) {
+      const isCorrectPassword = this.authService.validateUser(
+        user.email,
+        userPassword.password,
+      );
+      if (isCorrectPassword) {
+        const hashedNewPassword = await bcrypt.hash(
+          userPassword.newPassword,
+          10,
+        );
+        return this.userService.updateUserById(
+          user.id,
+          undefined,
+          hashedNewPassword,
+        );
+      } else throw new BadRequestException('Invalid data');
+    }
   }
   @UseGuards(JwtAuthGuard)
   @Delete('/logout')

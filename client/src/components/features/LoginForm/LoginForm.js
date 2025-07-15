@@ -8,7 +8,7 @@ import AlertMessage from "../../common/AlertMessage/AlertMessage";
 import Loader from "../../common/Loader/Loader";
 import PageTitle from "../../common/PageTitle/PageTitle";
 import { useState } from "react";
-import { emailValidator } from "../../../utils/emailValidator"; 
+import { isEmailValid } from "../../../utils/validators";
 
 const LoginForm = () => {
     const status = useSelector(getStatus);
@@ -17,12 +17,11 @@ const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [validated, setValidated] = useState(false);
-    const isEmailValid = emailValidator(email);
 
     const handleSubmit = e => {
         e.preventDefault();
         setValidated(true);
-        if(isEmailValid && password){
+        if(isEmailValid(email) && password){
             const options = {
                 method: 'POST',
                 headers: {
@@ -57,7 +56,7 @@ const LoginForm = () => {
             </h2>
             <Form.Group className="mb-3" controlId="formLogin">
                 <Form.Label>Email: </Form.Label>
-                <Form.Control type="text" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} isInvalid={validated && !isEmailValid} required />
+                <Form.Control type="text" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} isInvalid={validated && !isEmailValid(email)} required />
                 <Form.Control.Feedback type="invalid">
                     Invalid email.
                 </Form.Control.Feedback>

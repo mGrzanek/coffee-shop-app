@@ -4,6 +4,7 @@ import { getStatus, updateStatus } from "../../../redux/statusReducer";
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import Loader from "../Loader/Loader";
+import PropTypes from 'prop-types';
 
 const PrivateRoute = ({children}) => {
     const user = useSelector(getUser);
@@ -22,6 +23,10 @@ const PrivateRoute = ({children}) => {
             {user && <span>{children}</span>}
         </>
     );
+}
+
+PrivateRoute.propTypes = {
+    children: PropTypes.node,
 }
 
 export default PrivateRoute

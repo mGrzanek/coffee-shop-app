@@ -1,7 +1,7 @@
 import { Form, Button } from 'react-bootstrap';
 import { getStatus, updateStatus } from "../../../redux/statusReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { emailValidator } from '../../../utils/emailValidator';
+import { isEmailValid } from '../../../utils/validators';
 import Loader from "../../common/Loader/Loader";
 import PageTitle from '../../common/PageTitle/PageTitle';
 import { useState } from "react";
@@ -17,14 +17,13 @@ const JoinForm = () => {
     const [password, setPassword] = useState('');
     const [passwordRepeat, setPasswordRepeat] = useState('');
     const [validated, setValidated] = useState(false);
-    const isEmailValid = emailValidator(email);
     const isPasswordValid = /^[A-Za-z0-9!@#$%^&*_+-?]{10,}$/.test(password);
     const isRepeatPassword = password === passwordRepeat;
 
     const handleSubmit = e => {
         e.preventDefault();
         setValidated(true)
-        if(isEmailValid && isPasswordValid && isRepeatPassword){
+        if(isEmailValid(email) && isPasswordValid && isRepeatPassword){
             const options = {
             method: 'POST',
             headers: {
@@ -59,7 +58,7 @@ const JoinForm = () => {
             </h2>
             <Form.Group className="mb-3" controlId="formLogin">
                 <Form.Label>Email: </Form.Label>
-                <Form.Control type="text" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} isInvalid={validated && !isEmailValid} required />
+                <Form.Control type="text" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} isInvalid={validated && !isEmailValid(email)} required />
                 <Form.Control.Feedback type="invalid">
                     Invalid email.
                 </Form.Control.Feedback>

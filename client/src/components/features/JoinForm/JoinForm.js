@@ -1,8 +1,9 @@
 import { Form, Button } from 'react-bootstrap';
 import { getStatus, updateStatus } from "../../../redux/statusReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { isEmailValid } from '../../../utils/validators';
+import { isEmailValid, isPasswordValid } from '../../../utils/validators';
 import Loader from "../../common/Loader/Loader";
+import PasswordForm from '../PasswordForm/PasswordForm';
 import PageTitle from '../../common/PageTitle/PageTitle';
 import { useState } from "react";
 import AlertMessage from '../../common/AlertMessage/AlertMessage';
@@ -17,13 +18,12 @@ const JoinForm = () => {
     const [password, setPassword] = useState('');
     const [passwordRepeat, setPasswordRepeat] = useState('');
     const [validated, setValidated] = useState(false);
-    const isPasswordValid = /^[A-Za-z0-9!@#$%^&*_+-?]{10,}$/.test(password);
     const isRepeatPassword = password === passwordRepeat;
 
     const handleSubmit = e => {
         e.preventDefault();
         setValidated(true)
-        if(isEmailValid(email) && isPasswordValid && isRepeatPassword){
+        if(isEmailValid(email) && isPasswordValid(password) && isRepeatPassword){
             const options = {
             method: 'POST',
             headers: {
@@ -50,7 +50,7 @@ const JoinForm = () => {
     return(
         <Form className="col-10 col-sm-8 col-md-4 mx-auto" noValidate onSubmit={handleSubmit}>
             {status === "loginError" && <AlertMessage variant="warning" alertTitle="Email exist yet" alertContent="Email is already taken" />}
-            {status === "clientError" && <AlertMessage variant="danger" alertTitle="Invalid data" alertContent="YYou must complete all fields correctly." />}
+            {status === "clientError" && <AlertMessage variant="danger" alertTitle="Invalid data" alertContent="You must complete all fields correctly." />}
             {status === "serverError" && <AlertMessage variant="danger" alertTitle="Something went wrong..." alertContent="Unexpected error... Please try again." />}
             {status === "pending" && <Loader />}
             <h2 className="my-4 text-warning">
@@ -63,20 +63,8 @@ const JoinForm = () => {
                     Invalid email.
                 </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formPassword">
-                <Form.Label>Password: </Form.Label>
-                <Form.Control type="password"  placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} isInvalid={validated && !isPasswordValid } required />
-                <Form.Control.Feedback type="invalid">
-                    Password must min 10 chars with letters, numbers and special (!@#$%^&*_+-?)
-                </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formRepeatPassword">
-                <Form.Label>Repeat password: </Form.Label>
-                <Form.Control type="password"  placeholder="Password Repeat" value={passwordRepeat} onChange={e => setPasswordRepeat(e.target.value)} isInvalid={validated && !isRepeatPassword } required />
-                <Form.Control.Feedback type="invalid">
-                    The password must be the same!
-                </Form.Control.Feedback>
-            </Form.Group>
+            <PasswordForm password={password} setPassword={setPassword} passwordRepeat={passwordRepeat} setPasswordRepeat={setPasswordRepeat} 
+                isRepeatPassword={isRepeatPassword} validated={validated} register={true} />
             <Button type="submit" variant="outline-light" className='btn-one'>Join</Button>
         </Form>
     );

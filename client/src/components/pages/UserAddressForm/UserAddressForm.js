@@ -41,7 +41,7 @@ const UserAddressForm = () => {
         } else dispatch(updateStatus('clientError'));
     }
     return(
-        <Form className="col-10 col-sm-8 col-md-6 mx-auto" noValidate onSubmit={updateUserData}>
+        <Form className="col-9 col-sm-7 col-md-6 mx-auto" noValidate onSubmit={updateUserData}>
             {status === "clientError" && <AlertMessage variant="danger" alertTitle="Incorrect data" alertContent="Invalid params." />}
             {status === "serverError" && <AlertMessage variant="danger" alertTitle="Something went wrong..." alertContent="Unexpected error... Please try again." />}
             <PageTitle>Update your data:</PageTitle>
@@ -49,7 +49,10 @@ const UserAddressForm = () => {
                 setLastName={setLastName} email={user.email} phone={phone} setPhone={setPhone} street={street} setStreet={setStreet}
                 streetNumber={streetNumber} setStreetNumber={setStreetNumber} city={city} setCity={setCity} validated={validated} isUser={true} 
                 isFormValid={isFormValid} setIsFormValid={setIsFormValid}/>
-            <Button type='submit' className="btn-one">Save</Button>
+            <div className='d-flex justify-content-around align-items-center'>
+                <Button type='submit' className="btn-one">Save</Button>
+                <Button type="button" variant="outline-light" className='btn-one' onClick={() => navigate('/user/settings')}>Cancel</Button>
+            </div>
         </Form>
     );
 }

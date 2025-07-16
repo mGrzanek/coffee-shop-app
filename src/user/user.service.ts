@@ -84,7 +84,7 @@ export class UserService {
     } catch (err) {
       if (err.code === 'P2002')
         throw new ConflictException('This email is already exist');
-      else throw err;
+      else console.error(err);
     }
   }
   public removeUserById(id: User['id']): Promise<User> {

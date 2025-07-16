@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 const ClientOrderItem = ({firstName, lastName, phone, email, address}) => {
      return(
         <ListGroup.Item>
-            <div className="mx-auto col-10 d-flex flex-column flex-sm-row justify-content-sm-around align-items-center align-items-sm-start">
-                <div className="col-6 py-3">
+            <div className="mx-auto col-10 d-flex flex-column flex-sm-row justify-content-sm-start align-items-center align-items-sm-start">
+                <div className="col-6 col-sm-4 py-3 px-2">
                     <div className={styles.label}>Client:</div>
                     <div>{firstName} {lastName}</div>
                     <div>{email}</div>

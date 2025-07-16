@@ -23,8 +23,8 @@ const UserSettings = () => {
             <PageTitle>Settings:</PageTitle>
             {!user && status === 'authError' && <Navigate to='/' />}
             {user && status === null && <ListGroup className="col-10 mx-auto text-center">
-                <ListGroup.Item><Nav.Link className={styles.settingLink} as={NavLink} to="/user/settings/address">Update adress data</Nav.Link></ListGroup.Item>
-                <ListGroup.Item><Nav.Link className={styles.settingLink} as={NavLink}>Update login or password</Nav.Link></ListGroup.Item>
+                <ListGroup.Item><Nav.Link className={styles.settingLink} as={NavLink} to="/user/settings/data">Update user data</Nav.Link></ListGroup.Item>
+                <ListGroup.Item><Nav.Link className={styles.settingLink} as={NavLink} to="/user/settings/password">Update password</Nav.Link></ListGroup.Item>
             </ListGroup>}
         </>
        

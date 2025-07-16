@@ -25,3 +25,7 @@ export const isStreetNumberValid = value => {
 export const isCityValid = value => {
     return /^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9\s.'/-]{3,40}$/.test(value);
 };
+
+export const isPasswordValid = value => {
+    return /^[A-Za-z0-9!@#$%^&*_+-?]{10,}$/.test(value);
+}

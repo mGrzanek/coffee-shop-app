@@ -67,7 +67,7 @@ const OrderSummary = () => {
                 if (res.ok) {
                     dispatch(updateClientThunk(null));
                     dispatch(removeAllCartProductsThunk());
-                    dispatch(fetchUser());
+                    dispatch(fetchUser())
                     dispatch(updateStatus('success'));
                     navigate('/');
                 } else if(res.status >= 400 && res.status < 500) dispatch(updateStatus("clientError"));
@@ -94,7 +94,7 @@ const OrderSummary = () => {
                 <ListGroup.Item>
                     <div className="d-flex justify-content-between align-items-center col-11">
                         <div className={styles.delivery}>Delivery price:</div> 
-                        <span className=" mx-md-4 mx-lg-5">{currentDeliveryPrice.toFixed(2)} $</span>
+                        <span >{currentDeliveryPrice.toFixed(2)} $</span>
                     </div>
                 </ListGroup.Item>
                 <ListGroup.Item className="summaryLabel px-sm-5 d-flex justify-content-center justify-content-sm-end align-items-center">

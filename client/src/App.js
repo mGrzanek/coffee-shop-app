@@ -19,6 +19,7 @@ import UserFavorites from "./components/pages/UserFavorites/UserFavorites";
 import UserOrders from "./components/views/UserOrders/UserOrders";
 import UserSettings from "./components/pages/UserSettings/UserSettings";
 import UserAddressForm from "./components/pages/UserAddressForm/UserAddressForm";
+import UserUpdatePassword from "./components/pages/UserUpdatePassword/UserUpdatePassword";
 import Footer from "./components/views/Footer/Footer";
 import NotFound from "./components/pages/NotFound/NotFound";
 import { fetchProducts } from "./redux/productsReducer";
@@ -55,8 +56,8 @@ const App = () => {
           <Route path='/user/favorites' element={<PrivateRoute><UserFavorites /></PrivateRoute>} />
           <Route path='/user/orders' element={<PrivateRoute><UserOrders /></PrivateRoute>} />
           <Route path='/user/settings' element={<PrivateRoute><UserSettings /></PrivateRoute>} />
-          <Route path='/user/settings/address' element={<PrivateRoute><UserAddressForm /></PrivateRoute>} />
-          <Route path='/user/settings/login' element={<PrivateRoute><UserAddressForm /></PrivateRoute>} />
+          <Route path='/user/settings/data' element={<PrivateRoute><UserAddressForm /></PrivateRoute>} />
+          <Route path='/user/settings/password' element={<PrivateRoute><UserUpdatePassword /></PrivateRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </MainContainer>

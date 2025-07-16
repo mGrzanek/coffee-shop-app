@@ -1,7 +1,8 @@
 @import './../../../styles/settings.scss';
 
 .settingLink {
-    font-size: 1.1rem;
+    font-size: .8rem;
     color: $main-color;
-    font-weight: 500;
+    font-weight: 700;
+    text-transform: uppercase;
 }

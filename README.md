@@ -1,6 +1,7 @@
 # coffee shop app
 
 This is full-stack coffee shop web app that allows users to browse, customize and order coffee products. The app features real-time price updates, dynamic filtering, detailed product pages, cart management with notes and a streamlined order flow with summary and confirmation.
+Additionally, the app supports user registration and login. Logged users have access to a personal dashboard with favorite products, account settings and order history. They can add items to favorites, update their personal data or password and review past orders.
 
 https://coffee-shop-app-hbwo.onrender.com/
 
@@ -12,9 +13,18 @@ The application consists of the following pages:
 - `/product/:id` – Detailed view of a single product. Options can be modified and the product added to the cart with updated price.
 - `/products/varieties/:variety` – Filters products by variety.
 - `/products/search/:searchPhrase` – Filters products by search phrase.
-- `/cart` – Displays current cart contents. Allows editing/removing products and adding individual notes. All prices are updated live.
+- `/cart` – Displays current cart contents. Allows editing/removing products and adding individual notes by click on the pencil icon. All prices are updated live.
 - `/order/form` – Order placement form.
 - `/order/summary` – Displays order summary before final submission.
+- `/register` – User registration form.
+- `/login` – User login form.
+- `/logout` – Logs out the current user.
+- `/user/orders` – Displays a logged-in user order history. Clicking on order number opens detailed view.
+- `/user/favorites` – Displays a logged-in user favorite products.
+- `/user/settings` – User settings dashboard for logged-in users.
+- `/user/settings/data` – Form to update user personal data (firstname, lastname, phone, address).
+- `/user/settings/password` – Form to change the user password.
+
 
 ## Technologies Used
 
@@ -23,7 +33,7 @@ The application consists of the following pages:
 
 ## Work in Progress
 
-Work on user registration and login is currently underway.
+Development of the admin panel is currently in progress.
 
 ## Configuration
 

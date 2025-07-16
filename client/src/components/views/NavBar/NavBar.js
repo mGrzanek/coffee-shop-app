@@ -1,6 +1,6 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { getAllProducts } from "../../../redux/productsReducer";
 import { getUser } from "../../../redux/userReducer";
 import { getAllCartProducts } from "../../../redux/cartProductsReducer";
@@ -12,10 +12,19 @@ import styles from './NavBar.module.scss';
 const NavBar = () => {
     const cartProducts = useSelector(getAllCartProducts);
     const products = useSelector(getAllProducts);
+    const [productsAmount, setProductsAmount] = useState(0);
     const user = useSelector(getUser);
     const varieties = useMemo(() => {
     return [...new Set(products.map(product => product.variety))];
     }, [products]);
+
+    useEffect(() => {
+        if(cartProducts.length > 0) setProductsAmount(cartProducts.map(cartProduct => cartProduct.productAmount).reduce((acc, item) => { 
+            return acc + item 
+        }, 0));
+    }, [cartProducts]);
+    
+
 
     return(
         <Navbar data-bs-theme="dark" className={styles.navbar}>
@@ -73,7 +82,7 @@ const NavBar = () => {
                     </Nav.Link>}
                     <Nav.Link className={styles.navLink} as={NavLink} to="/cart">
                         <FontAwesomeIcon className={styles.cart} icon={faCartShopping} />
-                        {cartProducts.length > 0 && <div className={styles.cartBadge}>{cartProducts.length}</div>}
+                        {cartProducts.length > 0 && <div className={styles.cartBadge}>{productsAmount}</div>}
                     </Nav.Link>
                 </Nav>
             </Container>

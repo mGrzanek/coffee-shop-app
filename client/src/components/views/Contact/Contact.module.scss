@@ -1,0 +1,21 @@
+@import './../../../styles/settings.scss';
+
+.contact {
+    padding: 15px;
+    h4 {
+        color: $main-color;
+        font-weight: 600;
+    }
+
+    div {
+        font-size: .8rem;
+        font-weight: 500;
+    }
+}
+
+.form {
+    border: 1px solid $cream-color;
+    box-shadow: 1px 1px 8px $cream-color;
+    padding: 5px;
+    margin-bottom: 10px;
+}

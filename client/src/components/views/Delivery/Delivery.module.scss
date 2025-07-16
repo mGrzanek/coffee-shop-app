@@ -1,0 +1,16 @@
+@import './../../../styles/settings.scss';
+
+.delivery {
+    display: flex;
+    align-items: center;
+    
+    :first-child {
+        color: $main-color;
+        font-size: 1.1rem;
+        padding: 5px;
+    }
+
+    span {
+        font-size: 1rem;
+    }
+}

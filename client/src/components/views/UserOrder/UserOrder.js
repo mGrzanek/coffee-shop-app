@@ -27,7 +27,7 @@ const UserOrder = ({id, createdAt, totalPrice, status, clientName, clientSurname
             <Accordion.Collapse eventKey="0">
                 <div>
                     {orders.orderedProducts.map(orderedProduct => <OrderDetail key={orderedProduct.id} productName={orderedProduct.product.name} productAmount={orderedProduct.productAmount} 
-                        productWeight={orderedProduct.weight.value} currentSinglePrice={orderedProduct.productSinglePrice} optionalMessage={orderedProduct.optionalMessage} productPrice={orderedProduct.productPrice} />)}
+                        productWeight={orderedProduct.weight.value} currentProductPrice={orderedProduct.productPrice} optionalMessage={orderedProduct.optionalMessage} productPrice={orderedProduct.productPrice} />)}
                     <ClientOrderItem firstName={clientName} lastName={clientSurname} phone={clientPhone} email={clientEmail} address={clientAddress.split(' ')} />
                 </div>
             </Accordion.Collapse>

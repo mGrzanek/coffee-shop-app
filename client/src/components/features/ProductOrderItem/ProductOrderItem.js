@@ -8,13 +8,18 @@ const ProductOrderItem = ({productId, productName, productPrice, productSinglePr
     const product = useSelector(state => getProductById(state, productId));
     const weights = product ? product.weights : [];
     const [currentWeightMultiplier, setCurrentWeightMultiplier] = useState(null);
+    const [currentProductPrice, setCurrentProductPrice] = useState(null);
     
     const multiplier = weights.length > 0 ? weights.find(weight => weight.id === weightId).multiplier : null;
-    const currentProductPrice = productSinglePrice*currentWeightMultiplier;
 
      useEffect(() => {
-            setCurrentWeightMultiplier(multiplier);
-        }, [multiplier]);
+        setCurrentWeightMultiplier(multiplier);
+    }, [multiplier]);
+
+    useEffect(() => {
+        if(currentWeightMultiplier && productSinglePrice) setCurrentProductPrice(productSinglePrice*currentWeightMultiplier);
+    }, [productSinglePrice, currentWeightMultiplier]);
+
 
     return(
        <> 

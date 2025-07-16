@@ -1,7 +1,7 @@
 import { ListGroup } from "react-bootstrap";
 import styles from './OrderDetail.module.scss';
 
-const OrderDetail = ({productName, productWeight, productAmount, currentSinglePrice, productPrice, optionalMessage }) => {
+const OrderDetail = ({productName, productWeight, productAmount, currentProductPrice, productPrice, optionalMessage }) => {
     return(
         <ListGroup.Item className={styles.productsSumary}>
             <div className="d-flex flex-column flex-sm-row justify-content-around align-items-center">
@@ -12,9 +12,9 @@ const OrderDetail = ({productName, productWeight, productAmount, currentSinglePr
                     <div className="w-100 col-12 d-flex align-items-center justify-content-around">
                         <div>{productWeight}g</div>
                         <div>
-                            {productAmount} x {typeof currentSinglePrice === 'number' ? currentSinglePrice.toFixed(2) : '0.00'} $
+                            {productAmount} x $ {currentProductPrice.toFixed(2)}
                         </div>
-                        <div>{typeof productPrice === 'number' ? productPrice.toFixed(2) : '0.00'} $</div>
+                        <div>$ {productPrice.toFixed(2)}</div>
                     </div>
                     {optionalMessage && (
                         <div className="pt-3 col-10 d-flex justify-content-center justify-content-sm-start align-items-center">

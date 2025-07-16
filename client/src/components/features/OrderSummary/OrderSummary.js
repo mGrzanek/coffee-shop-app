@@ -92,7 +92,7 @@ const OrderSummary = () => {
                     {products.map(product => <ProductOrderItem key={product.id} {...product} />)}
                 <ClientOrderItem {...client} />
                 <ListGroup.Item>
-                    <div className="d-flex justify-content-between align-items-center col-11">
+                    <div className="mx-auto d-flex justify-content-between align-items-center col-11">
                         <div className={styles.delivery}>Delivery price:</div> 
                         <span >{currentDeliveryPrice.toFixed(2)} $</span>
                     </div>

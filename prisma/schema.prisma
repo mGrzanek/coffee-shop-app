@@ -98,13 +98,24 @@ model User {
   password Password?
   orders Order[]
   favorites Product[] @relation("ProductUser")
+  messages Messages[]
 }
 
 model Password {
-  id       String @id @default(uuid())
+  id String @id @default(uuid())
   hashedPassword String
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   String @unique
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+}
+
+model Messages {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  subject String
+  message String
+  email String
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
 }
 
 

@@ -12,6 +12,7 @@ import { PhotosModule } from './photos/photos.module';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
+import { MessagesModule } from './messages/messages.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -31,6 +32,7 @@ import configuration from './config/configuration';
       load: [configuration],
       isGlobal: true,
     }),
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

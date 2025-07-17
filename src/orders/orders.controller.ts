@@ -12,11 +12,15 @@ import {
 import { OrdersService } from './orders.service';
 import { CreateOrderDTO } from './dtos/create-order.dto';
 import { JwtOptionalAuthGuard } from 'src/auth/jwt-optional-auth.guard';
+import { AdminAuthGuard } from 'src/auth/admin-auth.guard';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('orders')
 export class OrdersController {
   constructor(private orderService: OrdersService) {}
   @Get('/')
+  @UseGuards(AdminAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async getAllOrders() {
     return this.orderService.getAllOrders();
   }

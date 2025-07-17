@@ -32,7 +32,6 @@ export const fetchUser = () => {
         console.error('Fetch user error:', err);
         dispatch(setUser(null));
         dispatch(updateStatus('serverError'));
-        dispatch(updateStatus('serverError'));
       });
   };
 };

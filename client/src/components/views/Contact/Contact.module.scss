@@ -2,20 +2,23 @@
 
 .contact {
     padding: 15px;
-    h4 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $cream-color;
+    margin-bottom: 10px;
+
+    span {
         color: $main-color;
         font-weight: 600;
+        font-family: $hero-title-font-family;
+        font-size: 1.3rem;
+        text-align: center;
     }
 
     div {
         font-size: .8rem;
         font-weight: 500;
     }
-}
-
-.form {
-    border: 1px solid $cream-color;
-    box-shadow: 1px 1px 8px $cream-color;
-    padding: 5px;
-    margin-bottom: 10px;
 }

@@ -11,7 +11,7 @@ https://coffee-shop-app-hbwo.onrender.com/
 The application consists of the following pages:
 
 - `/` – Search for products and view all available items. Each product can be customized and added to the cart. Price updates live as parameters change.
-- `/product/:id` – Detailed view of a single product. Options can be modified and the product added to the cart with updated price.
+- `/products/:id` – Detailed view of a single product. Options can be modified and the product added to the cart with updated price.
 - `/products/varieties/:variety` – Filters products by variety.
 - `/products/search/:searchPhrase` – Filters products by search phrase.
 - `/cart` – Displays current cart contents. Allows editing/removing products and adding individual notes by click on the pencil icon. All prices are updated live.

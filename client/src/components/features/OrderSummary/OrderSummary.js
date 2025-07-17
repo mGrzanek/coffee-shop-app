@@ -94,7 +94,7 @@ const OrderSummary = () => {
                 <ListGroup.Item>
                     <div className="mx-auto d-flex justify-content-between align-items-center col-11">
                         <div className={styles.delivery}>Delivery price:</div> 
-                        <span >{currentDeliveryPrice.toFixed(2)} $</span>
+                        <span className="px-md-4 px-lg-5">{currentDeliveryPrice.toFixed(2)} $</span>
                     </div>
                 </ListGroup.Item>
                 <ListGroup.Item className="summaryLabel px-sm-5 d-flex justify-content-center justify-content-sm-end align-items-center">

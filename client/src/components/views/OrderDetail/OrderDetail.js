@@ -12,7 +12,7 @@ const OrderDetail = ({productName, productWeight, productAmount, currentProductP
                     <div className="w-100 col-12 d-flex align-items-center justify-content-around">
                         <div>{productWeight}g</div>
                         <div>
-                            {productAmount} x $ {currentProductPrice.toFixed(2)}
+                            {productAmount} x $ {typeof currentProductPrice === 'number' ? currentProductPrice.toFixed(2) : '0.00'}
                         </div>
                         <div>$ {productPrice.toFixed(2)}</div>
                     </div>

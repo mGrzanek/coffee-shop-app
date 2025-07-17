@@ -17,6 +17,7 @@ const ProductVarieties = () => {
         <>
             <PageTitle>Coffee {variety}</PageTitle>
             {status === "clientConflict" && <AlertMessage variant="warning" alertTitle="Product limit" alertContent="You can add to cart max 10 pieces of selected product" />}
+            {status === "authError" && <AlertMessage variant="warning" alertTitle="Only for logged users" alertContent="This action is possible only after logged" />}
             {status === "clientError" && <AlertMessage variant="danger" alertTitle="Something went wrong" alertContent="Product not added to cart" />}
             <Row className="d-flex mx-auto px-3 py-4">{filteredProducts.map(product => <ProductItem key={product.id} {...product} />)}</Row>
         </>

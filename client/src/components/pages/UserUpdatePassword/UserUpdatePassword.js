@@ -41,7 +41,8 @@ const UserUpdatePassword = () => {
                     if(res.ok) {
                         dispatch(updateStatus('success'));
                         navigate('/');
-                    }
+                    } else if(res.status >= 400 && res.status < 500) dispatch(updateStatus('clientError'));
+                    else dispatch(updateStatus('serverError'));
                 })
                 .catch(() => dispatch(updateStatus('serverError')));
         } else dispatch(updateStatus('clientError'));

@@ -2,6 +2,7 @@
 
 This is full-stack coffee shop web app that allows users to browse, customize and order coffee products. The app features real-time price updates, dynamic filtering, detailed product pages, cart management with notes and a streamlined order flow with summary and confirmation.
 Additionally, the app supports user registration and login. Logged users have access to a personal dashboard with favorite products, account settings and order history. They can add items to favorites, update their personal data or password and review past orders.
+Logged and guest users can send messages to store by a modal contact form available in the footer.
 
 https://coffee-shop-app-hbwo.onrender.com/
 

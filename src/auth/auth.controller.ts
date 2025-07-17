@@ -67,7 +67,7 @@ export class AuthController {
   ) {
     const user = await this.userService.getUserById(req.user?.userId);
     if (user) {
-      const isCorrectPassword = this.authService.validateUser(
+      const isCorrectPassword = await this.authService.validateUser(
         user.email,
         userPassword.password,
       );
